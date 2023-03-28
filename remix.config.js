@@ -4,6 +4,9 @@ module.exports = {
   ignoredRouteFiles: ['**/.*'],
   watchPaths: ['./public'],
   server: './server.js',
+  future: {
+    v2_routeConvention: true,
+  },
   /**
    * The following settings are required to deploy Hydrogen apps to Oxygen:
    */
@@ -15,5 +18,5 @@ module.exports = {
   serverDependenciesToBundle: 'all',
   serverModuleFormat: 'esm',
   serverPlatform: 'neutral',
-  serverMinify: process.env.NODE_ENV === 'production',
+  serverMinify: true,
 };
