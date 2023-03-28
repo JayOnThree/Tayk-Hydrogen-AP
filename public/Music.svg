@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="401.652" height="402.687" viewBox="0 0 401.652 402.687">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="red"/>
+      <stop offset="1" stop-color="#ff0089"/>
+    </linearGradient>
+    <filter id="Path_1919" x="0" y="0" width="401.652" height="402.687" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="15" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Path_1905" x="91.176" y="90.716" width="197.301" height="221.372" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur-2"/>
+      <feFlood flood-color="#fff" flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Music" transform="translate(-1234.849 -144.004)">
+    <g transform="matrix(1, 0, 0, 1, 1234.85, 144)" filter="url(#Path_1919)">
+      <path id="Path_1919-2" data-name="Path 1919" d="M46.909,0a25.4,25.4,0,0,0-17.97,7.447l-21.5,21.5A25.4,25.4,0,0,0,0,46.909V233.5a25.4,25.4,0,0,0,7.439,17.957l53.8,53.791A25.407,25.407,0,0,0,79.2,312.687H264.748a25.422,25.422,0,0,0,17.965-7.439l21.5-21.5a25.422,25.422,0,0,0,7.439-17.965V79.2a25.417,25.417,0,0,0-7.44-17.966L250.417,7.442A25.4,25.4,0,0,0,232.455,0Z" transform="translate(45 45)" fill="url(#linear-gradient)"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 1234.85, 144)" filter="url(#Path_1905)">
+      <path id="Path_1905-2" data-name="Path 1905" d="M52.787,13.128a5.834,5.834,0,0,0-5.1,5.759v99.789a12.672,12.672,0,0,1-10.768,12.549l-19.037,2.769c-8.459,1.246-15.574,9.247-15.382,17.8a17.5,17.5,0,0,0,20,16.852l11.443-1.679a25.086,25.086,0,0,0,21.535-24.829V52.147a5.74,5.74,0,0,1,5-5.759l70.089-8.674a5.821,5.821,0,0,1,6.537,5.759v63.2a12.671,12.671,0,0,1-10.865,12.547l-19.032,2.769c-8.462,1.236-15.579,9.247-15.388,17.788a17.5,17.5,0,0,0,20,16.849l11.533-1.676A25.086,25.086,0,0,0,144.8,130.119V8.306a5.822,5.822,0,0,0-6.539-5.761Z" transform="translate(116.18 115.73)" fill="#fff" stroke="#fff" stroke-width="10"/>
+    </g>
+  </g>
+</svg>
