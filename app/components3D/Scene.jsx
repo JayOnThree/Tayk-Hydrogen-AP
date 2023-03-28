@@ -17,9 +17,9 @@ import {useSpring} from '@react-spring/core';
 import {motion} from 'framer-motion';
 import {a} from '@react-spring/web';
 
-import EnvImage from '../../../public/glb/moonless_golf_2k.hdr';
+import EnvImage from '../../public/glb/moonless_golf_2k.hdr';
 
-import Vending from './Vending';
+// import Vending from './Vending';
 // import Media from './Media';
 import Connect from './Connect';
 // import Court from './Court';
@@ -437,7 +437,7 @@ export default function Scene({children, ...props}) {
                     event.stopPropagation();
                   }}
                 >
-                  <Vending prodImages={prodImages} />
+                  {/* <Vending prodImages={prodImages} /> */}
                   <Html position={[0, 1, -1.5]} color style={{width: '500px'}}>
                     <motion.h6
                       className="scene-title"

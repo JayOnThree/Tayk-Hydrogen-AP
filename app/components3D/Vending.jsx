@@ -2,8 +2,8 @@ import {TextureLoader} from 'three';
 import {useLoader} from '@react-three/fiber';
 import {useGLTF} from '@react-three/drei';
 
-import Scene from '../../../public/glb/scene.glb';
-// import Shirt from '../../../public/Shirt.png';
+import Scene from '../../public/glb/scene.glb';
+// import Shirt from '../../public/Shirt.png';
 
 export default function Media({prodImages}) {
   const {nodes, materials} = useGLTF(Scene);

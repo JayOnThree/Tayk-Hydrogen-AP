@@ -1,6 +1,6 @@
 import {useGLTF} from '@react-three/drei';
 
-import Scene from '../../../public/glb/scene.glb';
+import Scene from '../../public/glb/scene.glb';
 
 export default function Media() {
   const {nodes, materials} = useGLTF(Scene);

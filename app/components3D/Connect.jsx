@@ -1,8 +1,8 @@
 import {useRef, useEffect} from 'react';
 import {useGLTF, useAnimations} from '@react-three/drei';
 
-import Basketball from '../../../public/glb/baldBasketball.glb';
-import TiedUpHair from '../../../public/glb/TiedUpHar.glb';
+import Basketball from '../../public/glb/baldBasketball.glb';
+import TiedUpHair from '../../public/glb/TiedUpHar.glb';
 
 function UpHair() {
   const groupUphair = useRef();
