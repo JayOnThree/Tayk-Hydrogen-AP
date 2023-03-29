@@ -764,11 +764,16 @@ a:hover {
   font-style: normal;
   cursor: pointer;
   -webkit-text-stroke: 2px black;
-
+  color: black;
   display: inline-block;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 10px 50px 10px 10px;
+}
+
+.category-text:hover {
+  color: #BD4AB6;
+  -webkit-text-stroke: 2px #BD4AB6;
 }
 
 .product-page-div {
