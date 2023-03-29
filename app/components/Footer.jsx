@@ -8,10 +8,14 @@ export default function Footer() {
           <h6 className="footer-text">© 2022 Tay K | All rights reserved</h6>
         </li>
         <li className="mainMenu-li">
-          <h6 className="footer-text">Return Policy</h6>
+          <Link to='/policies/return-policy'>
+            <h6 className="footer-text">Return Policy</h6>
+          </Link>
         </li>
         <li className="mainMenu-li">
-          <h6 className="footer-text">Shipping Policy</h6>
+          <Link to="/policies/shipping-policy">
+            <h6 className="footer-text">Shipping Policy</h6>
+          </Link>
         </li>
       </ul>
     </div>
