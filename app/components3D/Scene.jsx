@@ -239,7 +239,16 @@ export default function Scene({children, ...props}) {
       setRotZ(0.05);
     }
 
-    if (!mediaSelect && !shopSelect) {
+    if (connectSelect) {
+      setPosX(-2.8);
+      setPosY(0.2);
+      setPosZ(-0.1);
+      setRotX(-0.1);
+      setRotY(-0.7);
+      setRotZ(0.2);
+    }
+
+    if (!mediaSelect && !shopSelect && !connectSelect) {
       setPosX(-1.8);
       setPosY(0.1);
       setPosZ(0.7);
@@ -247,7 +256,7 @@ export default function Scene({children, ...props}) {
       setRotY(dragX.x / 100);
       setRotZ(0);
     }
-  }, [mediaSelect, dragX, shopSelect]);
+  }, [mediaSelect, dragX, shopSelect, connectSelect]);
 
   return (
     <div>
@@ -278,10 +287,15 @@ export default function Scene({children, ...props}) {
           exit={{width: '80%', marginLeft: '20%'}}
           transition={{duration: 0.3}}
         >
-          <div style={{width: '100%', textAlign: 'center'}} className="menu-text">
-            {connectSelect && 'CONNECT'}
-            {mediaSelect && 'MEDIA'}
-            {shopSelect && 'SHOP'}
+          <div className="mainMenu-li">
+            <div
+              style={{width: '100%', textAlign: 'center'}}
+              className="menu-text-clicked"
+            >
+              {connectSelect && 'CONNECT'}
+              {mediaSelect && 'MEDIA'}
+              {shopSelect && 'SHOP'}
+            </div>
           </div>
           {!connectSelect && !shopSelect && !mediaSelect && (
             <ul className="mainMenu-ul">
@@ -413,20 +427,28 @@ export default function Scene({children, ...props}) {
                   }}
                 >
                   <Media />
-                  <Html position={[3, 0, 3]} color style={{width: '500px'}}>
-                    <motion.h6
-                      className="scene-title"
-                      animate={{y: mediaHovered ? '0' : '20px', opacity: mediaHovered ? 1 : 0}}
-                    >
-                      Click to view
-                    </motion.h6>
-                    <motion.h6
-                      className="scene-title"
-                      animate={{y: !mediaHovered ? '0' : '-20px', opacity: !mediaHovered ? 1 : 0}}
-                    >
-                      View everything Tay K
-                    </motion.h6>
-                  </Html>
+                  {!mediaSelect && (
+                    <Html position={[3, 0, 3]} color style={{width: '500px'}}>
+                      <motion.h6
+                        className="scene-title"
+                        animate={{
+                          y: mediaHovered ? '0' : '20px',
+                          opacity: mediaHovered ? 1 : 0,
+                        }}
+                      >
+                        Click to view
+                      </motion.h6>
+                      <motion.h6
+                        className="scene-title"
+                        animate={{
+                          y: !mediaHovered ? '0' : '-20px',
+                          opacity: !mediaHovered ? 1 : 0,
+                        }}
+                      >
+                        View everything Tay K
+                      </motion.h6>
+                    </Html>
+                  )}
                 </group>
                 <group
                   onPointerOver={() => setShopHovered(true)}
@@ -437,20 +459,32 @@ export default function Scene({children, ...props}) {
                   }}
                 >
                   <Vending prodImages={prodImages} />
-                  <Html position={[0, 1, -1.5]} color style={{width: '500px'}}>
-                    <motion.h6
-                      className="scene-title"
-                      animate={{y: shopHovered ? '0' : '20px', opacity: shopHovered ? 1 : 0}}
+                  {!shopSelect && (
+                    <Html
+                      position={[0, 1, -1.5]}
+                      color
+                      style={{width: '500px'}}
                     >
-                      Click to view
-                    </motion.h6>
-                    <motion.h6
-                      className="scene-title"
-                      animate={{y: !shopHovered ? '0' : '-20px', opacity: !shopHovered ? 1 : 0}}
-                    >
-                      Shop for Tay K merch
-                    </motion.h6>
-                  </Html>
+                      <motion.h6
+                        className="scene-title"
+                        animate={{
+                          y: shopHovered ? '0' : '20px',
+                          opacity: shopHovered ? 1 : 0,
+                        }}
+                      >
+                        Click to view
+                      </motion.h6>
+                      <motion.h6
+                        className="scene-title"
+                        animate={{
+                          y: !shopHovered ? '0' : '-20px',
+                          opacity: !shopHovered ? 1 : 0,
+                        }}
+                      >
+                        Shop for Tay K merch
+                      </motion.h6>
+                    </Html>
+                  )}
                 </group>
                 <group>
                   <mesh
@@ -463,20 +497,32 @@ export default function Scene({children, ...props}) {
                     <meshPhongMaterial color="white" opacity={0} transparent />
                   </mesh>
                   <Connect />
-                  <Html position={[3.7, 1, -3.5]} color style={{width: '500px'}}>
-                    <motion.h6
-                      className="scene-title"
-                      animate={{y: connectHovered ? '0' : '20px', opacity: connectHovered ? 1 : 0}}
+                  {!connectSelect && (
+                    <Html
+                      position={[3.7, 1, -3.5]}
+                      color
+                      style={{width: '500px'}}
                     >
-                      Click to view
-                    </motion.h6>
-                    <motion.h6
-                      className="scene-title"
-                      animate={{y: !connectHovered ? '0' : '-20px', opacity: !connectHovered ? 1 : 0}}
-                    >
-                      Connect on Discord
-                    </motion.h6>
-                  </Html>
+                      <motion.h6
+                        className="scene-title"
+                        animate={{
+                          y: connectHovered ? '0' : '20px',
+                          opacity: connectHovered ? 1 : 0,
+                        }}
+                      >
+                        Click to view
+                      </motion.h6>
+                      <motion.h6
+                        className="scene-title"
+                        animate={{
+                          y: !connectHovered ? '0' : '-20px',
+                          opacity: !connectHovered ? 1 : 0,
+                        }}
+                      >
+                        Connect on Discord
+                      </motion.h6>
+                    </Html>
+                  )}
                 </group>
               </group>
             </group>
