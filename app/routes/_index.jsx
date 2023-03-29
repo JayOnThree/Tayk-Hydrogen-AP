@@ -11,7 +11,6 @@ export async function loader({context}) {
 }
 
 export default function index() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const {products} = useLoaderData();
 
   return (
