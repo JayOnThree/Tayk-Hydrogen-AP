@@ -12,11 +12,20 @@ export default function Media({prodImages}) {
   return (
     <group>
       {batchTextures.map((textures, i) => {
+        const row1 = i >= 0 && i <= 2;
+        const row2 = i >= 3 && i <= 5;
+        const row3 = i >= 6 && i <= 8;
+        const left = i === 0 || i === 3 || i === 6 || i === 10;
+        const middle = i === 1 || i === 4 || i === 7 || i === 11;
         return (
           <mesh
             key={i}
             geometry={nodes.Plane008.geometry}
-            position={[0.96, 1.05, -0.8]}
+            position={[
+              0.96,
+              row1 ? 1.05 : row2 ? 0.91 : row3 ? 0.77 : 0.63,
+              left ? -0.8 : middle ? -0.935 : -1.07,
+            ]}
             rotation={[-1.55, 0, -Math.PI / 2]}
             scale={0.06}
           >
