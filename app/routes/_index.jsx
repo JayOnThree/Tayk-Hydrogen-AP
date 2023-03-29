@@ -2,7 +2,7 @@ import {ClientOnly} from 'remix-utils';
 import {useLoaderData} from '@remix-run/react';
 import {json} from 'react-router';
 
-// import Canvas from '~/components3D/Scene';
+import Canvas from '~/components3D/Scene';
 import Footer from '~/components/Footer';
 
 export async function loader({context}) {
@@ -15,10 +15,10 @@ export default function index() {
 
   return (
     <div className="App">
-      {/* <ClientOnly
+      <ClientOnly
         fallback={null}
         children={() => <Canvas products={products} />}
-      /> */}
+      />
       <Footer />
     </div>
   );
