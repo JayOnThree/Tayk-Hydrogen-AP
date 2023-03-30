@@ -35,7 +35,7 @@ export default function Post() {
         dragX={0}
       />
       <Toolbar />
-      <h1 className="music-header">Blog</h1>
+      <h1 className="music-header d-none d-md-none d-lg-block">Blog</h1>
       <Row
         style={{
           width: '100vw',

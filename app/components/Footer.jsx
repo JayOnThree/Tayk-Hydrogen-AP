@@ -17,6 +17,11 @@ export default function Footer() {
             <h6 className="footer-text">Shipping Policy</h6>
           </Link>
         </li>
+        <li className="mainMenu-li">
+          <Link to="/policies/shipping-policy">
+            <h6 className="footer-text">Contact</h6>
+          </Link>
+        </li>
       </ul>
     </div>
   );

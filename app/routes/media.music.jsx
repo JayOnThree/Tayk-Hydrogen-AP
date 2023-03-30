@@ -34,7 +34,7 @@ export default function music() {
         landingPage={false}
         dragX={0}
       />
-      <h1 className="music-header">Music</h1>
+      <h1 className="music-header d-none d-md-none d-lg-block">Music</h1>
       <div className="music-div">
         <MusicFrame
           url={

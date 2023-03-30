@@ -609,19 +609,79 @@ a:hover {
   filter: invert(1);
 }
 
-.messanger-text-contact {
-  color: black;
+.messanger-contact {
   padding: 15px;
   font-weight: 400;
-  font-size: clamp(10pt, 3vw, 18pt)
+  font-size: clamp(10pt, 3vw, 18pt);
+  text-align: left;
+  border-radius: 50px;
 }
 
-.messanger-text-sent {
-  color: white;
-  padding: 15px;
-  font-weight: 400;
-  font-size: clamp(10pt, 3vw, 18pt)
+.text-reciever {
+  background-color: #E9E9EB;
+  padding: 12px;
+  border-radius: 50px;
+  color: black;
+  max-width: 500px;
 }
+
+.messanger-sent {
+  font-weight: 400;
+  font-size: clamp(10pt, 3vw, 18pt);
+  text-align: right;
+  padding: 15px;
+}
+
+.text-sender {
+  color: white;
+  background-color: #0085FF;
+  padding: 12px;
+  border-radius: 50px;
+}
+
+
+
+
+.message {
+  border-radius: 20px;
+  padding: 8px 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.messages {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.yours {
+  align-items: flex-start;
+}
+
+.yours .message {
+  margin-right: 25%;
+  background-color: #eee;
+  position: relative;
+  color: black;
+  font-weight: 400;
+}
+
+.mine {
+  align-items: flex-end;
+}
+
+.mine .message {
+  color: white;
+  margin-left: 25%;
+  background: linear-gradient(to bottom, #00D0EA 0%, #0085D1 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+
+
 
 .message-input {
   width: 100%;
@@ -640,6 +700,16 @@ a:hover {
   padding: 5px;
   max-height: 80px;
   min-height: 40px;
+}
+
+.message-form-div {
+  height: 175px;
+  border-top: grey solid 1px;
+  color: black;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 .enter-button {

@@ -49,7 +49,7 @@ export default function Videos() {
         dragX={0}
       />
       <Toolbar home={false} blogPost={false} />
-      <h1 className="music-header">Videos</h1>
+      <h1 className="music-header d-none d-md-none d-lg-block">Videos</h1>
       <div className="backgroundLayer">
         <VideoFrame url={'https://www.youtube.com/embed/q6I0Aa_62IM'} />
         <VideoFrame url={'https://www.youtube.com/embed/OYhXJaEbw7c'} />

@@ -1,16 +1,23 @@
 import {Container, Col, Row} from 'react-bootstrap';
 import {Link} from '@remix-run/react';
+import {motion} from 'framer-motion';
 
 import Toolbar from '../components/Toolbar';
 import Header from '../components/Header';
 import Footer from '~/components/Footer';
 
 export default function Media() {
+  const MotionContainer = motion(Container);
+
   return (
-    <Container
+    <MotionContainer
       fluid
       className="screen-container"
       style={{backgroundImage: `url('/Background.jpg')`}}
+      initial={{y: 1000, opacity: 0}}
+      animate={{y: 0, opacity: 1}}
+      exit={{y: 1000, opacity: 0}}
+      transition={{duration: 0.3}}
     >
       <Header
         mediaHome={true}
@@ -68,6 +75,6 @@ export default function Media() {
         </Col>
       </Row>
       <Footer />
-    </Container>
+    </MotionContainer>
   );
 }

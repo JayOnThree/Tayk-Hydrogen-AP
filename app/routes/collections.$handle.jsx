@@ -3,6 +3,7 @@ import {useLoaderData, Link} from '@remix-run/react';
 import {json} from 'react-router';
 import {Container, Row, Col} from 'react-bootstrap';
 import {useNavigate} from '@remix-run/react';
+import {motion} from 'framer-motion';
 
 import ProductCard from '~/components/ProductCard';
 import Header from '~/components/Header';
@@ -48,6 +49,7 @@ export const meta = ({data}) => {
 };
 
 export default function Collection() {
+  const MotionContainer = motion(Container);
   const Orientation = [
     'A1',
     'A2',
@@ -116,14 +118,21 @@ export default function Collection() {
   }
 
   return (
-    <Container fluid className="container-shop">
+    <MotionContainer
+      fluid
+      className="container-shop"
+      // initial={{y: 1000, opacity: 0}}
+      // animate={{y: 0, opacity: 1}}
+      // exit={{y: 1000, opacity: 0}}
+      // transition={{duration: 0.3}}
+    >
       <Header
         mediaHome={false}
         blogPost={false}
         productHome={true}
         product={false}
         landingPage={false}
-        dragX={{x:0}}
+        dragX={{x: 0}}
       />
       <Row style={{height: '100px'}}>
         <Col lg={8} className="category-div">
@@ -158,7 +167,6 @@ export default function Collection() {
         <Col lg={8} xs={7} className="product-page-div">
           <div className="Product-wrapper">
             {collection.products.nodes.map((product, i) => (
-              // eslint-disable-next-line react/jsx-key
               <div
                 key={product.id}
                 onPointerOver={() => setTextIndex(i)}
@@ -174,7 +182,7 @@ export default function Collection() {
             <div className="marque-div-mobile d-flex d-lg-none">
               {dialText === null ? (
                 textIndex === null ? (
-              <marquee className="marque-text">
+                  <marquee className="marque-text">
                     CLICK AN ITEM OR TYPE ITS CODE
                   </marquee>
                 ) : (
@@ -188,7 +196,7 @@ export default function Collection() {
               <div className="dialpad-div-container">
                 {Buttons.map((value, i) => {
                   return (
-                    // eslint-disable-next-line react/no-array-index-key, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
                     <div
                       key={i}
                       className="square"
@@ -213,7 +221,8 @@ export default function Collection() {
                   className="square"
                   onClick={() => {
                     enterFunction();
-                  }}>
+                  }}
+                >
                   <div className="content" style={{width: '200%'}}>
                     <h4 className="dial-button-text">Select</h4>
                   </div>
@@ -224,7 +233,7 @@ export default function Collection() {
         </Col>
       </Row>
       <Footer />
-    </Container>
+    </MotionContainer>
   );
 }
 
