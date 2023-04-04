@@ -1,10 +1,12 @@
 import {useState, useEffect} from 'react';
 import {Link, useLocation} from '@remix-run/react';
+import {createBrowserHistory} from 'history';
 import {Container} from 'react-bootstrap';
 import {motion} from 'framer-motion';
 
 export default function Header({blogPost}) {
   const location = useLocation();
+  // let history = createBrowserHistory();
   const [mobile, setMobile] = useState();
   const [tablet, setTablet] = useState();
 
@@ -13,6 +15,15 @@ export default function Header({blogPost}) {
       setMobile(window.innerWidth < 600);
       setTablet(window.innerWidth < 900 && window.innerWidth > 600);
     }
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setMobile(window.innerWidth < 600);
+      setTablet(window.innerWidth < 900 && window.innerWidth > 600);
+    }
+
+    window.addEventListener('resize', handleResize);
   });
 
   return (
@@ -25,12 +36,12 @@ export default function Header({blogPost}) {
         exit={{marginLeft: '-200px'}}
         transition={{duration: 0.5}}
       >
-        <Link
-          to={blogPost ? '/media/blog' : '/media'}
+        <a
+          // onClick={() => history.back()}
           className="circle-router"
         >
           <img alt="back" src="/back.svg" className="icon-router" />
-        </Link>
+        </a>
         <Link to="/" className="circle-router">
           <img alt="exit" src="/exit.svg" className="icon-router" />
         </Link>
@@ -57,7 +68,9 @@ export default function Header({blogPost}) {
           </div>
         </motion.div>
       </div>
-      <img src="/cart.svg" className="cart" />
+      {/* <Link to='/cart'>
+        <img src="/cart.svg" className="cart" alt='cart' />
+      </Link> */}
     </Container>
   );
 }

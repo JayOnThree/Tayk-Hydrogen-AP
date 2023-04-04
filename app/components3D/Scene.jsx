@@ -215,7 +215,7 @@ export default function Scene({children, ...props}) {
       setDragX({x});
     },
     {
-      bounds: {left: 0, right: 300, top: 0, bottom: 0},
+      bounds: {left: -10, right: 325, top: 0, bottom: 0},
       rubberband: true,
     },
   );
@@ -283,20 +283,10 @@ export default function Scene({children, ...props}) {
         <motion.div
           className="header-div"
           initial={{width: '80%', marginLeft: '20%'}}
-          animate={{width: '100%', marginLeft: 0}}
+          animate={{width: '100%', marginLeft: 0, y: !connectSelect && !shopSelect && !mediaSelect ? 0 : '-200px'}}
           exit={{width: '80%', marginLeft: '20%'}}
           transition={{duration: 0.3}}
         >
-          <div className="mainMenu-li">
-            <div
-              style={{width: '100%', textAlign: 'center'}}
-              className="menu-text-clicked"
-            >
-              {connectSelect && 'CONNECT'}
-              {mediaSelect && 'MEDIA'}
-              {shopSelect && 'SHOP'}
-            </div>
-          </div>
           {!connectSelect && !shopSelect && !mediaSelect && (
             <ul className="mainMenu-ul">
               <li className="mainMenu-li">
@@ -428,7 +418,7 @@ export default function Scene({children, ...props}) {
                 >
                   <Media />
                   {!mediaSelect && (
-                    <Html position={[3, 0, 3]} color style={{width: '500px'}}>
+                    <Html position={[4, 0.5, 3]} color style={{width: '500px'}}>
                       <motion.h6
                         className="scene-title"
                         animate={{

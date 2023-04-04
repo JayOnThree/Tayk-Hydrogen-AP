@@ -40,7 +40,7 @@ export const loader = async ({params, context, request}) => {
     selectedOptions.push({name, value});
   });
 
-  const {product} = await context.storefront.query(PRODUCT_QUERY, {
+  const {shop, product} = await context.storefront.query(PRODUCT_QUERY, {
     variables: {
       handle,
       selectedOptions,
@@ -57,11 +57,12 @@ export const loader = async ({params, context, request}) => {
   return json({
     product,
     selectedVariant,
+    storeDomain: shop.primaryDomain.url,
   });
 };
 
 export default function ProductHandle() {
-  const {product, selectedVariant} = useLoaderData();
+  const {product, selectedVariant, storeDomain} = useLoaderData();
   // const orderable = selectedVariant?.availableForSale || false;
   const [imageIndex, setImageIndex] = useState(0);
   const [toggleDescription, setToggleDescription] = useState(false);
@@ -89,7 +90,7 @@ export default function ProductHandle() {
           >
             {product.media.nodes.map((product, i) => {
               return (
-                <div key={i}>
+                <div key={product.image.id}>
                   {product.image !== undefined && (
                     <Image
                       data={product.image}
@@ -117,16 +118,15 @@ export default function ProductHandle() {
           >
             {product.media.nodes.map((product, i) => {
               return (
-                <>
+                <div key={product.image.id}>
                   {product.image !== undefined && (
                     <Image
-                      key={i}
                       data={product.image}
                       className="desktop-image-picker-mobile"
                       onClick={() => setImageIndex(i)}
                     />
                   )}
-                </>
+                </div>
               );
             })}
           </Col>
@@ -141,6 +141,12 @@ export default function ProductHandle() {
               options={product.options}
               selectedVariant={selectedVariant}
             />
+            <ShopPayButton
+              storeDomain={storeDomain}
+              variantIds={[selectedVariant?.id]}
+              width={'400px'}
+            />
+            <ProductForm variantId={selectedVariant?.id} />
             <h6
               style={{marginTop: '5vh'}}
               className="sub-title-prod"
@@ -273,6 +279,20 @@ const PRODUCT_QUERY = `#graphql
             value
           }
         }
+      }
+    }
+    shop {
+      name
+      primaryDomain {
+        url
+      }
+      shippingPolicy {
+        body
+        handle
+      }
+      refundPolicy {
+        body
+        handle
       }
     }
   }

@@ -121,6 +121,7 @@ export default function Collection() {
     <MotionContainer
       fluid
       className="container-shop"
+      style={{overflow: 'hidden'}}
       // initial={{y: 1000, opacity: 0}}
       // animate={{y: 0, opacity: 1}}
       // exit={{y: 1000, opacity: 0}}
@@ -198,7 +199,7 @@ export default function Collection() {
                   return (
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
                     <div
-                      key={i}
+                      key={value}
                       className="square"
                       onClick={() =>
                         setDialText(

@@ -9,6 +9,9 @@ import styles from './styles/app.css';
 import favicon from '../public/favicon.svg';
 import bootstrapCSS from 'bootstrap/dist/css/bootstrap.min.css';
 import {AnimatePresence} from 'framer-motion';
+import {defer} from '@shopify/remix-oxygen';
+import {Layout} from '~/components/Layout';
+import {CART_QUERY} from '~/queries/cart';
 
 export const links = () => {
   return [
@@ -32,6 +35,29 @@ export const meta = () => ({
   viewport: 'width=device-width,initial-scale=1',
 });
 
+export async function loader({context, request}) {
+  const cartId = await context.session.get('cartId');
+  return defer({
+    cart: cartId ? getCart(context, cartId) : undefined,
+    layout: await context.storefront.query(LAYOUT_QUERY),
+  });
+}
+
+async function getCart({storefront}, cartId) {
+  if (!storefront) {
+    throw new Error('missing storefront client in cart query');
+  }
+  const {cart} = await storefront.query(CART_QUERY, {
+    variables: {
+      cartId,
+      country: storefront.i18n.country,
+      language: storefront.i18n.language,
+    },
+    cache: storefront.CacheNone(),
+  });
+  return cart;
+}
+
 export default function App() {
   return (
     <html lang="en">
@@ -41,6 +67,7 @@ export default function App() {
       </head>
       <body style={{background: 'black', overflow: 'hidden'}}>
         <AnimatePresence mode="wait" initial={false}>
+          <Layout />
           <Outlet />
         </AnimatePresence>
         <ScrollRestoration />
@@ -49,3 +76,23 @@ export default function App() {
     </html>
   );
 }
+
+const LAYOUT_QUERY = `#graphql
+  query layout {
+    shop {
+      id
+      name
+      description
+      primaryDomain {
+        url
+      }
+      brand {
+       logo {
+         image {
+          url
+         }
+       }
+     }
+    }
+  }
+`;

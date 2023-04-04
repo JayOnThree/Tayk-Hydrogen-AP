@@ -1,6 +1,7 @@
 import React from 'react';
 
 const InputField = (props) => {
+  // console.log(props.submitted);
   const validateInput = (values) => {
     if (values.some((f) => f === '') || values[0].indexOf('@') === -1) {
       return true;
@@ -9,13 +10,13 @@ const InputField = (props) => {
     }
   };
   if (props.type === 'submit') {
-    console.log(props.formValues);
     return (
       <input
-        // className="enter-button"
-        type="submit"
+        className="enter-button"
+        type="image"
         value={props.label}
-        // src="/send.svg"
+        src="/send.svg" 
+        style={{filter: validateInput(props.formValues) ? 'grayscale(100%)' : 'grayscale(0%)'}}
         disabled={validateInput(props.formValues)}
       />
     );

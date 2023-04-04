@@ -35,19 +35,16 @@ export default function Post() {
         dragX={0}
       />
       <Toolbar />
-      <h1 className="music-header d-none d-md-none d-lg-block">Blog</h1>
       <Row
         style={{
           width: '100vw',
-          height: '100vh',
+          height: '100%',
           overflow: 'scroll',
-          marginTop: '-7vh',
-          paddingTop: '10vh',
-          paddingBottom: '20vh',
+          borderRadius: '50px 50px 0 0',
           textAlign: 'left',
         }}
       >
-        <Col lg={9} md={8} style={{marginBottom: '50px'}}>
+        <Col lg={{offset: 1, span: 10}} md={{offset: 1, span: 10}} style={{marginBottom: '50px', marginTop: '60px'}}>
           <div
             className="blogpost-header-img"
             style={{backgroundImage: `url(${article.image.url})`}}
@@ -58,7 +55,7 @@ export default function Post() {
             <h3 className="blogPost-body">{article.content}</h3>
           </div>
         </Col>
-        <Col lg={3} md={4} className="d-none d-sm-none d-md-block d-lg-block">
+        {/* <Col lg={3} md={4} className="d-none d-sm-none d-md-block d-lg-block" style={{marginTop: '60px'}}>
           <div
             className="related-post-container"
             style={{marginBottom: '20px', lineHeight: '1'}}
@@ -95,7 +92,7 @@ export default function Post() {
               </div>
             </div>
           </div>
-        </Col>
+        </Col> */}
       </Row>
       <Footer />
     </Container>

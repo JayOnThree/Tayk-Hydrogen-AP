@@ -62,7 +62,6 @@ body {
   border-radius: 0px 0px 50px 50px;
   background-color: #ffffff23;
   height: 100%;
-  width: 100%;
 }
 
 .mainMenu-ul {
@@ -122,6 +121,10 @@ body {
   width: 100%;
   z-index: 9;
   height: 30px;
+  background: rgb(255,255,255, 0.1);
+  /* background: linear-gradient(0deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%); */
+  border-radius: 30px;
+  backdrop-filter: blur(6px);
 }
 
 .mainMenu-ul-footer {
@@ -147,7 +150,8 @@ body {
   -webkit-text-stroke: 1.5px black;
   font-size: 10pt;
   color: black;
-  filter: drop-shadow(0px 0px 3px #FFFFFF50);
+  padding-top: 2px;
+  /* filter: drop-shadow(0px 0px 3px #FFFFFF50); */
 }
 
 .paint {
@@ -457,6 +461,7 @@ a:hover {
   border-bottom: #707070 1px solid;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 .header-blogpost-thumb {
@@ -502,7 +507,7 @@ a:hover {
 }
 
 .blogPost-head {
-  font-size: 40pt;
+  font-size: clamp(25pt, 3vw, 40pt);
   font-weight: 800;
   color: black;
   text-align: left;
@@ -531,7 +536,7 @@ a:hover {
   height: 15vw;
   min-height: 100px;
   position: fixed;
-  top: 70px;
+  top: 20px;
   right: 0;
   z-index: 4;
   cursor: pointer;
@@ -666,6 +671,7 @@ a:hover {
   position: relative;
   color: black;
   font-weight: 400;
+  text-align: left;
 }
 
 .mine {
@@ -678,6 +684,7 @@ a:hover {
   background: linear-gradient(to bottom, #00D0EA 0%, #0085D1 100%);
   background-attachment: fixed;
   position: relative;
+  text-align: right;
 }
 
 
@@ -758,9 +765,9 @@ a:hover {
 .backgroundLayer {
   width: 100vw;
   text-align: center;
-  height: 100vh;
+  height: calc(100% - 70px);
   overflow: scroll;
-  margin-top: 5vh;
+  /* margin-top: 5vh; */
   margin-left: -15px;
 }
 
@@ -769,9 +776,8 @@ a:hover {
 .music-div {
   width: 100vw;
   text-align: center;
-  height: 100vh;
+  height: calc(100% - 70px);
   overflow: scroll;
-  margin-top: 5vh;
   margin-left: -15px;
 }
 
@@ -779,7 +785,7 @@ a:hover {
   cursor: pointer;
   display: inline-block;
   width: 80%;
-  /* margin-top: 10vh; */
+  margin-top: 10vh;
 }
 
 /* collections */
@@ -1168,3 +1174,227 @@ a:hover {
   text-align: left;
   font-size: 10pt;
 }
+
+.policy-header-text {
+  -webkit-text-stroke: 5px black;
+  font-size: 45pt;
+  text-align: left;
+}
+
+/* cart */
+
+/* CART
+   * ============================== */
+   .Cart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 350px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border: 5px solid black;
+    border-radius: 30px 0px 0px 30px;
+    transform: translateX(100%);
+    transition: transform 0.15s ease-in-out;
+    z-index: 999999999;
+  }
+  
+  .Cart--open {
+    transform: translateX(0);
+  }
+  
+  .Cart__close {
+    position: absolute;
+    right: 9px;
+    top: 8px;
+    font-size: 35px;
+    color: #999;
+    border: none;
+    background: transparent;
+    transition: transform 100ms ease;
+    cursor: pointer;
+  }
+  
+  .Cart__header {
+    padding: 20px;
+    /* border-bottom: 1px solid #e5e5e5; */
+    flex: 0 0 auto;
+    display: inline-block;
+    /* font-size: clamp(20pt, 10vw, 60pt); */
+    /* font-size: 70pt; */
+    font-family: fake_receiptregular;
+    font-weight: 800;
+    color: black;
+  }
+  
+  .Cart__line-items {
+    flex: 1 0 auto;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .Cart__footer {
+    padding: 20px;
+    flex: 0 0 auto;
+  }
+  
+  .Cart__checkout {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    font-weight: 700;
+    /* font-size: clamp(30pt, 5vw, 35pt); */
+  }
+  
+  .Cart-info {
+    padding: 15px 20px 10px;
+  }
+  
+  .Cart-info__total {
+    float: left;
+    text-transform: uppercase;
+  }
+  
+  .Cart-info__small {
+    font-size: 15px;
+    font-weight: 800;
+  }
+  
+  .Cart-info__pricing {
+    float: right;
+  }
+  
+  .pricing {
+    margin-left: 5px;
+    font-size: 16px;
+    color: black;
+    font-family: fake_receiptregular;
+    font-weight: 800;
+  }
+  
+  /* LINE ITEMS
+    * ============================== */
+  .Line-item {
+    margin-bottom: 20px;
+    overflow: hidden;
+    backface-visibility: visible;
+    min-height: 65px;
+    position: relative;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .Line-item__img {
+    width: 65px;
+    height: 65px;
+    border-radius: 3px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #e5e5e5;
+    position: absolute;
+  }
+  
+  .Line-item__content {
+    width: 100%;
+    padding-left: 75px;
+  }
+  
+  .Line-item__content-row {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 5px;
+    position: relative;
+  }
+  
+  .Line-item__variant-title {
+    float: right;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #767676;
+    font-family: fake_receiptregular;
+    font-weight: 800;
+  }
+  
+  .Line-item__title {
+    color: #4e5665;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  
+  .Line-item__price {
+    line-height: 23px;
+    float: right;
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 40px;
+    font-family: fake_receiptregular;
+    font-weight: 800;
+  }
+  
+  .Line-item__quantity-container {
+    border: 1px solid #767676;
+    float: left;
+    border-radius: 3px;
+  }
+  
+  .Line-item__quantity-update {
+    color: #767676;
+    display: block;
+    float: left;
+    height: 21px;
+    line-height: 16px;
+    font-family: fake_receiptregular;
+    font-weight: 800;
+    width: 25px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  .Line-item__quantity-update-form {
+    display: inline;
+  }
+  
+  .Line-item__quantity {
+    color: black;
+    width: 38px;
+    height: 21px;
+    line-height: 23px;
+    font-size: 15px;
+    border: none;
+    text-align: center;
+    -moz-appearance: textfield;
+    background: transparent;
+    border-left: 1px solid #767676;
+    border-right: 1px solid #767676;
+    font-family: fake_receiptregular;
+    font-weight: 800;
+    display: block;
+    float: left;
+    padding: 0;
+    border-radius: 0;
+  }
+  
+  .Line-item__remove {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: 0;
+    background: 0;
+    font-size: 20px;
+    top: -4px;
+    opacity: 0.5;
+  }
+  
+  .Line-item__remove:hover {
+    opacity: 1;
+    cursor: pointer;
+  }

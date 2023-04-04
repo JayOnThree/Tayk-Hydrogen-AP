@@ -28,26 +28,32 @@ export default function Blog() {
         dragX={0}
       />
       <Toolbar />
-      <h1 className="music-header d-none d-md-none d-lg-block">Blog</h1>
       <Row
         style={{
           width: '100vw',
-          height: '100vh',
+          height: '100%',
           overflow: 'scroll',
-          paddingTop: '10vh',
-          paddingBottom: '20vh',
-          position: 'absolute',
-          marginTop: '-7vh',
+          borderRadius: '50px 50px 0 0',
         }}
       >
         {articles.nodes.map((article, i) => {
           const excerptShort = article.excerpt.slice(0, 70);
           const output = article.title.toLowerCase();
-          const output2 = output.replace(/[^\w ]+/g,'');
+          const output2 = output.replace(/[^\w ]+/g, '');
           const slug = output2.replace(/ +/g, '-');
           return (
-            <Col lg={4} md={6} sm={6} xs={12} key={i}>
-              <Link to={`/media/blog/${slug}`}>
+            <Col
+              lg={4}
+              md={6}
+              sm={6}
+              xs={12}
+              key={i}
+              style={{marginTop: i === 0 ? '40px' : '0px'}}
+            >
+              <Link
+                to={`/media/blog/${slug}`}
+                style={{textAlign: 'left', textDecoration: 'none'}}
+              >
                 <div className="blog-post-div">
                   <div
                     className="img-div"

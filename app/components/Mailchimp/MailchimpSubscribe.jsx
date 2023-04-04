@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {Col} from 'react-bootstrap';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
+import {motion} from 'framer-motion';
 
 import InputField from './InputField';
 
@@ -29,7 +30,12 @@ const CustomForm = ({status, onValidated}) => {
   };
 
   return (
-    <div style={{height: 'calc(100% - 175px)', overflow: 'scroll', background: 'white'}}>
+    <div
+      style={{
+        height: 'calc(70vh - 175px)',
+        overflow: 'scroll',
+      }}
+    >
       {/* {status !== 'success' ? <h2>success message</h2> : null} */}
       <div style={{width: '100%', marginTop: '10px'}}>
         <h3 className="yours messages">
@@ -39,29 +45,46 @@ const CustomForm = ({status, onValidated}) => {
         </h3>
       </div>
       {submitted && (
-        <div style={{width: '100%'}}>
+        <motion.div
+          style={{width: '100%'}}
+          animate={{
+            marginTop: submitted ? 0 : 100,
+            opacity: submitted ? 1 : 0,
+          }}
+        >
           <h3 className="mine messages">
             <div className="message">{submitted}</div>
           </h3>
-        </div>
+        </motion.div>
       )}
       {status === 'success' && (
-        <div style={{width: '100%'}}>
-          <h3 className="messanger-contact">
+        <motion.div
+          style={{width: '100%'}}
+          initial={{marginTop: -100, opacity: 0}}
+          animate={{marginTop: 0, opacity: 1}}
+          exit={{marginTop: -100, opacity: 0}}
+        >
+          <h3 className="yours messages">
             <div className="message">
               Your message has been succesfully sent! Thank you!
             </div>
           </h3>
-        </div>
+        </motion.div>
       )}
       {status === 'error' && (
-        <div style={{width: '100%'}}>
+        <motion.div
+          style={{width: '100%'}}
+          animate={{
+            marginTop: status === 'error' ? 0 : 100,
+            opacity: status === 'error' ? 1 : 0,
+          }}
+        >
           <h3 className="yours messages">
             <div className="message">
-              We're sorry your message was not able to send. Please refresh the page and try again
+              We're sorry, your message was not able to send. Please try again.
             </div>
           </h3>
-        </div>
+        </motion.div>
       )}
       <form
         onSubmit={(e) => {
@@ -70,46 +93,6 @@ const CustomForm = ({status, onValidated}) => {
         }}
         className="message-form-div"
       >
-        {/* {status === 'error' && (
-          <div className="home-text">Please try again later</div>
-        )} */}
-        {/* {status !== 'success' ? (
-          <>
-            <div className="inputTextStyling">
-              <InputField
-                label="Name"
-                onChangeHandler={setName}
-                type="name"
-                value={name}
-                isRequired
-                placeholder="Your Name"
-              />
-            </div>
-            <div className="inputTextStyling">
-              <InputField
-                label="Email"
-                onChangeHandler={setEmail}
-                type="email"
-                value={email}
-                placeholder="Your Email"
-                isRequired
-              />
-            </div>
-          </>
-        ) : null} */}
-        {/* {status !== 'success' ? (
-          <div style={{width: '100%', textAlign: 'right', right: 0}}>
-            {status === 'sending' ? (
-              <div className="home-text">sending...</div>
-            ) : (
-              <Col lg={2}>
-                <InputField label="enter" type="submit" formValues={[email]} />
-              </Col>
-            )}
-          </div>
-        ) : (
-          <div className="home-text">we will talk soon.</div>
-        )} */}
         <Col lg={{span: 8, offset: 2}} xs={8}>
           <InputField
             label="Email"
@@ -132,6 +115,8 @@ const CustomForm = ({status, onValidated}) => {
           <InputField
             label="enter"
             type="submit"
+            alt="Submit"
+            submitted={submitted}
             formValues={[email, messageTay]}
           />
         </Col>
