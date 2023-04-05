@@ -18,6 +18,12 @@ const MusicFrame = ({url}) => {
   );
 };
 
+const url = [
+  'https://open.spotify.com/embed/track/0Dk9lP1YnOqssHH0oCeq9u?utm_source=generator&theme=0',
+  'https://open.spotify.com/embed/track/0Dk9lP1YnOqssHH0oCeq9u?utm_source=generator&theme=0',
+  'https://open.spotify.com/embed/track/0Dk9lP1YnOqssHH0oCeq9u?utm_source=generator&theme=0',
+];
+
 export default function music() {
   return (
     <Container
@@ -34,23 +40,18 @@ export default function music() {
         landingPage={false}
         dragX={0}
       />
-      <h1 className="music-header d-none d-md-none d-lg-block">Music</h1>
       <div className="music-div">
-        <MusicFrame
-          url={
-            'https://open.spotify.com/embed/track/0Dk9lP1YnOqssHH0oCeq9u?utm_source=generator&theme=0'
-          }
-        />
-        <MusicFrame
-          url={
-            'https://open.spotify.com/embed/track/1WRzux3cJRM9xRNN99QKgR?utm_source=generator&theme=0'
-          }
-        />
-        <MusicFrame
-          url={
-            'https://open.spotify.com/embed/track/3wGXyJGsCf1myH5MooQIqE?utm_source=generator&theme=0'
-          }
-        />
+      <h1 className="music-header d-none d-md-none d-lg-block">Music</h1>
+        {url &&
+          url.map((link, i) => {
+            return (
+              <MusicFrame
+                key={i}
+                style={{marginTop: i === 0 ? '10vh' : '0vh'}}
+                url={link}
+              />
+            );
+          })}
       </div>
       <Footer />
     </Container>

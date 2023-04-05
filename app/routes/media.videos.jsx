@@ -33,6 +33,12 @@ const VideoFrame = ({url}) => {
   );
 };
 
+const url = [
+  'https://www.youtube.com/embed/q6I0Aa_62IM',
+  'https://www.youtube.com/embed/OYhXJaEbw7c',
+  'https://www.youtube.com/embed/Z0leBlnf1Ng',
+];
+
 export default function Videos() {
   return (
     <Container
@@ -49,11 +55,19 @@ export default function Videos() {
         dragX={0}
       />
       <Toolbar home={false} blogPost={false} />
-      <h1 className="music-header d-none d-md-none d-lg-block">Videos</h1>
       <div className="backgroundLayer">
-        <VideoFrame url={'https://www.youtube.com/embed/q6I0Aa_62IM'} />
-        <VideoFrame url={'https://www.youtube.com/embed/OYhXJaEbw7c'} />
-        <VideoFrame url={'https://www.youtube.com/embed/Z0leBlnf1Ng'} />
+        <h1 className="music-header d-none d-md-none d-lg-block">Videos</h1>
+        {url &&
+          url.map((link, i) => {
+            return (
+              <div style={{marginTop: i === 0 ? '10vh' : '0vh'}} key={i}>
+                <VideoFrame
+                  url={link}
+                  style={{marginTop: i === 0 ? '10vh' : '0vh'}}
+                />
+              </div>
+            );
+          })}
       </div>
       <Footer />
     </Container>

@@ -134,7 +134,7 @@ export default function Collection() {
                 style={{textDecoration: 'none'}}
                 to={`/collections/${collection.handle}`}
                 key={collection.id}
-                className="category-text"
+                className="category-text category-text-size"
               >
                 {collection.title}
               </Link>
@@ -156,7 +156,7 @@ export default function Collection() {
         </Col>
       </Row>
       <Row style={{height: 'calc(100% - 100px)'}}>
-        <Col lg={8} xs={8} className="product-page-div">
+        <Col lg={8} xs={7} className="product-page-div">
           <div className="Product-wrapper">
             {collection.products.nodes.map((product, i) => (
               <div
@@ -164,17 +164,12 @@ export default function Collection() {
                 onPointerOver={() => setTextIndex(i)}
                 onPointerOut={() => setTextIndex(null)}
               >
-                <ProductCard
-                  product={product}
-                  index={i}
-                  onPointerOver={() => setTextIndex(i)}
-                  onPointerOut={() => setTextIndex(null)}
-                />
+                <ProductCard product={product} index={i} />
               </div>
             ))}
           </div>
         </Col>
-        <Col lg={4} xs={4}>
+        <Col lg={4} xs={5}>
           <div style={{height: '100%', width: '100%'}}>
             <div className="marque-div-mobile d-flex d-lg-none">
               {dialText === null ? (
