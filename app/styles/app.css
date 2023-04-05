@@ -805,7 +805,7 @@ a:hover {
 }
 
 .marque-text {
-  font-size: 30pt;
+  font-size: clamp(20pt, 2vw, 30pt);
   font-weight: 800;
   font-family: 'bpdotsunicasesquarebold';
 }
@@ -843,21 +843,25 @@ a:hover {
 
   overflow-y: hidden;
   overflow-x: auto;
-  white-space: nowrap;
+  display: table;
+  width: 500%;
+  /* white-space: nowrap; */
 }
 
 .category-text {
-  font-size: clamp(25pt, 3vw, 30pt);
+  font-size: clamp(20pt, 3vw, 30pt);
   font-family: "subway-berlin-sc", sans-serif;
   font-weight: 400;
   font-style: normal;
   cursor: pointer;
   -webkit-text-stroke: 2px black;
   color: black;
-  display: inline-block;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 50px 10px 10px;
+  /* padding: 10px 50px 10px 10px; */
+  padding-left: 15px;
+
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .category-text:hover {
@@ -874,14 +878,26 @@ a:hover {
 }
 
 .Product-wrapper {
-  margin: 0px 0px 0px 0px;
+  /* margin: 0px 0px 0px 0px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center; */
+
+  margin: 2% auto 2%;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+  height: 100%;
+  padding-bottom: 50px;
 }
 
 .Product {
+  /* flex: 0 1 25%; */
+
   flex: 0 1 25%;
+  width: 100%;
+  height: auto;
+  padding: 5px;
 }
 
 .prod-images {
@@ -905,6 +921,7 @@ a:hover {
 .vending-price-text {
   color: black;
   font-weight: 700;
+  padding-left: 5px;
 }
 
 @media only screen and (min-width: 1400px) {
@@ -1021,7 +1038,6 @@ a:hover {
   color: white;
   -webkit-text-stroke: 3px white;
 }
-
 /* product page */
 
 .product-images-div {
@@ -1033,17 +1049,23 @@ a:hover {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  padding: 15px;
 }
 
 .product-images-picker-div-mobile {
   background: #50EF6E;
   border-radius: 48px;
   border: solid 5px #E8E8E8;
-  overflow-y: scroll;
-  height: 20%;
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  height: 150px;
+}
+
+.desktop-image-picker-mobile {
+  width: auto;
+  height: 145px;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .product-images-div-mobile {
@@ -1055,6 +1077,7 @@ a:hover {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  padding: 15px;
 }
 
 .product-options-div {
@@ -1067,12 +1090,6 @@ a:hover {
 
 .desktop-image-picker {
   width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.desktop-image-picker-mobile {
-  width: auto;
   height: 100%;
   cursor: pointer;
 }
@@ -1173,6 +1190,7 @@ a:hover {
 .subtext-prod {
   text-align: left;
   font-size: 10pt;
+  padding-bottom: 10px;
 }
 
 .policy-header-text {

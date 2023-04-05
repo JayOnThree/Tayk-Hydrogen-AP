@@ -118,22 +118,13 @@ export default function Collection() {
   }
 
   return (
-    <MotionContainer
-      fluid
-      className="container-shop"
-      style={{overflow: 'hidden'}}
-      // initial={{y: 1000, opacity: 0}}
-      // animate={{y: 0, opacity: 1}}
-      // exit={{y: 1000, opacity: 0}}
-      // transition={{duration: 0.3}}
-    >
+    <Container fluid className="container-shop" style={{overflow: 'hidden'}}>
       <Header
         mediaHome={false}
         blogPost={false}
         productHome={true}
         product={false}
         landingPage={false}
-        dragX={{x: 0}}
       />
       <Row style={{height: '100px'}}>
         <Col lg={8} className="category-div">
@@ -165,7 +156,7 @@ export default function Collection() {
         </Col>
       </Row>
       <Row style={{height: 'calc(100% - 100px)'}}>
-        <Col lg={8} xs={7} className="product-page-div">
+        <Col lg={8} xs={8} className="product-page-div">
           <div className="Product-wrapper">
             {collection.products.nodes.map((product, i) => (
               <div
@@ -173,12 +164,17 @@ export default function Collection() {
                 onPointerOver={() => setTextIndex(i)}
                 onPointerOut={() => setTextIndex(null)}
               >
-                <ProductCard product={product} index={i} />
+                <ProductCard
+                  product={product}
+                  index={i}
+                  onPointerOver={() => setTextIndex(i)}
+                  onPointerOut={() => setTextIndex(null)}
+                />
               </div>
             ))}
           </div>
         </Col>
-        <Col lg={4} xs={5}>
+        <Col lg={4} xs={4}>
           <div style={{height: '100%', width: '100%'}}>
             <div className="marque-div-mobile d-flex d-lg-none">
               {dialText === null ? (
@@ -234,7 +230,7 @@ export default function Collection() {
         </Col>
       </Row>
       <Footer />
-    </MotionContainer>
+    </Container>
   );
 }
 

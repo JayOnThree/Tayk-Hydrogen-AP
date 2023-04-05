@@ -10,24 +10,34 @@ import ProductOptions from '~/components/ProductOptions';
 import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 
-function ProductForm({variantId}) {
+function ProductForm({variantId, selectedVariant}) {
   const [root] = useMatches();
   const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
   const lines = [{merchandiseId: variantId, quantity: 1}];
+  const isOutOfStock = !selectedVariant?.availableForSale;
+
   return (
-    <fetcher.Form action="/cart" method="post">
-      <input type="hidden" name="cartAction" value={'ADD_TO_CART'} />
-      <input
-        type="hidden"
-        name="countryCode"
-        value={selectedLocale?.country ?? 'US'}
-      />
-      <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <button className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
-        Add to Bag
-      </button>
-    </fetcher.Form>
+    <div>
+      {isOutOfStock ? (
+        <button className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
+          Sold Out
+        </button>
+      ) : (
+        <fetcher.Form action="/cart" method="post">
+          <input type="hidden" name="cartAction" value={'ADD_TO_CART'} />
+          <input
+            type="hidden"
+            name="countryCode"
+            value={selectedLocale?.country ?? 'US'}
+          />
+          <input type="hidden" name="lines" value={JSON.stringify(lines)} />
+          <button className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
+            Add to Bag
+          </button>
+        </fetcher.Form>
+      )}
+    </div>
   );
 }
 
@@ -70,7 +80,7 @@ export default function ProductHandle() {
   // const [lastImage, setLastImage] = useState(3);
   // const [firstImage, setFirstImage] = useState(0);
   const largeImage = product.media.nodes[imageIndex && imageIndex].image;
-  const prodMediaLength = product.media.nodes.length;
+  // const prodMediaLength = product.media.nodes.length;
 
   return (
     <>
@@ -146,7 +156,10 @@ export default function ProductHandle() {
               variantIds={[selectedVariant?.id]}
               width={'400px'}
             />
-            <ProductForm variantId={selectedVariant?.id} />
+            <ProductForm
+              variantId={selectedVariant?.id}
+              selectedVariant={selectedVariant}
+            />
             <h6
               style={{marginTop: '5vh'}}
               className="sub-title-prod"

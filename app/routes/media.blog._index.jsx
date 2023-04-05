@@ -48,7 +48,7 @@ export default function Blog() {
               sm={6}
               xs={12}
               key={i}
-              style={{marginTop: i === 0 ? '40px' : '0px'}}
+              style={{marginTop: '40px'}}
             >
               <Link
                 to={`/media/blog/${slug}`}

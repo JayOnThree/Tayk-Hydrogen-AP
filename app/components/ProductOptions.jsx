@@ -12,8 +12,10 @@ export default function ProductOptions({options, selectedVariant}) {
   const {pathname} = useLocation();
   const [currentSearchParams] = useSearchParams();
   const [dropDownClicked, setDropDownClicked] = useState();
+  const [variant, setVariant] = useState();
   const transition = useTransition();
   const navigate = useNavigate();
+  const isOutOfStock = !selectedVariant?.availableForSale;
 
   const paramsWithDefaults = (() => {
     const defaultParams = new URLSearchParams(currentSearchParams);
@@ -27,8 +29,7 @@ export default function ProductOptions({options, selectedVariant}) {
     }
     return defaultParams;
   })();
-  // Update the in-flight request data from the 'transition' (if available)
-  // to create an optimistic UI that selects a link before the request is completed
+
   const searchParams = transition.location
     ? new URLSearchParams(transition.location.search)
     : paramsWithDefaults;
@@ -51,7 +52,7 @@ export default function ProductOptions({options, selectedVariant}) {
                 )
               }
             >
-              <h6 className="dropdownText">{option.name}</h6>
+              <h6 className="dropdownText">{variant !== undefined ? variant : option.name}</h6>
               <img
                 src="/arrow.svg"
                 className="dropdown-arrow"
@@ -74,11 +75,13 @@ export default function ProductOptions({options, selectedVariant}) {
                       key={value}
                       onClick={() => {
                         navigate(`${pathname}?${linkParams.toString()}`);
+                        setVariant(value)
                         setDropDownClicked(undefined);
                       }}
                       style={{
                         backgroundColor: isSelected ? '#EFEFEF' : 'white',
-                        WebkitTextStroke: isSelected ? '2px black' : '0px black',
+                        WebkitTextStroke: isSelected ? isOutOfStock ? '2px red' : '2px black' : '0px black',
+                        color: isOutOfStock ? 'red' : 'black',
                       }}
                     >
                       {value}

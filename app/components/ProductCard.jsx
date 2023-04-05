@@ -40,7 +40,7 @@ export default function ProductCard({product, index}) {
           alt={product.title}
           className="prod-images"
         />
-        {/* <h6 style={{color: '#195A2E'}}>{product.title}</h6> */}
+        <h6 style={{color: '#195A2E'}}>{product.title}</h6>
         <div className="vending-text-div" style={{display: 'flex'}}>
           <h6 className="vending-text">{orientation[index]}</h6>
           <Money data={price} className="vending-price-text" />
