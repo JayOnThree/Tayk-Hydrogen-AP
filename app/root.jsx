@@ -8,7 +8,7 @@ import {
 import styles from './styles/app.css';
 import favicon from '../public/favicon.svg';
 import bootstrapCSS from 'bootstrap/dist/css/bootstrap.min.css';
-import {AnimatePresence} from 'framer-motion';
+import shareicon from '../public/BackgroundMusic.svg';
 import {defer} from '@shopify/remix-oxygen';
 import {Layout} from '~/components/Layout';
 import {CART_QUERY} from '~/queries/cart';
@@ -33,6 +33,12 @@ export const links = () => {
 export const meta = () => ({
   charset: 'utf-8',
   viewport: 'width=device-width,initial-scale=1',
+  title: "The Tay K Experience",
+  description: 'Connect and shop on the Tay K ',
+  'og:image': shareicon,
+  'og:image:type': 'image/png',
+  'og:image:width': '1024',
+  'og:image:height': '1024',
 });
 
 export async function loader({context, request}) {
@@ -66,10 +72,8 @@ export default function App() {
         <Links />
       </head>
       <body style={{background: 'black', overflow: 'hidden'}}>
-        <AnimatePresence mode="wait" initial={false}>
-          <Layout />
-          <Outlet />
-        </AnimatePresence>
+        <Layout />
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
       </body>

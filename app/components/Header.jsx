@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {Link, useLocation} from '@remix-run/react';
-import {createBrowserHistory} from 'history';
+// import {createBrowserHistory} from 'history';
 import {Container} from 'react-bootstrap';
 import {motion} from 'framer-motion';
 
@@ -36,7 +36,7 @@ export default function Header() {
         transition={{duration: 0.5}}
       >
         <a
-          // onClick={() => history.back()}
+          onClick={() => history.back()}
           className="circle-router"
         >
           <img alt="back" src="/back.svg" className="icon-router" />

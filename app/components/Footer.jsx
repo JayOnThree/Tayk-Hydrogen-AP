@@ -7,22 +7,22 @@ export default function Footer() {
       <ul className="mainMenu-ul-footer">
         <li className="mainMenu-li-footer">
           <a href='' style={{cursor: 'default', textDecoration: 'none'}}>
-          <h6 className="footer-text">© {year} Tay K | All rights reserved</h6>
+          <h6 className="footer-text">© {year} TAY K | ALL RIGHTS RESERVED</h6>
           </a>
         </li>
         <li className="mainMenu-li">
           <Link to='/policies/return-policy' style={{textDecoration: 'none'}}>
-            <h6 className="footer-text">Return Policy</h6>
+            <h6 className="footer-text">RETURN POLICY</h6>
           </Link>
         </li>
         <li className="mainMenu-li">
           <Link to="/policies/shipping-policy" style={{textDecoration: 'none'}}>
-            <h6 className="footer-text">Shipping Policy</h6>
+            <h6 className="footer-text">SHIPPING POLICY</h6>
           </Link>
         </li>
         <li className="mainMenu-li">
           <Link to="/policies/shipping-policy" style={{textDecoration: 'none'}}>
-            <h6 className="footer-text">Contact</h6>
+            <h6 className="footer-text">CONTACT</h6>
           </Link>
         </li>
       </ul>

@@ -175,7 +175,6 @@ function ShopUI({shopSelect}) {
 
 function PerspectiveCameraAmimated({posX, posY, posZ, rotX, rotY, rotZ}) {
   const camera = useRef();
-
   useFrame(() => {
     camera.current.rotation.x = THREE.MathUtils.lerp(
       camera.current.rotation.x,
@@ -214,7 +213,6 @@ function PerspectiveCameraAmimated({posX, posY, posZ, rotX, rotY, rotZ}) {
 export default function Scene({children, ...props}) {
   const mesh = useRef(null);
   const prodImages = props.products.nodes;
-
   const [posX, setPosX] = useState(-2);
   const [posY, setPosY] = useState(0.1);
   const [posZ, setPosZ] = useState(0.5);
@@ -228,7 +226,6 @@ export default function Scene({children, ...props}) {
   const [shopHovered, setShopHovered] = useState(false);
   const [mediaHovered, setMediaHovered] = useState(false);
   const [connectHovered, setConnectHovered] = useState(false);
-
   useEffect(() => {
     document.body.style.cursor = mediaHovered ? 'pointer' : 'auto';
   }, [mediaHovered]);
@@ -256,18 +253,18 @@ export default function Scene({children, ...props}) {
       setPosX(-1.39);
       setPosY(0.1);
       setPosZ(1.5);
-      setRotX(0.5);
+      setRotX(0.1);
       setRotY(3.5);
       setRotZ(0.1);
     }
 
     if (shopSelect) {
-      setPosX(-2.8);
+      setPosX(-2.55);
       setPosY(0.1);
       setPosZ(1);
-      setRotX(0.05);
+      setRotX(0);
       setRotY(1.45);
-      setRotZ(0.05);
+      setRotZ(0);
     }
 
     if (connectSelect) {
@@ -276,7 +273,7 @@ export default function Scene({children, ...props}) {
       setPosZ(-0.1);
       setRotX(-0.1);
       setRotY(-0.7);
-      setRotZ(0.2);
+      setRotZ(0.1);
     }
 
     if (!mediaSelect && !shopSelect && !connectSelect) {
