@@ -61,10 +61,7 @@ export default function Videos() {
           url.map((link, i) => {
             return (
               <div style={{marginTop: i === 0 ? '10vh' : '0vh'}} key={i}>
-                <VideoFrame
-                  url={link}
-                  style={{marginTop: i === 0 ? '10vh' : '0vh'}}
-                />
+                <VideoFrame url={link} />
               </div>
             );
           })}

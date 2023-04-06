@@ -4,7 +4,7 @@ import {createBrowserHistory} from 'history';
 import {Container} from 'react-bootstrap';
 import {motion} from 'framer-motion';
 
-export default function Header({blogPost}) {
+export default function Header() {
   const location = useLocation();
   // let history = createBrowserHistory();
   const [mobile, setMobile] = useState();
@@ -22,7 +22,6 @@ export default function Header({blogPost}) {
       setMobile(window.innerWidth < 600);
       setTablet(window.innerWidth < 900 && window.innerWidth > 600);
     }
-
     window.addEventListener('resize', handleResize);
   });
 

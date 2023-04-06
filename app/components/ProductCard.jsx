@@ -31,7 +31,6 @@ const orientation = [
 
 export default function ProductCard({product, index}) {
   const {price, compareAtPrice} = product.variants?.nodes[0] || {};
-
   return (
     <div className="Product">
       <Link to={`/products/${product.handle}`} style={{textDecoration: 'none'}}>

@@ -1,21 +1,20 @@
 import {useState} from 'react';
-import {
-  useLocation,
-  useSearchParams,
-  useTransition,
-} from '@remix-run/react';
+import {useLocation, useSearchParams, useTransition} from '@remix-run/react';
 import {useNavigate} from '@remix-run/react';
 
 // import Arrow from '../assets/arrow.svg'
 
-export default function ProductOptions({options, selectedVariant}) {
+export default function ProductOptions({
+  options,
+  selectedVariant,
+  sizeVariantsIndicator,
+}) {
   const {pathname} = useLocation();
   const [currentSearchParams] = useSearchParams();
   const [dropDownClicked, setDropDownClicked] = useState();
   const [variant, setVariant] = useState();
   const transition = useTransition();
   const navigate = useNavigate();
-  const isOutOfStock = !selectedVariant?.availableForSale;
 
   const paramsWithDefaults = (() => {
     const defaultParams = new URLSearchParams(currentSearchParams);
@@ -52,7 +51,9 @@ export default function ProductOptions({options, selectedVariant}) {
                 )
               }
             >
-              <h6 className="dropdownText">{variant !== undefined ? variant : option.name}</h6>
+              <h6 className="dropdownText">
+                {variant !== undefined ? `${option.name}: ${variant}` : option.name}
+              </h6>
               <img
                 src="/arrow.svg"
                 className="dropdown-arrow"
@@ -66,7 +67,7 @@ export default function ProductOptions({options, selectedVariant}) {
             </div>
             <div className="dropdown-content">
               {dropDownClicked === option.name &&
-                option.values.map((value) => {
+                option.values.map((value, i) => {
                   const linkParams = new URLSearchParams(searchParams);
                   const isSelected = currentOptionVal === value;
                   linkParams.set(option.name, value);
@@ -75,13 +76,19 @@ export default function ProductOptions({options, selectedVariant}) {
                       key={value}
                       onClick={() => {
                         navigate(`${pathname}?${linkParams.toString()}`);
-                        setVariant(value)
+                        setVariant(value);
                         setDropDownClicked(undefined);
                       }}
                       style={{
                         backgroundColor: isSelected ? '#EFEFEF' : 'white',
-                        WebkitTextStroke: isSelected ? isOutOfStock ? '2px red' : '2px black' : '0px black',
-                        color: isOutOfStock ? 'red' : 'black',
+                        WebkitTextStroke: isSelected
+                          ? sizeVariantsIndicator[i].availableForSale
+                            ? '2px black'
+                            : '2px #D8D8D8'
+                          : '0px black',
+                        color: sizeVariantsIndicator[i].availableForSale
+                          ? 'black'
+                          : '#D8D8D8',
                       }}
                     >
                       {value}

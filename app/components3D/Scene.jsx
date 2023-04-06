@@ -13,9 +13,9 @@ import {
   Loader,
 } from '@react-three/drei';
 import {useDrag} from '@use-gesture/react';
-import {useSpring} from '@react-spring/core';
+// import {useSpring} from '@react-spring/core';
 import {motion} from 'framer-motion';
-import {a} from '@react-spring/web';
+// import {a} from '@react-spring/web';
 
 import EnvImage from '../../public/glb/moonless_golf_2k.hdr';
 
@@ -25,6 +25,31 @@ import Connect from './Connect';
 import Court from './Court';
 
 extend({UnrealBloomPass});
+
+function EnterButton({shopSelect, connectSelect, mediaSelect}) {
+  const navigate = useNavigate();
+  return (
+    <button
+      className="enter-button-landing"
+      style={{
+        backgroundImage: 'url(/arrow2.svg)',
+        transform:
+          shopSelect || connectSelect || mediaSelect ? 'scale(1)' : 'scale(0)',
+      }}
+      onClick={() =>
+        navigate(
+          shopSelect
+            ? '/collections/shirts'
+            : mediaSelect
+            ? '/media'
+            : connectSelect && 'https://discord.com/',
+        )
+      }
+    >
+      <h3 className="enter-button-text">ENTER</h3>
+    </button>
+  );
+}
 
 function ConnectDiscordUI({connectSelect}) {
   return (
@@ -38,35 +63,26 @@ function ConnectDiscordUI({connectSelect}) {
           opacity: connectSelect ? 1 : 0,
         }}
       />
-      <img
-        src="/arrow2.svg"
-        alt="Join the Discord"
-        className="arrow-image"
-        style={{
-          transform: connectSelect ? 'translateY(0)' : 'translateY(1000px)',
-          opacity: connectSelect ? 1 : 0,
-        }}
-      />
     </>
   );
 }
 
 function MediaPhoneUI({mediaSelect}) {
-  const divStyle = {
-    zIndex: '10',
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    textAlign: 'center',
-    touchAction: 'none',
-    marginTop: '150px',
-    position: 'absolute',
-    marginLeft: '25px',
-  };
+  // const divStyle = {
+  //   zIndex: '10',
+  //   alignItems: 'center',
+  //   display: 'flex',
+  //   justifyContent: 'center',
+  //   textAlign: 'center',
+  //   touchAction: 'none',
+  //   marginTop: '150px',
+  //   position: 'absolute',
+  //   marginLeft: '25px',
+  // };
 
-  const [hovered, setHovered] = useState(false);
+  // const [hovered, setHovered] = useState(false);
   const locale = 'en';
-  const navgiate = useNavigate();
+  // const navgiate = useNavigate();
   const [today, setDate] = useState(new Date());
   const date =
     today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -75,32 +91,32 @@ function MediaPhoneUI({mediaSelect}) {
     hour12: true,
     minute: 'numeric',
   });
-  const [toggled, setToggled] = useState(false);
-  const [{x}, api] = useSpring(() => ({x: 0}));
-  const bindDrag = useDrag(
-    ({down, tap, movement: [mx]}) => {
-      if (!down && tap) {
-        api.start({x: 200});
-        setToggled(true);
-        return;
-      }
-      if (down) {
-        api.start({x: mx});
-      } else {
-        const isToggled = x._lastCallId > 30;
-        api.start({x: isToggled ? 200 : 0});
-        setToggled(isToggled);
-      }
-    },
-    {bounds: {left: 0, right: 200, top: 0, bottom: 0}},
-    {axis: 'x'},
-  );
+  // const [toggled, setToggled] = useState(false);
+  // const [{x}, api] = useSpring(() => ({x: 0}));
+  // const bindDrag = useDrag(
+  //   ({down, tap, movement: [mx]}) => {
+  //     if (!down && tap) {
+  //       api.start({x: 200});
+  //       setToggled(true);
+  //       return;
+  //     }
+  //     if (down) {
+  //       api.start({x: mx});
+  //     } else {
+  //       const isToggled = x._lastCallId > 30;
+  //       api.start({x: isToggled ? 200 : 0});
+  //       setToggled(isToggled);
+  //     }
+  //   },
+  //   {bounds: {left: 0, right: 200, top: 0, bottom: 0}},
+  //   {axis: 'x'},
+  // );
 
-  useEffect(() => {
-    if (toggled) {
-      navgiate('/media');
-    }
-  }, [toggled]);
+  // useEffect(() => {
+  //   if (toggled) {
+  //     navgiate('/media');
+  //   }
+  // }, [toggled]);
 
   return (
     <div
@@ -112,7 +128,7 @@ function MediaPhoneUI({mediaSelect}) {
     >
       <div
         className="phone-background"
-        style={{backgroundImage: 'url(/Background.jpg)'}}
+        // style={{backgroundImage: 'url(/Background.jpg)'}}
       >
         <div className="time-div">
           <h2 className="time-text">{time}</h2>
@@ -125,7 +141,7 @@ function MediaPhoneUI({mediaSelect}) {
             with me{' '}
           </h2>
         </div>
-        <div style={divStyle} alt="swipe Arrow">
+        {/* <div style={divStyle} alt="swipe Arrow">
           <div className="backgroundStyle">
             <a.div // Knob
               style={{backgroundImage: `url('/slideArrow.svg')`, x}}
@@ -136,9 +152,24 @@ function MediaPhoneUI({mediaSelect}) {
             ></a.div>
           </div>
           <h2 className="slide-media-text">Drag to Enter</h2>
-        </div>
+        </div> */}
       </div>
     </div>
+  );
+}
+
+function ShopUI({shopSelect}) {
+  return (
+    <>
+      <img
+        src="/shopEnter.png"
+        className="shop-enter-image"
+        style={{
+          transform: shopSelect ? 'translateY(0)' : 'translateY(1000px)',
+          opacity: shopSelect ? 1 : 0,
+        }}
+      />
+    </>
   );
 }
 
@@ -260,30 +291,44 @@ export default function Scene({children, ...props}) {
 
   return (
     <div>
-      <img
+      <button
+        className="exit-section-button"
         style={{
           transform:
             shopSelect || connectSelect || mediaSelect
               ? 'scale(1)'
               : 'scale(0)',
         }}
-        src="/close.svg"
-        className="close-img"
-        alt="exit"
-        onClick={() => {
-          setMediaSelect(false);
-          setShopSelect(false);
-          setConnectSelect(false);
-        }}
+      >
+        <img
+          src="/close.svg"
+          className="close-img"
+          alt="exit"
+          onClick={() => {
+            setMediaSelect(false);
+            setShopSelect(false);
+            setConnectSelect(false);
+          }}
+        />
+      </button>
+      <EnterButton
+        mediaSelect={mediaSelect}
+        connectSelect={connectSelect}
+        shopSelect={shopSelect}
       />
       <MediaPhoneUI mediaSelect={mediaSelect} />
       <ConnectDiscordUI connectSelect={connectSelect} />
+      <ShopUI shopSelect={shopSelect} />
       <Loader containerStyles={{background: 'black'}} />
       <div className="header-container-canvas">
         <motion.div
           className="header-div"
           initial={{width: '80%', marginLeft: '20%'}}
-          animate={{width: '100%', marginLeft: 0, y: !connectSelect && !shopSelect && !mediaSelect ? 0 : '-200px'}}
+          animate={{
+            width: '100%',
+            marginLeft: 0,
+            y: !connectSelect && !shopSelect && !mediaSelect ? 0 : '-200px',
+          }}
           exit={{width: '80%', marginLeft: '20%'}}
           transition={{duration: 0.3}}
         >

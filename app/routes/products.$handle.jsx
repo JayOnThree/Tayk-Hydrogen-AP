@@ -20,9 +20,7 @@ function ProductForm({variantId, selectedVariant}) {
   return (
     <div>
       {isOutOfStock ? (
-        <button className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
-          Sold Out
-        </button>
+        <button className="addtocart-button-soldout">Sold Out</button>
       ) : (
         <fetcher.Form action="/cart" method="post">
           <input type="hidden" name="cartAction" value={'ADD_TO_CART'} />
@@ -32,9 +30,7 @@ function ProductForm({variantId, selectedVariant}) {
             value={selectedLocale?.country ?? 'US'}
           />
           <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-          <button className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
-            Add to Bag
-          </button>
+          <button className="addtocart-button">Add to Bag</button>
         </fetcher.Form>
       )}
     </div>
@@ -73,13 +69,11 @@ export const loader = async ({params, context, request}) => {
 
 export default function ProductHandle() {
   const {product, selectedVariant, storeDomain} = useLoaderData();
-  // const orderable = selectedVariant?.availableForSale || false;
   const [imageIndex, setImageIndex] = useState(0);
   const [toggleDescription, setToggleDescription] = useState(false);
   const [toggleReturns, setToggleReturns] = useState(false);
-  // const [lastImage, setLastImage] = useState(3);
-  // const [firstImage, setFirstImage] = useState(0);
   const largeImage = product.media.nodes[imageIndex && imageIndex].image;
+  const sizeVariantsIndicator = product.variants;
   // const prodMediaLength = product.media.nodes.length;
 
   return (
@@ -150,12 +144,14 @@ export default function ProductHandle() {
             <ProductOptions
               options={product.options}
               selectedVariant={selectedVariant}
+              sizeVariantsIndicator={sizeVariantsIndicator.nodes}
             />
-            <ShopPayButton
+            {/* <ShopPayButton
               storeDomain={storeDomain}
               variantIds={[selectedVariant?.id]}
-              width={'400px'}
-            />
+              width={'100%'}
+            /> */}
+            {/* add to cart button */}
             <ProductForm
               variantId={selectedVariant?.id}
               selectedVariant={selectedVariant}
@@ -183,7 +179,7 @@ export default function ProductHandle() {
               ></div>
             )}
 
-            <h6
+            {/* <h6
               className="sub-title-prod"
               onClick={() => setToggleReturns(!toggleReturns)}
             >
@@ -206,7 +202,7 @@ export default function ProductHandle() {
                 nulla pariatur. Excepteur sint occaecat cupidatat non proident,
                 sunt in culpa qui officia deserunt mollit anim id est laborum.
               </div>
-            )}
+            )} */}
           </Col>
         </Row>
       </Container>
@@ -239,7 +235,7 @@ const PRODUCT_QUERY = `#graphql
       }
       options {
         name,
-        values
+        values,
       }
       selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions) {
         id
@@ -274,7 +270,7 @@ const PRODUCT_QUERY = `#graphql
           handle
         }
       }
-      variants(first: 1) {
+      variants(first: 10) {
         nodes {
           id
           title
