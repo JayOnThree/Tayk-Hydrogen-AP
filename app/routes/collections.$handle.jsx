@@ -184,9 +184,9 @@ export default function Collection() {
                 <h5 className="marque-text">{dialText}</h5>
               )}
             </div>
-            <div className="dialpad-parent-container">
+            <div className="dialpad-parent-container" style={{backgroundImage: `url(/panelBackground.svg)`}}>
               <div className="dialpad-div-container">
-                {Buttons.map((value, i) => {
+                {Buttons.map((value) => {
                   return (
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
                     <div

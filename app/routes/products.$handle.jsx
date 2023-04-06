@@ -108,7 +108,7 @@ export default function ProductHandle() {
           </Col>
           <Col
             className="product-images-div d-none d-md-none d-lg-block"
-            lg={6}
+            lg={5}
             style={{backgroundImage: `url(${largeImage.url})`}}
           ></Col>
           <Col
@@ -134,7 +134,11 @@ export default function ProductHandle() {
               );
             })}
           </Col>
-          <Col className="product-options-div" lg={3}>
+          <Col
+            className="product-options-div"
+            lg={4}
+            style={{backgroundImage: `url(/panelBackground.svg)`}}
+          >
             <h1 className="prod-title">{product.title}</h1>
             <Money
               withoutTrailingZeros

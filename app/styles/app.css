@@ -1071,6 +1071,9 @@ a:hover {
     margin-right: -10px;
     background: white;
     height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
 
@@ -1082,6 +1085,7 @@ a:hover {
     width: 60%;
     margin-left: 20%;
     margin-top: 30px;
+
     /* background-color: green; */
   }
 }
@@ -1117,6 +1121,9 @@ a:hover {
     margin-right: -10px;
     background: white;
     height: calc(100% - 100px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
 
@@ -1199,6 +1206,9 @@ a:hover {
   border: solid 5px #E8E8E8;
   overflow-y: scroll;
   height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .desktop-image-picker {
