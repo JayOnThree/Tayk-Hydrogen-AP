@@ -8,7 +8,7 @@ import {
 import styles from './styles/app.css';
 import favicon from '../public/favicon.svg';
 import bootstrapCSS from 'bootstrap/dist/css/bootstrap.min.css';
-import shareicon from '../public/BackgroundMusic.svg';
+import shareicon from '../public/shareimage.png';
 import {defer} from '@shopify/remix-oxygen';
 import {Layout} from '~/components/Layout';
 import {CART_QUERY} from '~/queries/cart';
@@ -34,7 +34,7 @@ export const meta = () => ({
   charset: 'utf-8',
   viewport: 'width=device-width,initial-scale=1',
   title: "The Tay K Experience",
-  description: 'Connect and shop on the Tay K ',
+  description: 'Connect and shop on the Tay K certified platform',
   'og:image': shareicon,
   'og:image:type': 'image/png',
   'og:image:width': '1024',
