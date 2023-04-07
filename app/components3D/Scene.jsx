@@ -287,8 +287,8 @@ export default function Scene({children, ...props}) {
   }, [mediaSelect, dragX, shopSelect, connectSelect]);
 
   return (
-    <div>
-      {/* <button
+    <>
+      <button
         className="exit-section-button"
         style={{
           transform:
@@ -410,7 +410,7 @@ export default function Scene({children, ...props}) {
             </ul>
           )}
         </motion.div>
-      </div> */}
+      </div>
       <Canvas {...props} style={{top: 0, left: 0, position: 'fixed'}}>
         {children}
         <Preload all />
@@ -459,7 +459,7 @@ export default function Scene({children, ...props}) {
                   }}
                 >
                   <Media />
-                  {/* {!mediaSelect && (
+                  {!mediaSelect && (
                     <Html position={[4, 0.5, 3]} color style={{width: '500px'}}>
                       <motion.h6
                         className="scene-title"
@@ -480,7 +480,7 @@ export default function Scene({children, ...props}) {
                         View everything Tay K
                       </motion.h6>
                     </Html>
-                  )} */}
+                  )}
                 </group>
                 <group
                   onPointerOver={() => setShopHovered(true)}
@@ -491,7 +491,7 @@ export default function Scene({children, ...props}) {
                   }}
                 >
                   <Vending prodImages={prodImages} />
-                  {/* {!shopSelect && (
+                  {!shopSelect && (
                     <Html
                       position={[0, 1, -1.5]}
                       color
@@ -516,7 +516,7 @@ export default function Scene({children, ...props}) {
                         Shop for Tay K merch
                       </motion.h6>
                     </Html>
-                  )} */}
+                  )}
                 </group>
                 <group>
                   <mesh
@@ -529,7 +529,7 @@ export default function Scene({children, ...props}) {
                     <meshPhongMaterial color="white" opacity={0} transparent />
                   </mesh>
                   <Connect />
-                  {/* {!connectSelect && (
+                  {!connectSelect && (
                     <Html
                       position={[3.7, 1, -3.5]}
                       color
@@ -554,7 +554,7 @@ export default function Scene({children, ...props}) {
                         Connect on Discord
                       </motion.h6>
                     </Html>
-                  )} */}
+                  )}
                 </group>
               </group>
             </group>
@@ -569,6 +569,6 @@ export default function Scene({children, ...props}) {
           </group>
         </Suspense>
       </Canvas>
-    </div>
+    </>
   );
 }
