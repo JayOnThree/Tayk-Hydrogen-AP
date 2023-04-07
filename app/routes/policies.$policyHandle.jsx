@@ -8,7 +8,12 @@ import Footer from '~/components/Footer';
 
 export async function loader({context}) {
   const {policies} = await context.storefront.query(POLICY_QUERIES);
-  return json({policies});
+  return json({
+    policies,
+    analytics: {
+      pageType: 'Policies',
+    },
+  });
 }
 
 export default function Policies() {
@@ -17,14 +22,7 @@ export default function Policies() {
 
   return (
     <Container fluid className="container-shop" style={{overflow: 'hidden'}}>
-      <Header
-        mediaHome={false}
-        blogPost={false}
-        productHome={true}
-        product={false}
-        landingPage={false}
-        dragX={{x: 0}}
-      />
+      <Header />
       <Row>
         <Col lg={{offset: 1, span: 10}} style={{padding: '20px'}}>
           <h1 className="policy-header-text">

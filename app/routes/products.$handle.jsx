@@ -10,6 +10,14 @@ import ProductOptions from '~/components/ProductOptions';
 import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 
+const seo = ({data}) => ({
+  title: data?.collection?.title,
+  description: data?.collection?.description,
+});
+export const handle = {
+  seo,
+};
+
 function ProductForm({variantId, selectedVariant}) {
   const [root] = useMatches();
   const selectedLocale = root?.data?.selectedLocale;
@@ -64,28 +72,24 @@ export const loader = async ({params, context, request}) => {
     product,
     selectedVariant,
     storeDomain: shop.primaryDomain.url,
+    analytics: {
+      pageType: `products/${handle}`,
+    }
   });
 };
 
 export default function ProductHandle() {
-  const {product, selectedVariant, storeDomain} = useLoaderData();
+  const {product, selectedVariant} = useLoaderData();
   const [imageIndex, setImageIndex] = useState(0);
   const [toggleDescription, setToggleDescription] = useState(false);
-  const [toggleReturns, setToggleReturns] = useState(false);
+  // const [toggleReturns, setToggleReturns] = useState(false);
   const largeImage = product.media.nodes[imageIndex && imageIndex].image;
   const sizeVariantsIndicator = product.variants;
   // const prodMediaLength = product.media.nodes.length;
 
   return (
     <>
-      <Header
-        mediaHome={false}
-        blogPost={false}
-        productHome={false}
-        product={true}
-        landingPage={false}
-        dragX={{x: 0}}
-      />
+      <Header />
       <Container fluid className="container-shop">
         <Row style={{height: '100%'}}>
           <Col

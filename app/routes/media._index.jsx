@@ -1,10 +1,19 @@
 import {Container, Col, Row} from 'react-bootstrap';
 import {Link} from '@remix-run/react';
 import {motion} from 'framer-motion';
+import {json} from 'react-router';
 
 import Toolbar from '../components/Toolbar';
 import Header from '../components/Header';
 import Footer from '~/components/Footer';
+
+export async function loader() {
+  return json({
+    analytics: {
+      pageType: 'media',
+    },
+  });
+}
 
 export default function Media() {
   const MotionContainer = motion(Container);

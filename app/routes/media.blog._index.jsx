@@ -8,7 +8,12 @@ import Footer from '~/components/Footer';
 
 export async function loader({context}) {
   const {articles} = await context.storefront.query(ARTICLES_QUERY);
-  return json({articles});
+  return json({
+    articles,
+    analytics: {
+      pageType: 'media/blog',
+    },
+  });
 }
 
 export default function Blog() {

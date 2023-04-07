@@ -1,8 +1,17 @@
 import {Container} from 'react-bootstrap';
+import {json} from '@shopify/remix-oxygen';
 
 import Header from '~/components/Header';
 import Toolbar from '../components/Toolbar';
 import Footer from '~/components/Footer';
+
+export async function loader() {
+  return json({
+    analytics: {
+      pageType: 'media/music',
+    },
+  });
+}
 
 const MusicFrame = ({url}) => {
   return (
@@ -32,16 +41,9 @@ export default function music() {
       style={{backgroundImage: `url('/BackgroundMusic.svg')`}}
     >
       <Toolbar />
-      <Header
-        mediaHome={false}
-        blogPost={false}
-        productHome={false}
-        product={false}
-        landingPage={false}
-        dragX={0}
-      />
+      <Header />
       <div className="music-div">
-      <h1 className="music-header d-none d-md-none d-lg-block">Music</h1>
+        <h1 className="music-header d-none d-md-none d-lg-block">Music</h1>
         {url &&
           url.map((link, i) => {
             return (

@@ -1,8 +1,17 @@
 import {Container} from 'react-bootstrap';
+import {json} from '@shopify/remix-oxygen';
 
 import Toolbar from '../components/Toolbar';
 import Header from '../components/Header';
 import Footer from '~/components/Footer';
+
+export async function loader() {
+  return json({
+    analytics: {
+      pageType: 'media/videos',
+    },
+  });
+}
 
 const VideoFrame = ({url}) => {
   return (

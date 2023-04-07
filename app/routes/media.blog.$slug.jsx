@@ -14,7 +14,12 @@ export async function loader({context, params}) {
     },
   });
 
-  return json({articles});
+  return json({
+    articles,
+    analytics: {
+      pageType: `media/blog/${searchParams}`,
+    },
+  });
 }
 
 export default function Post() {

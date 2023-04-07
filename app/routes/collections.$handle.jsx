@@ -3,7 +3,7 @@ import {useLoaderData, Link} from '@remix-run/react';
 import {json} from 'react-router';
 import {Container, Row, Col} from 'react-bootstrap';
 import {useNavigate} from '@remix-run/react';
-import {motion} from 'framer-motion';
+// import {motion} from 'framer-motion';
 
 import ProductCard from '~/components/ProductCard';
 import Header from '~/components/Header';
@@ -38,6 +38,9 @@ export async function loader({params, context, request}) {
   return json({
     collection,
     collections,
+    analytics: {
+      pageType: `collections/${handle}`,
+    },
   });
 }
 
@@ -49,7 +52,7 @@ export const meta = ({data}) => {
 };
 
 export default function Collection() {
-  const MotionContainer = motion(Container);
+  // const MotionContainer = motion(Container);
   const Orientation = [
     'A1',
     'A2',
@@ -119,13 +122,7 @@ export default function Collection() {
 
   return (
     <Container fluid className="container-shop" style={{overflow: 'hidden'}}>
-      <Header
-        mediaHome={false}
-        blogPost={false}
-        productHome={true}
-        product={false}
-        landingPage={false}
-      />
+      <Header />
       <Row style={{height: '100px'}}>
         <Col lg={8} className="category-div">
           {collections.nodes.map((collection) => {
