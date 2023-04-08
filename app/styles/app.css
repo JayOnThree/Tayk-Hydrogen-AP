@@ -1006,6 +1006,7 @@ a:hover {
 
 .addtocart-button:hover {
   background-color: #50EF6E;
+  border: 1px solid white;
   color: black;
   -webkit-text-stroke: 2px black;
 }
@@ -1425,6 +1426,11 @@ a:hover {
     -webkit-text-stroke: 3px black;
   }
 
+  .cart-close:hover {
+    color: white;
+    -webkit-text-stroke: 3px white;
+  }
+
   .cart-container {
     display: flex;
     margin-top: 50px;
@@ -1437,7 +1443,7 @@ a:hover {
 
   .cart-header-text {
     font-weight: 700;
-    font-family: "subway-berlin-sc", sans-serif;
+    font-family: sans-serif;
     -webkit-text-stroke: 2px black;
   }
 
@@ -1478,10 +1484,14 @@ a:hover {
     border: none;
     height: 47px;
     -webkit-text-stroke: 2px white;
-
-    display: flex;
     align-items: stretch;
     justify-content: space-between;
+    border: 1px solid white;
+  }
+
+  .checkout-button:hover {
+    background: #50EF6E;
+    border: 1px solid white;
   }
 
   .cart-text {
@@ -1489,6 +1499,10 @@ a:hover {
     display: block;
     list-style-type: none;
     text-align: center;
+  }
+
+  .cart-text:hover {
+    color: black;
   }
   
   /* LINE ITEMS

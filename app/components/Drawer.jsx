@@ -15,7 +15,7 @@ function Drawer({open, onClose, children}) {
           x
         </button>
         <header className="Cart__container">
-          <h2 className="cart-header-text">Your cart</h2>
+          <h2 className="cart-header-text">Cart</h2>
           {children}
         </header>
       </div>

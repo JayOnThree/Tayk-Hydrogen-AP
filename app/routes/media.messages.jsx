@@ -21,14 +21,7 @@ export default function Messages() {
       className="screen-container"
       style={{backgroundImage: `url('/BackgroundBlog.svg')`}}
     >
-      <Header
-        mediaHome={false}
-        blogPost={false}
-        productHome={false}
-        product={false}
-        landingPage={false}
-        dragX={0}
-      />
+      <Header/>
       <Toolbar />
       <h1 className="music-header d-none d-md-none d-lg-block">Messages</h1>
       <Row className="row-message-container">

@@ -29,7 +29,7 @@ function CartHeader({openDrawer}) {
   );
 }
 
-export function Layout({children, title}) {
+export function Layout({children}) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const fetchers = useFetchers();
   const [root] = useMatches();

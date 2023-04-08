@@ -11,26 +11,35 @@ import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 
 const seo = ({data}) => ({
-  title: data?.collection?.title,
-  description: data?.collection?.description,
+  title: data?.product?.title,
+  description: data?.product?.description,
 });
 export const handle = {
   seo,
 };
 
-function ProductForm({variantId, selectedVariant}) {
+function ProductForm({variantId, selectedVariant, product}) {
   const [root] = useMatches();
   const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
   const lines = [{merchandiseId: variantId, quantity: 1}];
   const isOutOfStock = !selectedVariant?.availableForSale;
+  const analytics = {
+    event: 'addToCart',
+    // products: [product],
+  };
 
   return (
-    <div>
+    <>
       {isOutOfStock ? (
         <button className="addtocart-button-soldout">Sold Out</button>
       ) : (
         <fetcher.Form action="/cart" method="post">
+          <input
+            type="hidden"
+            name="analytics"
+            value={JSON.stringify(analytics)}
+          />
           <input type="hidden" name="cartAction" value={'ADD_TO_CART'} />
           <input
             type="hidden"
@@ -41,7 +50,7 @@ function ProductForm({variantId, selectedVariant}) {
           <button className="addtocart-button">Add to Bag</button>
         </fetcher.Form>
       )}
-    </div>
+    </>
   );
 }
 
@@ -74,7 +83,7 @@ export const loader = async ({params, context, request}) => {
     storeDomain: shop.primaryDomain.url,
     analytics: {
       pageType: `products/${handle}`,
-    }
+    },
   });
 };
 
@@ -159,10 +168,10 @@ export default function ProductHandle() {
               variantIds={[selectedVariant?.id]}
               width={'100%'}
             /> */}
-            {/* add to cart button */}
             <ProductForm
               variantId={selectedVariant?.id}
               selectedVariant={selectedVariant}
+              // product={product}
             />
             <h6
               style={{marginTop: '5vh'}}
@@ -314,136 +323,3 @@ const PRODUCT_QUERY = `#graphql
     }
   }
 `;
-
-{
-  /* <Row style={{width: '100%', paddingTop: '3vh'}}>
-        <Col className="g-0 d-md-none d-none d-lg-block" lg={1}>
-          <div style={{width: '100%', paddingLeft: '10px'}}>
-            {product.media.nodes.map((product, i) => {
-              return (
-                <div key={i}>
-                  {product.image !== undefined &&
-                    i <= lastImage &&
-                    i >= firstImage && (
-                      <Image
-                        data={product.image}
-                        className="desktop-image-picker"
-                        onClick={() => setImageIndex(i)}
-                      />
-                    )}
-                </div>
-              );
-            })}
-            <div
-              className="image-picker-div"
-              onClick={() => {
-                setFirstImage(
-                  firstImage < prodMediaLength - 4
-                    ? firstImage + 1
-                    : prodMediaLength - 4,
-                    setLastImage(lastImage < prodMediaLength - 1 ? lastImage + 1 : lastImage)
-                  )}}
-                >
-                  <img src={'/arrow.svg'} className="arrow-image" />
-            </div>
-            <div
-              className="image-picker-div"
-              onClick={() => {
-                setFirstImage(firstImage > 0 ? firstImage - 1 : 0);
-                setLastImage(
-                  lastImage < prodMediaLength && firstImage > 0
-                    ? lastImage - 1
-                    : lastImage,
-                )
-                  }}
-            >
-              <img
-                src={'/arrow'}
-                className="arrow-image"
-                style={{transform: 'rotate(180deg)'}}
-              />
-            </div>
-          </div>
-        </Col>
-
-        <Col lg={7} className="d-md-none d-none d-lg-block">
-          <div className="prod-main-image">
-              <Image
-                data={largeImage}
-                style={{ width: "auto", height: "100%" }}
-              />
-            </div>
-          </Col>
-
-          <Col 
-            md={12} sm={12} xs={12} 
-            className='d-block d-lg-none' 
-            style={{ width: "100%", textAlign: "center", marginLeft: "15px" }}
-          >
-              <Image
-                data={largeImage}
-                style={{ width: "100%", height: "auto", border: "1px solid black" }}
-              />
-          </Col>
-          <Col
-            md={12} sm={12} xs={12} 
-            className=' d-block d-lg-none' 
-            style={{ height: "15vh", marginLeft: "15px", width: "100%", marginTop: "10px", display: "table" }}
-          >
-              {product.media.nodes.map((product, i) => {
-                  return (
-                    <div key={i} style={{ height: "100%", width: "25%", float: "left" }}>
-                      {product.image !== undefined && i < 4 &&
-                        <div
-                          key={i}
-                          style={{ backgroundImage: `url(${product.image.url})` }}
-                          className="mobile-image-picker"
-                          onClick={() => setImageIndex(i)}
-                        >
-                        </div>
-                      }
-                    </div>
-                  )
-                })}
-          </Col>
-
-          <Col lg={4} style={{ marginTop: "10px" }}>
-            <h1 className='prod-title'>{product.title}</h1>
-            <Money
-              withoutTrailingZeros
-              data={selectedVariant.price}
-              style={{ fontSize: "15pt", fontWeight: "400", marginBottom: "10px" }}
-            />
-            <div className='info-box-div'>
-                <h6 className='info-box-text'>seller: <span style={{ color: "green" }}>blade(1734)</span></h6>
-                <h6 className='info-box-text'>ships from: Los Angeles</h6>
-                <h6 className='info-box-text'>ships to: Worldwide</h6>
-            </div>
-            <ProductOptions options={product.options} selectedVariant={selectedVariant} />
-
-          <div style={{width: '100%', marginTop: '2vh'}}>
-            <ProductForm variantId={selectedVariant?.id} />
-          </div>
-            <h6 style={{ marginTop: "5vh" }} className='sub-title-prod' onClick={() => setToggleDescription(!toggleDescription)}>
-              Description <img src={'/arrow.svg'} className="arrow-image" style={{ transform: toggleDescription ? "rotate(-180deg)" : "rotate(0)" }} />
-            </h6>
-            {toggleDescription &&
-              <div
-                dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-              ></div>
-            }
-
-            <h6 className='sub-title-prod' onClick={() => setToggleReturns(!toggleReturns)}>
-              Returns & Exchanges <img src={'/arrow.svg'} className="arrow-image" style={{ transform: toggleReturns ? "rotate(-180deg)" : "rotate(0)" }} />
-            </h6>
-            {toggleReturns &&
-              <div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </div>
-            }
-          </Col>
-        </Row>
-        <Row style={{ height: "10vh", padding: "50px 10px 10px 10px" }}>
-          <h6>You may also like:</h6>
-        </Row> */
-}

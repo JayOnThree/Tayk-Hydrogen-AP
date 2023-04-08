@@ -12,11 +12,11 @@ import styles from './styles/app.css';
 import favicon from '../public/favicon.svg';
 import bootstrapCSS from 'bootstrap/dist/css/bootstrap.min.css';
 import shareicon from '../public/shareimage.png';
-import {defer} from '@shopify/remix-oxygen';
+import {defer, json} from '@shopify/remix-oxygen';
 import {Layout} from '~/components/Layout';
 import {CART_QUERY} from '~/queries/cart';
 import {ShopifySalesChannel} from '@shopify/hydrogen';
-import {useAnalyticsFromLoaders} from '~/lib/utils';
+import {useAnalyticsFromLoaders, useAnalyticsFromActions} from '~/lib/utils';
 
 export const links = () => {
   return [
@@ -47,11 +47,7 @@ export const meta = () => ({
 });
 
 export async function loader({context, request}) {
-  // const cartId = await context.session.get('cartId');
-  const [cartId] = await Promise.all([
-    context.session.get('customerAccessToken'),
-    context.session.get('cartId'),
-  ]);
+  const cartId = await context.session.get('cartId');
 
   return defer({
     selectedLocale: context.storefront.i18n,
@@ -68,6 +64,11 @@ export default function App() {
   const data = useLoaderData();
   const location = useLocation();
   const pageAnalytics = useAnalyticsFromLoaders();
+  const analyticsFromActions = useAnalyticsFromActions();
+
+  if (analyticsFromActions) {
+    console.log(analyticsFromActions, 'analytics form');
+  }
 
   useEffect(() => {
     console.log(pageAnalytics);
@@ -122,4 +123,14 @@ async function getCart({storefront}, cartId) {
     cache: storefront.CacheNone(),
   });
   return cart;
+}
+
+export async function action({context}) {
+  const {session} = context;
+  const cartId = await session.get('cartId');
+  return json({
+    analytics: {
+      cartId,
+    },
+  });
 }

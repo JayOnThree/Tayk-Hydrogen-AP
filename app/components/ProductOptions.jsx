@@ -12,6 +12,7 @@ export default function ProductOptions({
   const {pathname} = useLocation();
   const [currentSearchParams] = useSearchParams();
   const [dropDownClicked, setDropDownClicked] = useState();
+  const [hovered, setHovered] = useState(false);
   const [variant, setVariant] = useState();
   const transition = useTransition();
   const navigate = useNavigate();
@@ -79,8 +80,10 @@ export default function ProductOptions({
                         setVariant(value);
                         setDropDownClicked(undefined);
                       }}
+                      onPointerOver={() => setHovered(i)}
+                      onPointerOut={() => sethovered(false)}
                       style={{
-                        backgroundColor: isSelected ? '#EFEFEF' : 'white',
+                        backgroundColor: isSelected ? '#EFEFEF' : i === hovered ? '#EFEFEF' : 'white',
                         WebkitTextStroke: isSelected
                           ? sizeVariantsIndicator[i].availableForSale
                             ? '2px black'

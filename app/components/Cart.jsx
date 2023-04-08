@@ -1,4 +1,5 @@
 import {Link, useFetcher} from '@remix-run/react';
+// import {json} from '@shopify/remix-oxygen';
 import {flattenConnection, Image, Money} from '@shopify/hydrogen-react';
 
 export function CartSummary({cost}) {
@@ -24,7 +25,9 @@ export function CartActions({checkoutUrl}) {
   if (!checkoutUrl) return null;
   return (
     <div className="checkout-button">
-      <a className="cart-text" href={checkoutUrl}>Continue to Checkout</a>
+      <a className="cart-text" href={checkoutUrl}>
+        Continue to Checkout
+      </a>
     </div>
   );
 }
