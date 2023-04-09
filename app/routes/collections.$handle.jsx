@@ -3,6 +3,7 @@ import {useLoaderData, Link} from '@remix-run/react';
 import {json} from 'react-router';
 import {Container, Row, Col} from 'react-bootstrap';
 import {useNavigate} from '@remix-run/react';
+import {AnalyticsPageType} from '@shopify/hydrogen';
 // import {motion} from 'framer-motion';
 
 import ProductCard from '~/components/ProductCard';
@@ -39,7 +40,9 @@ export async function loader({params, context, request}) {
     collection,
     collections,
     analytics: {
-      pageType: `collections/${handle}`,
+      // pageType: `collections/${handle}`,
+      pageType: AnalyticsPageType.collection,
+      collections: [collections],
     },
   });
 }

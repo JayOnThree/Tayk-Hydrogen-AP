@@ -415,37 +415,37 @@ export default function Scene({children, ...props}) {
         {children}
         <Preload all />
         <fog attach="fog" args={['black', 1, 6]} />
-        <pointLight position={[40, 40, 40]} />
-        <BakeShadows />
-        <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
-        <directionalLight
-          intensity={0.3}
-          color="#F4EF8E"
-          position={[0, 100, 0]}
-          castShadow
-          shadow-mapSize-height={512}
-          shadow-mapSize-width={512}
-        />
-        <directionalLight
-          intensity={0.5}
-          color="blue"
-          position={[200, 50, 500]}
-          castShadow
-          shadow-mapSize-height={512}
-          shadow-mapSize-width={512}
-        />
-        <directionalLight
-          intensity={1}
-          color="red"
-          position={[-8, 10, -20]}
-          castShadow
-          shadow-mapSize-height={512}
-          shadow-mapSize-width={512}
-        />
         <Effects disableGamma>
           <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
         </Effects>
         <Suspense fallback={null}>
+          <pointLight position={[40, 40, 40]} />
+          <BakeShadows />
+          <directionalLight
+            intensity={0.3}
+            color="#F4EF8E"
+            position={[0, 100, 0]}
+            castShadow
+            shadow-mapSize-height={512}
+            shadow-mapSize-width={512}
+          />
+          <directionalLight
+            intensity={0.5}
+            color="blue"
+            position={[200, 50, 500]}
+            castShadow
+            shadow-mapSize-height={512}
+            shadow-mapSize-width={512}
+          />
+          <directionalLight
+            intensity={1}
+            color="red"
+            position={[-8, 10, -20]}
+            castShadow
+            shadow-mapSize-height={512}
+            shadow-mapSize-width={512}
+          />
+          <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
           <group ref={mesh} {...props} {...bind()}>
             <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
               <group dispose={null} scale={0.5}>

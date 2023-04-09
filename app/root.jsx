@@ -7,6 +7,14 @@ import {
   useLoaderData,
   useLocation,
 } from '@remix-run/react';
+import {
+  AnalyticsEventName,
+  getClientBrowserParameters,
+  sendShopifyAnalytics,
+  ShopifySalesChannel,
+  useShopifyCookies,
+  Seo,
+} from '@shopify/hydrogen';
 import {useEffect} from 'react';
 import styles from './styles/app.css';
 import favicon from '../public/favicon.svg';
@@ -15,7 +23,6 @@ import shareicon from '../public/shareimage.png';
 import {defer, json} from '@shopify/remix-oxygen';
 import {Layout} from '~/components/Layout';
 import {CART_QUERY} from '~/queries/cart';
-import {ShopifySalesChannel} from '@shopify/hydrogen';
 import {useAnalyticsFromLoaders, useAnalyticsFromActions} from '~/lib/utils';
 
 export const links = () => {
@@ -46,6 +53,15 @@ export const meta = () => ({
   'og:image:height': '1024',
 });
 
+export const handle = {
+  seo: {
+    title: 'Snowdevil',
+    titleTemplate: '%s - A custom Hydrogen storefront',
+    description:
+      'Hydrogen is a React-based framework for building headless storefronts on Shopify.',
+  },
+};
+
 export async function loader({context, request}) {
   const cartId = await context.session.get('cartId');
 
@@ -65,20 +81,50 @@ export default function App() {
   const location = useLocation();
   const pageAnalytics = useAnalyticsFromLoaders();
   const analyticsFromActions = useAnalyticsFromActions();
+  useShopifyCookies({hasUserConsent: true});
 
-  if (analyticsFromActions) {
-    console.log(analyticsFromActions, 'analytics form');
-  }
+  // if (analyticsFromActions) {
+  //   console.log(analyticsFromActions, 'analytics form');
+  // }
+
+  // useEffect(() => {
+  //   console.log(pageAnalytics);
+  // }, [location]);
 
   useEffect(() => {
-    console.log(pageAnalytics);
+    const payload = {
+      ...getClientBrowserParameters(),
+      ...pageAnalytics,
+      hasUserConsent,
+      shopifySalesChannel: ShopifySalesChannel.hydrogen,
+    };
+    sendShopifyAnalytics({
+      eventName: AnalyticsEventName.PAGE_VIEW,
+      payload,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
+
+  if (analyticsFromActions.event === 'addToCart') {
+    // Triggers when a successful add to cart event occurres
+    const payload = {
+      ...getClientBrowserParameters(),
+      ...pageAnalytics,
+      shopifySalesChannel: ShopifySalesChannel.hydrogen,
+      cartId: analyticsFromActions.cartId,
+    };
+    sendShopifyAnalytics({
+      eventName: AnalyticsEventName.ADD_TO_CART,
+      payload,
+    });
+  }
 
   return (
     <html lang="en">
       <head>
         <Meta />
         <Links />
+        <Seo />
       </head>
       <body style={{background: 'black', overflow: 'hidden'}}>
         <Layout />
