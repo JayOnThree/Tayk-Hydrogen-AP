@@ -55,7 +55,7 @@ export const meta = () => ({
 export const handle = {
   seo: {
     title: 'Tay K Worldwide',
-    titleTemplate: '%s - A certified experience',
+    titleTemplate: '%s - A Tay K certified experience',
     description: 'Connect and shop on the Tay K certified experience',
   },
 };
