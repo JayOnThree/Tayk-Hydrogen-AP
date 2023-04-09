@@ -45,7 +45,6 @@ export const links = () => {
 export const meta = () => ({
   charset: 'utf-8',
   viewport: 'width=device-width,initial-scale=1',
-  title: 'The Tay K Experience',
   description: 'Connect and shop on the Tay K certified platform',
   'og:image': shareicon,
   'og:image:type': 'image/png',
@@ -55,10 +54,9 @@ export const meta = () => ({
 
 export const handle = {
   seo: {
-    title: 'Snowdevil',
-    titleTemplate: '%s - A custom Hydrogen storefront',
-    description:
-      'Hydrogen is a React-based framework for building headless storefronts on Shopify.',
+    title: 'Tay K Worldwide',
+    titleTemplate: '%s - A certified experience',
+    description: 'Connect and shop on the Tay K certified experience',
   },
 };
 
@@ -81,7 +79,8 @@ export default function App() {
   const location = useLocation();
   const pageAnalytics = useAnalyticsFromLoaders();
   const analyticsFromActions = useAnalyticsFromActions();
-  useShopifyCookies({hasUserConsent: true});
+  const hasUserConsent = true;
+  useShopifyCookies({hasUserConsent});
 
   // if (analyticsFromActions) {
   //   console.log(analyticsFromActions, 'analytics form');
@@ -105,19 +104,18 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
-  if (analyticsFromActions.event === 'addToCart') {
-    // Triggers when a successful add to cart event occurres
-    const payload = {
-      ...getClientBrowserParameters(),
-      ...pageAnalytics,
-      shopifySalesChannel: ShopifySalesChannel.hydrogen,
-      cartId: analyticsFromActions.cartId,
-    };
-    sendShopifyAnalytics({
-      eventName: AnalyticsEventName.ADD_TO_CART,
-      payload,
-    });
-  }
+  // if (analyticsFromActions.event === 'addToCart') {
+  //   const payload = {
+  //     ...getClientBrowserParameters(),
+  //     ...pageAnalytics,
+  //     shopifySalesChannel: ShopifySalesChannel.hydrogen,
+  //     cartId: analyticsFromActions.cartId,
+  //   };
+  //   sendShopifyAnalytics({
+  //     eventName: AnalyticsEventName.ADD_TO_CART,
+  //     payload,
+  //   });
+  // }
 
   return (
     <html lang="en">
