@@ -18,7 +18,7 @@ export const handle = {
   seo,
 };
 
-function ProductForm({variantId, selectedVariant, product}) {
+function ProductForm({variantId, selectedVariant}) {
   const [root] = useMatches();
   const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
