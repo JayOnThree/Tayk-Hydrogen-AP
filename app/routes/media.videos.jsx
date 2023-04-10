@@ -13,6 +13,14 @@ export async function loader() {
   });
 }
 
+const seo = () => ({
+  title: 'Videos',
+  description: 'View his videos here',
+});
+export const handle = {
+  seo,
+};
+
 const VideoFrame = ({url}) => {
   return (
     <>

@@ -226,6 +226,8 @@ export default function Scene({children, ...props}) {
   const [shopHovered, setShopHovered] = useState(false);
   const [mediaHovered, setMediaHovered] = useState(false);
   const [connectHovered, setConnectHovered] = useState(false);
+  const [loaderState, setLoader] = useState(false);
+
   useEffect(() => {
     document.body.style.cursor = mediaHovered ? 'pointer' : 'auto';
   }, [mediaHovered]);
@@ -316,7 +318,7 @@ export default function Scene({children, ...props}) {
       <MediaPhoneUI mediaSelect={mediaSelect} />
       <ConnectDiscordUI connectSelect={connectSelect} />
       <ShopUI shopSelect={shopSelect} />
-      <Loader containerStyles={{background: 'black'}} />
+      {loaderState & (
       <div className="header-container-canvas">
         <motion.div
           className="header-div"
@@ -411,6 +413,7 @@ export default function Scene({children, ...props}) {
           )}
         </motion.div>
       </div>
+      )}
       <Canvas {...props} style={{top: 0, left: 0, position: 'fixed'}}>
         {children}
         <Preload all />
@@ -569,6 +572,13 @@ export default function Scene({children, ...props}) {
           </group>
         </Suspense>
       </Canvas>
+      <Loader
+        containerStyles={{background: 'black'}}
+        initialState={(active) => setLoader(active)}
+        dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`}
+        dataStyles={{fontSize: '50pt', fontFamily: 'sans-serif', WebkitTextStroke: '8px white'}}
+        barStyles={{background: 'red'}}
+      />
     </>
   );
 }

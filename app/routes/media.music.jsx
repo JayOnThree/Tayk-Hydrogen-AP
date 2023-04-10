@@ -13,6 +13,14 @@ export async function loader() {
   });
 }
 
+const seo = () => ({
+  title: 'Music',
+  description: 'Listen to his music here',
+});
+export const handle = {
+  seo,
+};
+
 const MusicFrame = ({url}) => {
   return (
     // eslint-disable-next-line jsx-a11y/iframe-has-title

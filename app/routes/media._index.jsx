@@ -7,6 +7,14 @@ import Toolbar from '../components/Toolbar';
 import Header from '../components/Header';
 import Footer from '~/components/Footer';
 
+const seo = () => ({
+  title: 'Media',
+  description: 'Connect with Tay K',
+});
+export const handle = {
+  seo,
+};
+
 export async function loader() {
   return json({
     analytics: {

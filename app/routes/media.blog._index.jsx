@@ -6,6 +6,14 @@ import Toolbar from '../components/Toolbar';
 import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 
+const seo = () => ({
+  title: 'Blog Posts',
+  description: 'Pick a blog post',
+});
+export const handle = {
+  seo,
+};
+
 export async function loader({context}) {
   const {articles} = await context.storefront.query(ARTICLES_QUERY);
   return json({

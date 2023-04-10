@@ -22,9 +22,17 @@ export async function loader({context, params}) {
   });
 }
 
+const seo = ({data}) => ({
+  title: data?.articles?.nodes[0].title,
+  description: data?.articles?.nodes[0].excerpt,
+});
+export const handle = {
+  seo,
+};
+
 export default function Post() {
   const {articles} = useLoaderData();
-  const article = articles && articles.nodes[0];
+  const article = articles?.nodes[0];
   return (
     <Container
       fluid
@@ -49,7 +57,11 @@ export default function Post() {
           textAlign: 'left',
         }}
       >
-        <Col lg={{offset: 1, span: 10}} md={{offset: 1, span: 10}} style={{marginBottom: '50px', marginTop: '60px'}}>
+        <Col
+          lg={{offset: 1, span: 10}}
+          md={{offset: 1, span: 10}}
+          style={{marginBottom: '50px', marginTop: '60px'}}
+        >
           <div
             className="blogpost-header-img"
             style={{backgroundImage: `url(${article.image.url})`}}
@@ -60,44 +72,6 @@ export default function Post() {
             <h3 className="blogPost-body">{article.content}</h3>
           </div>
         </Col>
-        {/* <Col lg={3} md={4} className="d-none d-sm-none d-md-block d-lg-block" style={{marginTop: '60px'}}>
-          <div
-            className="related-post-container"
-            style={{marginBottom: '20px', lineHeight: '1'}}
-          >
-            <h3 className="relatedPosts-text">Related Posts</h3>
-            <div className="related-post-div">
-              <div
-                className="img-div"
-                style={{
-                  borderRadius: '25px 25px 0px 0px',
-                  backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/3/36/Hayden_Bridge.jpg')`,
-                }}
-              ></div>
-              <div style={{padding: '10px'}}>
-                <h6 className="header-blogpost-thumb">Lorem ipsum</h6>
-                <h6 className="subtitle-blogpost-thumb">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                </h6>
-              </div>
-            </div>
-            <div className="related-post-div">
-              <div
-                className="img-div"
-                style={{
-                  borderRadius: '25px 25px 0px 0px',
-                  backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/3/36/Hayden_Bridge.jpg')`,
-                }}
-              ></div>
-              <div style={{padding: '10px'}}>
-                <h6 className="header-blogpost-thumb">Lorem ipsum</h6>
-                <h6 className="subtitle-blogpost-thumb">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                </h6>
-              </div>
-            </div>
-          </div>
-        </Col> */}
       </Row>
       <Footer />
     </Container>

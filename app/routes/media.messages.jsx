@@ -14,6 +14,14 @@ export async function loader() {
   });
 }
 
+const seo = () => ({
+  title: 'Messages',
+  description: 'Shoot Tay K a message',
+});
+export const handle = {
+  seo,
+};
+
 export default function Messages() {
   return (
     <Container
