@@ -475,8 +475,8 @@ export default function Scene({children, ...props}) {
         containerStyles={{background: 'black'}}
         // initialState={(loaded) => setLoader(loaded)}
         dataInterpolation={(p) => {
-          `Loading ${p.toFixed(0)}%`;
           p === 100 && setLoader(true);
+          `Loading ${p.toFixed(0)}%`;
         }}
         dataStyles={{
           fontSize: 'clamp(20pt, 3vw, 40pt)',
