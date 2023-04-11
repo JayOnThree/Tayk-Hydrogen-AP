@@ -191,6 +191,10 @@ body {
   height: 90%;
 }
 
+.empty-cart-text {
+  font-family: "subway-berlin-sc", sans-serif;
+}
+
 .items-text {
   background: red;
   color: white;
@@ -1487,6 +1491,7 @@ a:hover {
     align-items: stretch;
     justify-content: space-between;
     border: 1px solid white;
+    cursor: pointer;
   }
 
   .checkout-button:hover {
@@ -1635,7 +1640,7 @@ a:hover {
     font-weight: 800;
     font-family: 'bpdotsunicasesquarebold';
     color: red;
-    opacity: 0.8;
+    opacity: 0.95;
     text-shadow:1px 1px 10px #ff0000, 1px 1px 10px #ff0000;
   }
 
@@ -1647,7 +1652,7 @@ a:hover {
     transform: rotate(10deg);
     transition: opacity 1s, transform 0.5s;
     transition-timing-function: ease;
-    top: 40vh;
+    top: 37vh;
     left: 0;
     right: 0;
     bottom: 0;

@@ -3,7 +3,6 @@ import {useLoaderData} from '@remix-run/react';
 import {json} from 'react-router';
 
 import Canvas from '~/components3D/Scene';
-import Footer from '~/components/Footer';
 
 export async function loader({context}) {
   const {products} = await context.storefront.query(PRODUCTS_QUERY);
@@ -19,7 +18,6 @@ export default function index() {
         fallback={null}
         children={() => <Canvas products={products} />}
       />
-      <Footer />
     </div>
   );
 }

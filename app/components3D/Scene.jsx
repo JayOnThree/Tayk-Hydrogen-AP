@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {Suspense, useRef, useState, useEffect} from 'react';
-import {Canvas, extend, useFrame} from '@react-three/fiber';
+import {Suspense, useRef, useState, useEffect, useTransition} from 'react';
+import {Canvas, extend, useFrame, useThree} from '@react-three/fiber';
 import {UnrealBloomPass} from 'three-stdlib';
 import {useNavigate} from '@remix-run/react';
 import {
@@ -11,11 +11,10 @@ import {
   Effects,
   PerspectiveCamera,
   Loader,
+  PerformanceMonitor,
 } from '@react-three/drei';
 import {useDrag} from '@use-gesture/react';
-// import {useSpring} from '@react-spring/core';
 import {motion} from 'framer-motion';
-// import {a} from '@react-spring/web';
 
 import EnvImage from '../../public/glb/moonless_golf_2k.hdr';
 
@@ -23,6 +22,8 @@ import Vending from './Vending';
 import Media from './Media';
 import Connect from './Connect';
 import Court from './Court';
+import Footer from '~/components/Footer';
+import {SceneHeader, useSceneHeader} from '~/components/SceneHeader';
 
 extend({UnrealBloomPass});
 
@@ -112,8 +113,8 @@ function ShopUI({shopSelect}) {
         opacity: shopSelect ? 1 : 0,
       }}
     >
-      <marquee className="marque-text-home" scrollAmount="12">
-        SHOP FOR MERCH HERE
+      <marquee className="marque-text-home" scrollamount="12">
+        BUY MERCH HERE
       </marquee>
     </div>
   );
@@ -166,13 +167,24 @@ export default function Scene({children, ...props}) {
   const [rotY, setRotY] = useState(1);
   const [rotZ, setRotZ] = useState(0);
   const [dragX, setDragX] = useState({x: 0});
-  const [shopSelect, setShopSelect] = useState(false);
-  const [mediaSelect, setMediaSelect] = useState(false);
-  const [connectSelect, setConnectSelect] = useState(false);
+  const [dpr, setDpr] = useState(1.5);
+  const {
+    shopSelect,
+    mediaSelect,
+    connectSelect,
+    shopFalse,
+    shopTrue,
+    mediaFalse,
+    mediaTrue,
+    connectFalse,
+    connectTrue,
+  } = useSceneHeader();
   const [shopHovered, setShopHovered] = useState(false);
   const [mediaHovered, setMediaHovered] = useState(false);
   const [connectHovered, setConnectHovered] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [loaderState, setLoader] = useState(false);
+  // const regress = useThree((state) => state.performance.regress);
 
   useEffect(() => {
     document.body.style.cursor = mediaHovered ? 'pointer' : 'auto';
@@ -198,39 +210,47 @@ export default function Scene({children, ...props}) {
 
   useEffect(() => {
     if (mediaSelect) {
-      setPosX(-1.39);
-      setPosY(0.1);
-      setPosZ(1.5);
-      setRotX(0.1);
-      setRotY(3.5);
-      setRotZ(0.1);
+      startTransition(() => {
+        setPosX(-1.39);
+        setPosY(0.1);
+        setPosZ(1.5);
+        setRotX(0.1);
+        setRotY(3.5);
+        setRotZ(0.1);
+      });
     }
 
     if (shopSelect) {
-      setPosX(-2.55);
-      setPosY(0.1);
-      setPosZ(1);
-      setRotX(0);
-      setRotY(1.45);
-      setRotZ(0);
+      startTransition(() => {
+        setPosX(-2.55);
+        setPosY(0.1);
+        setPosZ(1);
+        setRotX(0);
+        setRotY(1.45);
+        setRotZ(0);
+      });
     }
 
     if (connectSelect) {
-      setPosX(-2.8);
-      setPosY(0.2);
-      setPosZ(-0.1);
-      setRotX(-0.1);
-      setRotY(-0.7);
-      setRotZ(0.1);
+      startTransition(() => {
+        setPosX(-2.8);
+        setPosY(0.2);
+        setPosZ(-0.1);
+        setRotX(-0.1);
+        setRotY(-0.7);
+        setRotZ(0.1);
+      });
     }
 
     if (!mediaSelect && !shopSelect && !connectSelect) {
-      setPosX(-1.8);
-      setPosY(0.1);
-      setPosZ(0.7);
-      setRotX(0);
-      setRotY(dragX.x / 100);
-      setRotZ(0);
+      startTransition(() => {
+        setPosX(-1.8);
+        setPosY(0.1);
+        setPosZ(0.7);
+        setRotX(0);
+        setRotY(dragX.x / 100);
+        setRotZ(0);
+      });
     }
   }, [mediaSelect, dragX, shopSelect, connectSelect]);
 
@@ -250,9 +270,9 @@ export default function Scene({children, ...props}) {
           className="close-img"
           alt="exit"
           onClick={() => {
-            setMediaSelect(false);
-            setShopSelect(false);
-            setConnectSelect(false);
+            mediaFalse();
+            connectFalse();
+            shopFalse();
           }}
         />
       </button>
@@ -264,269 +284,208 @@ export default function Scene({children, ...props}) {
       <MediaPhoneUI mediaSelect={mediaSelect} />
       <ConnectDiscordUI connectSelect={connectSelect} />
       <ShopUI shopSelect={shopSelect} />
-      <div className="header-container-canvas">
-        <motion.div
-          className="header-div"
-          initial={{width: '80%', marginLeft: '20%'}}
-          animate={{
-            width: '100%',
-            marginLeft: 0,
-            y: !connectSelect && !shopSelect && !mediaSelect ? 0 : '-200px',
-          }}
-          exit={{width: '80%', marginLeft: '20%'}}
-          transition={{duration: 0.3}}
+      {loaderState && (
+        <SceneHeader
+          dragX={dragX}
+          shopSelect={shopSelect}
+          connectSelect={connectSelect}
+          mediaSelect={mediaSelect}
+          mediaTrue={mediaTrue}
+          mediaFalse={mediaFalse}
+          shopTrue={shopTrue}
+          shopFalse={shopFalse}
+          connectTrue={connectTrue}
+          connectFalse={connectFalse}
+        />
+      )}
+      <Canvas {...props} style={{top: 0, left: 0, position: 'fixed'}} dpr={dpr}>
+        <PerformanceMonitor
+          onIncline={() => setDpr(2)}
+          onDecline={() => setDpr(1)}
         >
-          {!connectSelect && !shopSelect && !mediaSelect && (
-            <ul className="mainMenu-ul">
-              <li className="mainMenu-li">
-                <div
-                  className="menu-text"
-                  onClick={() => {
-                    setMediaSelect(!mediaSelect);
-                  }}
-                >
-                  Media
-                  {mediaSelect ? (
-                    <img src="/paint.svg" alt="fingerprint" className="paint" />
-                  ) : (
-                    <img
-                      src="/paint.svg"
-                      alt="fingerprint"
-                      className="paint"
-                      style={{
-                        transform:
-                          dragX.x > 245 && !shopSelect && !connectSelect
-                            ? 'scale(1)'
-                            : 'scale(0)',
-                      }}
-                    />
-                  )}
-                </div>
-              </li>
-              <li className="mainMenu-li">
-                <div
-                  className="menu-text"
-                  onClick={() => {
-                    setShopSelect(!shopSelect);
-                  }}
-                >
-                  Shop
-                  {shopSelect ? (
-                    <img src="/paint.svg" alt="fingerprint" className="paint" />
-                  ) : (
-                    <img
-                      src="/paint.svg"
-                      alt="fingerprint"
-                      className="paint"
-                      style={{
-                        transform:
-                          dragX.x > 77 &&
-                          dragX.x < 245 &&
-                          !mediaSelect &&
-                          !connectSelect
-                            ? 'scale(1)'
-                            : 'scale(0)',
-                      }}
-                    />
-                  )}
-                </div>
-              </li>
-              <li className="mainMenu-li">
-                <div
-                  className="menu-text"
-                  onClick={() => setConnectSelect(!connectSelect)}
-                >
-                  Connect
-                  {connectSelect ? (
-                    <img src="/paint.svg" alt="fingerprint" className="paint" />
-                  ) : (
-                    <img
-                      src="/paint.svg"
-                      alt="fingerprint"
-                      className="paint"
-                      style={{
-                        transform:
-                          dragX.x < 77 && !shopSelect && !mediaSelect
-                            ? 'scale(1)'
-                            : 'scale(0)',
-                      }}
-                    />
-                  )}
-                </div>
-              </li>
-            </ul>
-          )}
-        </motion.div>
-      </div>
-      <Canvas {...props} style={{top: 0, left: 0, position: 'fixed'}}>
-        {children}
-        <Preload all />
-        <fog attach="fog" args={['black', 1, 6]} />
-        <Effects disableGamma>
-          <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
-        </Effects>
-        <Suspense fallback={null}>
-          <pointLight position={[40, 40, 40]} />
-          <BakeShadows />
-          <directionalLight
-            intensity={0.3}
-            color="#F4EF8E"
-            position={[0, 100, 0]}
-            castShadow
-            shadow-mapSize-height={512}
-            shadow-mapSize-width={512}
-          />
-          <directionalLight
-            intensity={0.5}
-            color="blue"
-            position={[200, 50, 500]}
-            castShadow
-            shadow-mapSize-height={512}
-            shadow-mapSize-width={512}
-          />
-          <directionalLight
-            intensity={1}
-            color="red"
-            position={[-8, 10, -20]}
-            castShadow
-            shadow-mapSize-height={512}
-            shadow-mapSize-width={512}
-          />
-          <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
-          <group ref={mesh} {...props} {...bind()}>
-            <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
-              <group dispose={null} scale={0.5}>
-                <Court />
-                <group
-                  onPointerOver={() => setMediaHovered(true)}
-                  onPointerOut={() => setMediaHovered(false)}
-                  onClick={(event) => {
-                    setMediaSelect(!mediaSelect);
-                    event.stopPropagation();
-                  }}
-                >
-                  <Media />
-                  {!mediaSelect && (
-                    <Html position={[4, 0.5, 3]} color style={{width: '500px'}}>
-                      <motion.h6
-                        className="scene-title"
-                        animate={{
-                          y: mediaHovered ? '0' : '20px',
-                          opacity: mediaHovered ? 1 : 0,
-                        }}
-                      >
-                        Click to view
-                      </motion.h6>
-                      <motion.h6
-                        className="scene-title"
-                        animate={{
-                          y: !mediaHovered ? '0' : '-20px',
-                          opacity: !mediaHovered ? 1 : 0,
-                        }}
-                      >
-                        View everything Tay K
-                      </motion.h6>
-                    </Html>
-                  )}
-                </group>
-                <group
-                  onPointerOver={() => setShopHovered(true)}
-                  onPointerOut={() => setShopHovered(false)}
-                  onClick={(event) => {
-                    setShopSelect(!shopSelect);
-                    event.stopPropagation();
-                  }}
-                >
-                  <Vending prodImages={prodImages} />
-                  {!shopSelect && (
-                    <Html
-                      position={[0, 1, -1.5]}
-                      color
-                      style={{width: '500px'}}
-                    >
-                      <motion.h6
-                        className="scene-title"
-                        animate={{
-                          y: shopHovered ? '0' : '20px',
-                          opacity: shopHovered ? 1 : 0,
-                        }}
-                      >
-                        Click to view
-                      </motion.h6>
-                      <motion.h6
-                        className="scene-title"
-                        animate={{
-                          y: !shopHovered ? '0' : '-20px',
-                          opacity: !shopHovered ? 1 : 0,
-                        }}
-                      >
-                        Shop for Tay K merch
-                      </motion.h6>
-                    </Html>
-                  )}
-                </group>
-                <group>
-                  <mesh
-                    position={[3.3, 0.5, -3.8]}
-                    onClick={() => setConnectSelect(!connectSelect)}
-                    onPointerOver={() => setConnectHovered(true)}
-                    onPointerOut={() => setConnectHovered(false)}
+          {children}
+          <Preload all />
+          <fog attach="fog" args={['black', 1, 6]} />
+          <Effects disableGamma>
+            <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
+          </Effects>
+          <Suspense fallback={null}>
+            <pointLight position={[40, 40, 40]} />
+            <BakeShadows />
+            <directionalLight
+              intensity={0.3}
+              color="#F4EF8E"
+              position={[0, 100, 0]}
+              castShadow
+              shadow-mapSize-height={512}
+              shadow-mapSize-width={512}
+            />
+            <directionalLight
+              intensity={0.5}
+              color="blue"
+              position={[200, 50, 500]}
+              castShadow
+              shadow-mapSize-height={512}
+              shadow-mapSize-width={512}
+            />
+            <directionalLight
+              intensity={1}
+              color="red"
+              position={[-8, 10, -20]}
+              castShadow
+              shadow-mapSize-height={512}
+              shadow-mapSize-width={512}
+            />
+            <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
+            <group ref={mesh} {...props} {...bind()}>
+              <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
+                <group dispose={null} scale={0.5}>
+                  <Court />
+                  <group
+                    onPointerOver={() => setMediaHovered(true)}
+                    onPointerOut={() => setMediaHovered(false)}
+                    onClick={(event) => {
+                      mediaSelect ? mediaFalse() : mediaTrue();
+                      event.stopPropagation();
+                    }}
                   >
-                    <boxGeometry args={[1, 1, 1.2]} />
-                    <meshPhongMaterial color="white" opacity={0} transparent />
-                  </mesh>
-                  <Connect />
-                  {!connectSelect && (
-                    <Html
-                      position={[3.7, 1, -3.5]}
-                      color
-                      style={{width: '500px'}}
+                    <Media />
+                    {!mediaSelect && (
+                      <Html
+                        position={[4, 0.5, 3]}
+                        color
+                        style={{width: '500px'}}
+                      >
+                        <motion.h6
+                          className="scene-title"
+                          animate={{
+                            y: mediaHovered ? '0' : '20px',
+                            opacity: mediaHovered ? 1 : 0,
+                          }}
+                        >
+                          Click to view
+                        </motion.h6>
+                        <motion.h6
+                          className="scene-title"
+                          animate={{
+                            y: !mediaHovered ? '0' : '-20px',
+                            opacity: !mediaHovered ? 1 : 0,
+                          }}
+                        >
+                          View everything Tay K
+                        </motion.h6>
+                      </Html>
+                    )}
+                  </group>
+                  <group
+                    onPointerOver={() => setShopHovered(true)}
+                    onPointerOut={() => setShopHovered(false)}
+                    onClick={(event) => {
+                      shopSelect ? shopFalse() : shopTrue();
+                      event.stopPropagation();
+                    }}
+                  >
+                    <Vending prodImages={prodImages} />
+                    {!shopSelect && (
+                      <Html
+                        position={[0, 1, -1.5]}
+                        color
+                        style={{width: '500px'}}
+                      >
+                        <motion.h6
+                          className="scene-title"
+                          animate={{
+                            y: shopHovered ? '0' : '20px',
+                            opacity: shopHovered ? 1 : 0,
+                          }}
+                        >
+                          Click to view
+                        </motion.h6>
+                        <motion.h6
+                          className="scene-title"
+                          animate={{
+                            y: !shopHovered ? '0' : '-20px',
+                            opacity: !shopHovered ? 1 : 0,
+                          }}
+                        >
+                          Shop for Tay K merch
+                        </motion.h6>
+                      </Html>
+                    )}
+                  </group>
+                  <group>
+                    <mesh
+                      position={[3.3, 0.5, -3.8]}
+                      onClick={() =>
+                        connectSelect ? connectFalse() : connectTrue()
+                      }
+                      onPointerOver={() => setConnectHovered(true)}
+                      onPointerOut={() => setConnectHovered(false)}
                     >
-                      <motion.h6
-                        className="scene-title"
-                        animate={{
-                          y: connectHovered ? '0' : '20px',
-                          opacity: connectHovered ? 1 : 0,
-                        }}
+                      <boxGeometry args={[1, 1, 1.2]} />
+                      <meshPhongMaterial
+                        color="white"
+                        opacity={0}
+                        transparent
+                      />
+                    </mesh>
+                    <Connect />
+                    {!connectSelect && (
+                      <Html
+                        position={[3.7, 1, -3.5]}
+                        color
+                        style={{width: '500px'}}
                       >
-                        Click to view
-                      </motion.h6>
-                      <motion.h6
-                        className="scene-title"
-                        animate={{
-                          y: !connectHovered ? '0' : '-20px',
-                          opacity: !connectHovered ? 1 : 0,
-                        }}
-                      >
-                        Connect on Discord
-                      </motion.h6>
-                    </Html>
-                  )}
+                        <motion.h6
+                          className="scene-title"
+                          animate={{
+                            y: connectHovered ? '0' : '20px',
+                            opacity: connectHovered ? 1 : 0,
+                          }}
+                        >
+                          Click to view
+                        </motion.h6>
+                        <motion.h6
+                          className="scene-title"
+                          animate={{
+                            y: !connectHovered ? '0' : '-20px',
+                            opacity: !connectHovered ? 1 : 0,
+                          }}
+                        >
+                          Connect on Discord
+                        </motion.h6>
+                      </Html>
+                    )}
+                  </group>
                 </group>
               </group>
+              <PerspectiveCameraAmimated
+                posX={posX}
+                posY={posY}
+                posZ={posZ}
+                rotX={rotX}
+                rotY={rotY}
+                rotZ={rotZ}
+              />
             </group>
-            <PerspectiveCameraAmimated
-              posX={posX}
-              posY={posY}
-              posZ={posZ}
-              rotX={rotX}
-              rotY={rotY}
-              rotZ={rotZ}
-            />
-          </group>
-        </Suspense>
+          </Suspense>
+        </PerformanceMonitor>
       </Canvas>
       <Loader
         containerStyles={{background: 'black'}}
-        initialState={(active) => setLoader(active)}
-        dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`}
+        // initialState={(loaded) => setLoader(loaded)}
+        dataInterpolation={(p) => {
+          `Loading ${p.toFixed(0)}%`;
+          p === 100 && setLoader(true);
+        }}
         dataStyles={{
-          fontSize: '50pt',
+          fontSize: 'clamp(20pt, 3vw, 40pt)',
           fontFamily: 'sans-serif',
-          WebkitTextStroke: '8px white',
+          WebkitTextStroke: '5px white',
         }}
         barStyles={{background: 'red'}}
       />
+      {loaderState && <Footer />}
     </>
   );
 }

@@ -3,6 +3,7 @@ import {Drawer, useDrawer} from '~/components/Drawer';
 import {Suspense} from 'react';
 import {Await, useMatches, useFetchers} from '@remix-run/react';
 import {CartLineItems, CartActions, CartSummary} from '~/components/Cart';
+import {useNavigate} from '@remix-run/react';
 
 function CartHeader({openDrawer}) {
   const [root] = useMatches();
@@ -49,7 +50,7 @@ export function Layout({children}) {
   }, [addToCartFetchers]);
 
   return (
-    <div className="flex flex-col min-h-screen antialiased bg-neutral-50">
+    <div>
       <header role="banner">
         <div>
           <CartHeader cart={cart} openDrawer={openDrawer} />
@@ -70,6 +71,8 @@ export function Layout({children}) {
 }
 
 function CartDrawer({cart, close}) {
+  const navigate = useNavigate();
+
   return (
     <Suspense>
       <Await resolve={cart}>
@@ -86,16 +89,19 @@ function CartDrawer({cart, close}) {
                 </div>
               </>
             ) : (
-              <div className="flex flex-col space-y-7 justify-center items-center md:py-8 md:px-12 px-4 py-6 h-screen">
-                <h2 className="whitespace-pre-wrap max-w-prose font-bold text-4xl">
-                  Your cart is empty
-                </h2>
-                <button
-                  onClick={close}
-                  className="inline-block rounded-sm font-medium text-center py-3 px-6 max-w-xl leading-none bg-black text-white w-full"
-                >
-                  Continue shopping
-                </button>
+              <div>
+                <h2 className="empty-cart-text">Your cart is empty</h2>
+                <div className="checkout-button">
+                  <a
+                    className="cart-text"
+                    onClick={() => {
+                      close();
+                      navigate('/collections/shirts');
+                    }}
+                  >
+                    Continue shopping
+                  </a>
+                </div>
               </div>
             )}
           </>

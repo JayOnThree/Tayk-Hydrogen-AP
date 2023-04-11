@@ -6,6 +6,7 @@ import {CartActions, CartSummary} from '~/components/Cart';
 import {Container} from 'react-bootstrap';
 import Header from '~/components/Header';
 import Footer from '~/components/Footer';
+import {useNavigate} from '@remix-run/react';
 
 export async function loader({context}) {
   const cartId = await context.session.get('cartId');
@@ -86,6 +87,7 @@ export async function action({request, context}) {
 }
 export default function Cart() {
   const {cart} = useLoaderData();
+  const navigate = useNavigate();
 
   if (cart?.totalQuantity > 0)
     return (
@@ -105,16 +107,16 @@ export default function Cart() {
     );
 
   return (
-    <div className="flex flex-col space-y-7 justify-center items-center md:py-8 md:px-12 px-4 py-6 h-screen">
-      <h2 className="whitespace-pre-wrap max-w-prose font-bold text-4xl">
-        Your cart is empty
-      </h2>
-      <Link
-        to="/"
-        className="inline-block rounded-sm font-medium text-center py-3 px-6 max-w-xl leading-none bg-black text-white w-full"
-      >
-        Continue shopping
-      </Link>
+    <div>
+      <h2 className="empty-cart-text">Your cart is empty</h2>
+      <div className="checkout-button">
+        <a
+          className="cart-text"
+          onClick={() => navigate('/collections/shirts')}
+        >
+          Continue shopping
+        </a>
+      </div>
     </div>
   );
 }
