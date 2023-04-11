@@ -68,21 +68,7 @@ function ConnectDiscordUI({connectSelect}) {
 }
 
 function MediaPhoneUI({mediaSelect}) {
-  // const divStyle = {
-  //   zIndex: '10',
-  //   alignItems: 'center',
-  //   display: 'flex',
-  //   justifyContent: 'center',
-  //   textAlign: 'center',
-  //   touchAction: 'none',
-  //   marginTop: '150px',
-  //   position: 'absolute',
-  //   marginLeft: '25px',
-  // };
-
-  // const [hovered, setHovered] = useState(false);
   const locale = 'en';
-  // const navgiate = useNavigate();
   const [today, setDate] = useState(new Date());
   const date =
     today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -91,32 +77,6 @@ function MediaPhoneUI({mediaSelect}) {
     hour12: true,
     minute: 'numeric',
   });
-  // const [toggled, setToggled] = useState(false);
-  // const [{x}, api] = useSpring(() => ({x: 0}));
-  // const bindDrag = useDrag(
-  //   ({down, tap, movement: [mx]}) => {
-  //     if (!down && tap) {
-  //       api.start({x: 200});
-  //       setToggled(true);
-  //       return;
-  //     }
-  //     if (down) {
-  //       api.start({x: mx});
-  //     } else {
-  //       const isToggled = x._lastCallId > 30;
-  //       api.start({x: isToggled ? 200 : 0});
-  //       setToggled(isToggled);
-  //     }
-  //   },
-  //   {bounds: {left: 0, right: 200, top: 0, bottom: 0}},
-  //   {axis: 'x'},
-  // );
-
-  // useEffect(() => {
-  //   if (toggled) {
-  //     navgiate('/media');
-  //   }
-  // }, [toggled]);
 
   return (
     <div
@@ -126,10 +86,7 @@ function MediaPhoneUI({mediaSelect}) {
       }}
       className="phone-container"
     >
-      <div
-        className="phone-background"
-        // style={{backgroundImage: 'url(/Background.jpg)'}}
-      >
+      <div className="phone-background">
         <div className="time-div">
           <h2 className="time-text">{time}</h2>
           <h2 className="date-text">{date}</h2>
@@ -141,18 +98,6 @@ function MediaPhoneUI({mediaSelect}) {
             with me{' '}
           </h2>
         </div>
-        {/* <div style={divStyle} alt="swipe Arrow">
-          <div className="backgroundStyle">
-            <a.div // Knob
-              style={{backgroundImage: `url('/slideArrow.svg')`, x}}
-              className="knobStyle"
-              onPointerOver={() => setHovered(true)}
-              onPointerOut={() => setHovered(false)}
-              {...bindDrag()}
-            ></a.div>
-          </div>
-          <h2 className="slide-media-text">Drag to Enter</h2>
-        </div> */}
       </div>
     </div>
   );
@@ -160,16 +105,17 @@ function MediaPhoneUI({mediaSelect}) {
 
 function ShopUI({shopSelect}) {
   return (
-    <>
-      <img
-        src="/shopEnter.png"
-        className="shop-enter-image"
-        style={{
-          transform: shopSelect ? 'translateY(0)' : 'translateY(1000px)',
-          opacity: shopSelect ? 1 : 0,
-        }}
-      />
-    </>
+    <div
+      className="home-marque-div"
+      style={{
+        transform: shopSelect ? 'translateY(0)' : 'translateY(1000px)',
+        opacity: shopSelect ? 1 : 0,
+      }}
+    >
+      <marquee className="marque-text-home" scrollAmount="12">
+        SHOP FOR MERCH HERE
+      </marquee>
+    </div>
   );
 }
 
@@ -318,7 +264,6 @@ export default function Scene({children, ...props}) {
       <MediaPhoneUI mediaSelect={mediaSelect} />
       <ConnectDiscordUI connectSelect={connectSelect} />
       <ShopUI shopSelect={shopSelect} />
-      {loaderState & (
       <div className="header-container-canvas">
         <motion.div
           className="header-div"
@@ -413,7 +358,6 @@ export default function Scene({children, ...props}) {
           )}
         </motion.div>
       </div>
-      )}
       <Canvas {...props} style={{top: 0, left: 0, position: 'fixed'}}>
         {children}
         <Preload all />
@@ -576,7 +520,11 @@ export default function Scene({children, ...props}) {
         containerStyles={{background: 'black'}}
         initialState={(active) => setLoader(active)}
         dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`}
-        dataStyles={{fontSize: '50pt', fontFamily: 'sans-serif', WebkitTextStroke: '8px white'}}
+        dataStyles={{
+          fontSize: '50pt',
+          fontFamily: 'sans-serif',
+          WebkitTextStroke: '8px white',
+        }}
         barStyles={{background: 'red'}}
       />
     </>

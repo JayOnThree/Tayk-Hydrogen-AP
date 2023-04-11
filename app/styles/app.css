@@ -1629,3 +1629,27 @@ a:hover {
     opacity: 1;
     cursor: pointer;
   }
+
+  .marque-text-home {
+    font-size: 60pt;
+    font-weight: 800;
+    font-family: 'bpdotsunicasesquarebold';
+    color: red;
+    opacity: 0.8;
+    text-shadow:1px 1px 10px #ff0000, 1px 1px 10px #ff0000;
+  }
+
+  .home-marque-div {
+    width: 300px;
+    position: absolute;
+    z-index: 3;
+    cursor: pointer;
+    transform: rotate(10deg);
+    transition: opacity 1s, transform 0.5s;
+    transition-timing-function: ease;
+    top: 40vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
