@@ -1,12 +1,14 @@
 import {useGLTF} from '@react-three/drei';
 
 import Scene from '../../public/glb/scene.glb';
+import Phone from './Phone';
 
-export default function Media() {
+export default function Media({mediaSelect}) {
   const {nodes, materials} = useGLTF(Scene);
 
   return (
     <group>
+      <Phone />
       <group
         position={[2.96,-0.05,3.53]}
         rotation={[-Math.PI / 2, 0, -0.93]} scale={0.0013}

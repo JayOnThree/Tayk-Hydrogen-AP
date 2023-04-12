@@ -367,7 +367,7 @@ export default function Scene({children, ...props}) {
                       event.stopPropagation();
                     }}
                   >
-                    <Media />
+                    <Media mediaSelect={mediaSelect} />
                     {!mediaSelect && (
                       <Html
                         position={[4, 0.5, 3]}
