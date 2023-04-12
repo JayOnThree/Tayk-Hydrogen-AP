@@ -15,7 +15,7 @@ function CartHeader({openDrawer}) {
           <button
             className="cart-button cart-margin"
             onClick={openDrawer}
-            style={{position: 'fixed', zIndex: '9'}}
+            style={{position: 'fixed', zIndex: '11'}}
           >
             {cart?.totalQuantity > 0 && (
               <div className="items-text">
@@ -91,8 +91,8 @@ function CartDrawer({cart, close}) {
             ) : (
               <div>
                 <h2 className="empty-cart-text">Your cart is empty</h2>
-                <div className="checkout-button">
-                  <a
+                <button className="checkout-button">
+                  <h4
                     className="cart-text"
                     onClick={() => {
                       close();
@@ -100,8 +100,8 @@ function CartDrawer({cart, close}) {
                     }}
                   >
                     Continue shopping
-                  </a>
-                </div>
+                  </h4>
+                </button>
               </div>
             )}
           </>

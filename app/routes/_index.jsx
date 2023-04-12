@@ -14,10 +14,10 @@ export default function index() {
 
   return (
     <div className="App">
-      <ClientOnly
+      {/* <ClientOnly
         fallback={null}
         children={() => <Canvas products={products} />}
-      />
+      /> */}
     </div>
   );
 }

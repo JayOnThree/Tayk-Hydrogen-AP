@@ -184,7 +184,10 @@ export default function Collection() {
                 <h5 className="marque-text">{dialText}</h5>
               )}
             </div>
-            <div className="dialpad-parent-container" style={{backgroundImage: `url(/panelBackground.svg)`}}>
+            <div
+              className="dialpad-parent-container"
+              style={{backgroundImage: `url(/panelBackground.svg)`}}
+            >
               <div className="dialpad-div-container">
                 {Buttons.map((value) => {
                   return (

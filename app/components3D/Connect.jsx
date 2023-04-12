@@ -62,7 +62,7 @@ function UpHair() {
   );
 }
 
-export default function Connect() {
+export default function Connect({dragX}) {
   const group = useRef();
   const {nodes, materials, animations} = useGLTF(Basketball);
   const {actions} = useAnimations(animations, group);
@@ -79,7 +79,7 @@ export default function Connect() {
         ref={group}
         dispose={null}
         scale={0.15}
-        position={[3.5, 0, -3.2]}
+        position={[3.2, 0, -3.2]}
         rotation={[0, 3, 0]}
       >
         <group name="Scene">

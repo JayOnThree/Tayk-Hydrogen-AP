@@ -21,7 +21,7 @@ export default function Policies() {
   const location = useLocation();
 
   return (
-    <Container fluid className="container-shop" style={{overflow: 'hidden'}}>
+    <Container fluid className="screen-container" style={{overflow: 'hidden'}}>
       <Header />
       <Row>
         <Col lg={{offset: 1, span: 10}} style={{padding: '20px'}}>

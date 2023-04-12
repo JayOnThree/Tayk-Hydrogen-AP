@@ -23,7 +23,10 @@ import shareicon from '../public/shareimage.png';
 import {defer, json} from '@shopify/remix-oxygen';
 import {Layout} from '~/components/Layout';
 import {CART_QUERY} from '~/queries/cart';
+import {ClientOnly} from 'remix-utils';
 import {useAnalyticsFromLoaders, useAnalyticsFromActions} from '~/lib/utils';
+
+import Canvas from '~/components3D/Scene';
 
 export const links = () => {
   return [
@@ -62,8 +65,10 @@ export const handle = {
 
 export async function loader({context, request}) {
   const cartId = await context.session.get('cartId');
+  const {products} = await context.storefront.query(PRODUCTS_QUERY);
 
   return defer({
+    products,
     selectedLocale: context.storefront.i18n,
     cart: cartId ? getCart(context, cartId) : undefined,
     layout: await context.storefront.query(LAYOUT_QUERY),
@@ -75,10 +80,10 @@ export async function loader({context, request}) {
 }
 
 export default function App() {
-  const data = useLoaderData();
+  const {products} = useLoaderData();
   const location = useLocation();
   const pageAnalytics = useAnalyticsFromLoaders();
-  const analyticsFromActions = useAnalyticsFromActions();
+  // const analyticsFromActions = useAnalyticsFromActions();
   const hasUserConsent = true;
   useShopifyCookies({hasUserConsent});
 
@@ -127,6 +132,10 @@ export default function App() {
       <body style={{background: 'black', overflow: 'hidden'}}>
         <Layout />
         <Outlet />
+        <ClientOnly
+          fallback={null}
+          children={() => <Canvas products={products} />}
+        />
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -178,3 +187,27 @@ export async function action({context}) {
     },
   });
 }
+
+const PRODUCTS_QUERY = `#graphql
+  query products {
+    products(first: 12) {
+        nodes {
+          id
+          title
+          publishedAt
+          handle
+          variants(first: 1) {
+            nodes {
+              id
+              image {
+                url
+                altText
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+    }
+`;

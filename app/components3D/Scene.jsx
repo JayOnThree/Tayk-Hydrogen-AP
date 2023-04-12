@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {Suspense, useRef, useState, useEffect, useTransition} from 'react';
 import {Canvas, extend, useFrame, useThree} from '@react-three/fiber';
 import {UnrealBloomPass} from 'three-stdlib';
-import {useNavigate} from '@remix-run/react';
+import {useNavigate, useLocation} from '@remix-run/react';
 import {
   Environment,
   BakeShadows,
@@ -17,7 +17,6 @@ import {useDrag} from '@use-gesture/react';
 import {motion} from 'framer-motion';
 
 import EnvImage from '../../public/glb/moonless_golf_2k.hdr';
-
 import Vending from './Vending';
 import Media from './Media';
 import Connect from './Connect';
@@ -27,7 +26,14 @@ import {SceneHeader, useSceneHeader} from '~/components/SceneHeader';
 
 extend({UnrealBloomPass});
 
-function EnterButton({shopSelect, connectSelect, mediaSelect}) {
+function EnterButton({
+  shopSelect,
+  connectSelect,
+  mediaSelect,
+  mediaFalse,
+  connectFalse,
+  shopFalse,
+}) {
   const navigate = useNavigate();
   return (
     <button
@@ -37,15 +43,18 @@ function EnterButton({shopSelect, connectSelect, mediaSelect}) {
         transform:
           shopSelect || connectSelect || mediaSelect ? 'scale(1)' : 'scale(0)',
       }}
-      onClick={() =>
+      onClick={() => {
         navigate(
           shopSelect
             ? '/collections/shirts'
             : mediaSelect
             ? '/media'
             : connectSelect && 'https://discord.com/',
-        )
-      }
+        );
+        mediaFalse();
+        connectFalse();
+        shopFalse();
+      }}
     >
       <h3 className="enter-button-text">ENTER</h3>
     </button>
@@ -159,6 +168,7 @@ function PerspectiveCameraAmimated({posX, posY, posZ, rotX, rotY, rotZ}) {
 
 export default function Scene({children, ...props}) {
   const mesh = useRef(null);
+  const location = useLocation();
   const prodImages = props.products.nodes;
   const [posX, setPosX] = useState(-2);
   const [posY, setPosY] = useState(0.1);
@@ -280,6 +290,9 @@ export default function Scene({children, ...props}) {
         mediaSelect={mediaSelect}
         connectSelect={connectSelect}
         shopSelect={shopSelect}
+        shopFalse={shopFalse}
+        connectFalse={connectFalse}
+        mediaFalse={mediaFalse}
       />
       <MediaPhoneUI mediaSelect={mediaSelect} />
       <ConnectDiscordUI connectSelect={connectSelect} />
@@ -298,7 +311,12 @@ export default function Scene({children, ...props}) {
           connectFalse={connectFalse}
         />
       )}
-      <Canvas {...props} style={{top: 0, left: 0, position: 'fixed'}} dpr={dpr}>
+      <Canvas
+        {...props}
+        style={{top: 0, left: 0, position: 'fixed'}}
+        dpr={dpr}
+        frameloop={location.pathname === '/' ? 'always' : 'demand'}
+      >
         <PerformanceMonitor
           onIncline={() => setDpr(2)}
           onDecline={() => setDpr(1)}
@@ -429,7 +447,7 @@ export default function Scene({children, ...props}) {
                         transparent
                       />
                     </mesh>
-                    <Connect />
+                    {dragX.x < 100 && <Connect />}
                     {!connectSelect && (
                       <Html
                         position={[3.7, 1, -3.5]}
@@ -479,7 +497,7 @@ export default function Scene({children, ...props}) {
           `Loading ${p.toFixed(0)}%`;
         }}
         dataStyles={{
-          fontSize: 'clamp(20pt, 3vw, 40pt)',
+          fontSize: 'clamp(25pt, 3vw, 40pt)',
           fontFamily: 'sans-serif',
           WebkitTextStroke: '5px white',
         }}

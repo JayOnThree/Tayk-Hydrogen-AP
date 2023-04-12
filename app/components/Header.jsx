@@ -1,12 +1,10 @@
 import {useState, useEffect} from 'react';
 import {Link, useLocation} from '@remix-run/react';
-// import {createBrowserHistory} from 'history';
 import {Container} from 'react-bootstrap';
 import {motion} from 'framer-motion';
 
 export default function Header() {
   const location = useLocation();
-  // let history = createBrowserHistory();
   const [mobile, setMobile] = useState();
   const [tablet, setTablet] = useState();
 
@@ -56,20 +54,17 @@ export default function Header() {
         >
           <div className="headline-text-nav">
             {location.pathname.indexOf('media') > -1 && (
-              <h5 className="menu-text">Media</h5>
+              <h5 className="menu-text-notLanding">Media</h5>
             )}
             {location.pathname.indexOf('collections') > -1 && (
-              <h5 className="menu-text">Shop</h5>
+              <h5 className="menu-text-notLanding">Shop</h5>
             )}
             {location.pathname.indexOf('products') > -1 && (
-              <h5 className="menu-text">Shop</h5>
+              <h5 className="menu-text-notLanding">Shop</h5>
             )}
           </div>
         </motion.div>
       </div>
-      {/* <Link to='/cart'>
-        <img src="/cart.svg" className="cart" alt='cart' />
-      </Link> */}
     </Container>
   );
 }

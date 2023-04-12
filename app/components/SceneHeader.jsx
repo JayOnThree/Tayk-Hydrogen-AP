@@ -1,10 +1,10 @@
 import {useState} from 'react';
-import {motion} from 'framer-motion';
+import {useLocation} from '@remix-run/react';
 
-export function useSceneHeader() {
-  const [shopSelect, setShopSelected] = useState(false);
-  const [mediaSelect, setMediaSelected] = useState(false);
-  const [connectSelect, setConnectSelected] = useState(false);
+export function useSceneHeader(stateDefault = false) {
+  const [shopSelect, setShopSelected] = useState(stateDefault);
+  const [mediaSelect, setMediaSelected] = useState(stateDefault);
+  const [connectSelect, setConnectSelected] = useState(stateDefault);
   function shopFalse() {
     setShopSelected(false);
   }
@@ -48,95 +48,97 @@ function SceneHeader({
   connectTrue,
   connectFalse,
 }) {
+  const location = useLocation();
+
   return (
     <div className="header-container-canvas">
-      <motion.div
-        className="header-div"
-        initial={{width: '80%', marginLeft: '20%'}}
-        animate={{
-          width: '100%',
-          marginLeft: 0,
-          y: !connectSelect && !shopSelect && !mediaSelect ? 0 : '-200px',
-          opacity: !connectSelect && !shopSelect && !mediaSelect ? 1 : 0,
-        }}
-        exit={{width: '80%', marginLeft: '20%'}}
-        transition={{duration: 0.3}}
-      >
-        <ul className="mainMenu-ul">
-          <li className="mainMenu-li">
-            <div
-              className="menu-text"
-              onClick={() => (mediaSelect ? mediaFalse() : mediaTrue())}
-            >
-              Media
-              {mediaSelect ? (
-                <img src="/paint.svg" alt="fingerprint" className="paint" />
-              ) : (
-                <img
-                  src="/paint.svg"
-                  alt="fingerprint"
-                  className="paint"
-                  style={{
-                    transform:
-                      dragX.x > 245 && !shopSelect && !connectSelect
-                        ? 'scale(1)'
-                        : 'scale(0)',
-                  }}
-                />
-              )}
-            </div>
-          </li>
-          <li className="mainMenu-li">
-            <div
-              className="menu-text"
-              onClick={() => (shopSelect ? shopFalse() : shopTrue())}
-            >
-              Shop
-              {shopSelect ? (
-                <img src="/paint.svg" alt="fingerprint" className="paint" />
-              ) : (
-                <img
-                  src="/paint.svg"
-                  alt="fingerprint"
-                  className="paint"
-                  style={{
-                    transform:
-                      dragX.x > 77 &&
-                      dragX.x < 245 &&
-                      !mediaSelect &&
-                      !connectSelect
-                        ? 'scale(1)'
-                        : 'scale(0)',
-                  }}
-                />
-              )}
-            </div>
-          </li>
-          <li className="mainMenu-li">
-            <div
-              className="menu-text"
-              onClick={() => (connectSelect ? connectFalse() : connectTrue())}
-            >
-              Connect
-              {connectSelect ? (
-                <img src="/paint.svg" alt="fingerprint" className="paint" />
-              ) : (
-                <img
-                  src="/paint.svg"
-                  alt="fingerprint"
-                  className="paint"
-                  style={{
-                    transform:
-                      dragX.x < 77 && !shopSelect && !mediaSelect
-                        ? 'scale(1)'
-                        : 'scale(0)',
-                  }}
-                />
-              )}
-            </div>
-          </li>
-        </ul>
-      </motion.div>
+      {location.pathname === '/' && (
+        <div
+          className="header-div"
+          style={{
+            width: 'calc(100% - 100px)',
+            transform:
+              !connectSelect && !shopSelect && !mediaSelect
+                ? 'translateY(0)'
+                : 'translateY(-200px)',
+          }}
+        >
+          <ul className="mainMenu-ul">
+            <li className="mainMenu-li">
+              <div
+                className="menu-text"
+                onClick={() => (mediaSelect ? mediaFalse() : mediaTrue())}
+              >
+                Media
+                {mediaSelect ? (
+                  <img src="/paint.svg" alt="fingerprint" className="paint" />
+                ) : (
+                  <img
+                    src="/paint.svg"
+                    alt="indication that you are in the media section"
+                    className="paint"
+                    style={{
+                      transform:
+                        dragX.x > 245 && !shopSelect && !connectSelect
+                          ? 'scale(1)'
+                          : 'scale(0)',
+                    }}
+                  />
+                )}
+              </div>
+            </li>
+            <li className="mainMenu-li">
+              <div
+                className="menu-text"
+                onClick={() => (shopSelect ? shopFalse() : shopTrue())}
+              >
+                Shop
+                {shopSelect ? (
+                  <img src="/paint.svg" alt="fingerprint" className="paint" />
+                ) : (
+                  <img
+                    src="/paint.svg"
+                    alt="indication that you are in the shop section"
+                    className="paint"
+                    style={{
+                      transform:
+                        dragX.x > 77 &&
+                        dragX.x < 245 &&
+                        !mediaSelect &&
+                        !connectSelect
+                          ? 'scale(1)'
+                          : 'scale(0)',
+                    }}
+                  />
+                )}
+              </div>
+            </li>
+            <li className="mainMenu-li">
+              <div
+                className="menu-text"
+                onClick={() => (connectSelect ? connectFalse() : connectTrue())}
+              >
+                Connect
+                {connectSelect ? (
+                  <img src="/paint.svg" alt="fingerprint" className="paint" />
+                ) : (
+                  <img
+                    src="/paint.svg"
+                    alt="indication that you are in the connect section"
+                    className="paint"
+                    style={{
+                      transform:
+                        dragX.x < 77 && !shopSelect && !mediaSelect
+                          ? 'scale(1)'
+                          : 'scale(0)',
+                    }}
+                  />
+                )}
+              </div>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
