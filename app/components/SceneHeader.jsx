@@ -157,16 +157,12 @@ function SceneHeader({
       )}
       {location.pathname !== '/' && (
         <>
-          <motion.div
+          <div
             className="navigation-div"
             style={{
               width: mobile ? '40%' : tablet ? '30%' : '20%',
               marginLeft: '0px',
             }}
-            // initial={{marginLeft: '-200px'}}
-            // animate={{marginLeft: '0px'}}
-            // exit={{marginLeft: '-200px'}}
-            transition={{duration: 0.5}}
           >
             <a onClick={() => history.back()} className="circle-router">
               <img alt="back" src="/back.svg" className="icon-router" />
@@ -174,7 +170,7 @@ function SceneHeader({
             <Link to="/" className="circle-router">
               <img alt="exit" src="/exit.svg" className="icon-router" />
             </Link>
-          </motion.div>
+          </div>
           <div className="header-container">
             <motion.div
               className="header-div"

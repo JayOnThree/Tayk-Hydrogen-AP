@@ -269,67 +269,67 @@ export default function Scene({children, ...props}) {
 
   return (
     <>
-      <Suspense fallback={null}>
-        <button
-          className="exit-section-button"
-          style={{
-            transform:
-              shopSelect || connectSelect || mediaSelect
-                ? 'scale(1)'
-                : 'scale(0)',
+      <button
+        className="exit-section-button"
+        style={{
+          transform:
+            shopSelect || connectSelect || mediaSelect
+              ? 'scale(1)'
+              : 'scale(0)',
+        }}
+      >
+        <img
+          src="/close.svg"
+          className="close-img"
+          alt="exit"
+          onClick={() => {
+            mediaFalse();
+            connectFalse();
+            shopFalse();
           }}
-        >
-          <img
-            src="/close.svg"
-            className="close-img"
-            alt="exit"
-            onClick={() => {
-              mediaFalse();
-              connectFalse();
-              shopFalse();
-            }}
-          />
-        </button>
-        <EnterButton
-          mediaSelect={mediaSelect}
-          connectSelect={connectSelect}
-          shopSelect={shopSelect}
-          shopFalse={shopFalse}
-          connectFalse={connectFalse}
-          mediaFalse={mediaFalse}
         />
-        <MediaPhoneUI mediaSelect={mediaSelect} />
-        <ConnectDiscordUI connectSelect={connectSelect} />
-        <ShopUI shopSelect={shopSelect} />
-        <SceneHeader
-          dragX={dragX}
-          shopSelect={shopSelect}
-          connectSelect={connectSelect}
-          mediaSelect={mediaSelect}
-          mediaTrue={mediaTrue}
-          mediaFalse={mediaFalse}
-          shopTrue={shopTrue}
-          shopFalse={shopFalse}
-          connectTrue={connectTrue}
-          connectFalse={connectFalse}
-        />
-        <Canvas
-          {...props}
-          style={{top: 0, left: 0, position: 'fixed'}}
-          dpr={dpr}
-          frameloop={location.pathname === '/' ? 'always' : 'demand'}
+      </button>
+      <EnterButton
+        mediaSelect={mediaSelect}
+        connectSelect={connectSelect}
+        shopSelect={shopSelect}
+        shopFalse={shopFalse}
+        connectFalse={connectFalse}
+        mediaFalse={mediaFalse}
+      />
+      <MediaPhoneUI mediaSelect={mediaSelect} />
+      <ConnectDiscordUI connectSelect={connectSelect} />
+      <ShopUI shopSelect={shopSelect} />
+      <SceneHeader
+        dragX={dragX}
+        shopSelect={shopSelect}
+        connectSelect={connectSelect}
+        mediaSelect={mediaSelect}
+        mediaTrue={mediaTrue}
+        mediaFalse={mediaFalse}
+        shopTrue={shopTrue}
+        shopFalse={shopFalse}
+        connectTrue={connectTrue}
+        connectFalse={connectFalse}
+      />
+      <Canvas
+        {...props}
+        style={{top: 0, left: 0, position: 'fixed'}}
+        dpr={dpr}
+        frameloop={location.pathname === '/' ? 'always' : 'demand'}
+      >
+        <PerformanceMonitor
+          onIncline={() => setDpr(2)}
+          onDecline={() => setDpr(1)}
         >
-          <PerformanceMonitor
-            onIncline={() => setDpr(2)}
-            onDecline={() => setDpr(1)}
-          >
-            {children}
-            <Preload all />
-            <fog attach="fog" args={['black', 1, 6]} />
-            <Effects disableGamma>
-              <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
-            </Effects>
-            <pointLight position={[40, 40, 40]} />
+          {children}
+          <Preload all />
+          <fog attach="fog" args={['black', 1, 6]} />
+          <Effects disableGamma>
+            <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
+          </Effects>
+          <pointLight position={[40, 40, 40]} />
+          <Suspense fallback={null}>
             <BakeShadows />
             <directionalLight
               intensity={0.3}
@@ -487,10 +487,10 @@ export default function Scene({children, ...props}) {
                 rotZ={rotZ}
               />
             </group>
-          </PerformanceMonitor>
-        </Canvas>
-        <Footer />
-      </Suspense>
+          </Suspense>
+        </PerformanceMonitor>
+      </Canvas>
+      <Footer />
       <Loader
         containerStyles={{background: 'black'}}
         dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`}
