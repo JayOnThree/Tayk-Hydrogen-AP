@@ -14,7 +14,6 @@ import {
   PerformanceMonitor,
 } from '@react-three/drei';
 import {useDrag} from '@use-gesture/react';
-import {motion} from 'framer-motion';
 
 import EnvImage from '../../public/glb/moonless_golf_2k.hdr';
 import Vending from './Vending';
@@ -170,6 +169,22 @@ function PerspectiveCameraAmimated({posX, posY, posZ, rotX, rotY, rotZ}) {
   return <PerspectiveCamera ref={camera} makeDefault fov={90} />;
 }
 
+function Loader({progress}) {
+  return (
+    <div
+      style={{
+        height: '100vh',
+        width: '100vw',
+        position: 'fixed',
+        zIndex: '50',
+        background: 'red',
+      }}
+    >
+      {progress.toFixed(0)}%
+    </div>
+  );
+}
+
 export default function Scene({children, ...props}) {
   const mesh = useRef(null);
   const location = useLocation();
@@ -267,13 +282,33 @@ export default function Scene({children, ...props}) {
     }
   }, [mediaSelect, dragX, shopSelect, connectSelect]);
 
-  function Loader() {
-    const { active, progress, errors, item, loaded, total } = useProgress();
-    return <Html center>{progress} % loaded</Html>;
-  }
+  // const {active, progress, errors, item, loaded, total} = useProgress();
+  // const hide = progress !== 100;
+  // console.log(total);
+
+  // function Loader() {
+  //   const {progress} = useProgress();
+  //   return (
+  //     <Html
+  //       center
+  //       style={{
+  //         height: '100vh',
+  //         width: '100vw',
+  //         position: 'fixed',
+  //         left: 0,
+  //         top: 0,
+  //         background: 'red',
+  //         zIndex: 50,
+  //       }}
+  //     >
+  //       <h2 style={{fontSize: '50pt'}}>{progress.toFixed(2)}%</h2>
+  //     </Html>
+  //   );
+  // }
 
   return (
     <>
+      {/* {hide && <Loader progress={progress} />} */}
       <button
         className="exit-section-button"
         style={{
@@ -330,13 +365,14 @@ export default function Scene({children, ...props}) {
           {children}
           <Preload all />
           <fog attach="fog" args={['black', 1, 6]} />
-          {/* <Effects disableGamma>
-            <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
-          </Effects> */}
-          <pointLight position={[40, 40, 40]} />
-          <Suspense fallback={<Loader />}>
-            {/* <BakeShadows /> */}
-            {/* <directionalLight
+          <Suspense fallback={null}>
+            <Effects disableGamma>
+              <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
+            </Effects>
+            <pointLight position={[40, 40, 40]} />
+
+            <BakeShadows />
+            <directionalLight
               intensity={0.3}
               color="#F4EF8E"
               position={[0, 100, 0]}
@@ -359,8 +395,8 @@ export default function Scene({children, ...props}) {
               castShadow
               shadow-mapSize-height={512}
               shadow-mapSize-width={512}
-            /> */}
-            {/* <Environment files={EnvImage} ground={{height: 16, radius: 100}} /> */}
+            />
+            <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
             <group ref={mesh} {...props} {...bind()}>
               <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
                 <group dispose={null} scale={0.5}>
@@ -374,7 +410,7 @@ export default function Scene({children, ...props}) {
                     }}
                   >
                     <Media mediaSelect={mediaSelect} />
-                    {!mediaSelect && (
+                    {/* {!mediaSelect && (
                       <Html
                         position={[4, 0.5, 3]}
                         color
@@ -399,7 +435,7 @@ export default function Scene({children, ...props}) {
                           View everything Tay K
                         </motion.h6>
                       </Html>
-                    )}
+                    )} */}
                   </group>
                   <group
                     onPointerOver={() => setShopHovered(true)}
@@ -410,7 +446,7 @@ export default function Scene({children, ...props}) {
                     }}
                   >
                     <Vending prodImages={prodImages} />
-                    {!shopSelect && (
+                    {/* {!shopSelect && (
                       <Html
                         position={[0, 1, -1.5]}
                         color
@@ -435,7 +471,7 @@ export default function Scene({children, ...props}) {
                           Shop for Tay K merch
                         </motion.h6>
                       </Html>
-                    )}
+                    )} */}
                   </group>
                   <group>
                     <mesh
@@ -454,7 +490,7 @@ export default function Scene({children, ...props}) {
                       />
                     </mesh>
                     {dragX.x < 100 && <Connect />}
-                    {!connectSelect && (
+                    {/* {!connectSelect && (
                       <Html
                         position={[3.7, 1, -3.5]}
                         color
@@ -479,7 +515,7 @@ export default function Scene({children, ...props}) {
                           Connect on Discord
                         </motion.h6>
                       </Html>
-                    )}
+                    )} */}
                   </group>
                 </group>
               </group>
