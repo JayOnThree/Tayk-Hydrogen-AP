@@ -23,6 +23,7 @@ import Connect from './Connect';
 import Court from './Court';
 import Footer from '~/components/Footer';
 import {SceneHeader, useSceneHeader} from '~/components/SceneHeader';
+import {useSceneLoader, SceneLoader} from './Loader';
 
 extend({UnrealBloomPass});
 
@@ -35,6 +36,21 @@ function EnterButton({
   shopFalse,
 }) {
   const navigate = useNavigate();
+  function navigationTimeout() {
+    mediaFalse();
+    connectFalse();
+    shopFalse();
+    setTimeout(() => {
+      navigate(
+        shopSelect
+          ? '/collections/shirts'
+          : mediaSelect
+          ? '/media'
+          : connectSelect && 'https://discord.com/',
+      );
+    }, 500);
+  }
+
   return (
     <button
       className="enter-button-landing"
@@ -43,18 +59,7 @@ function EnterButton({
         transform:
           shopSelect || connectSelect || mediaSelect ? 'scale(1)' : 'scale(0)',
       }}
-      onClick={() => {
-        navigate(
-          shopSelect
-            ? '/collections/shirts'
-            : mediaSelect
-            ? '/media'
-            : connectSelect && 'https://discord.com/',
-        );
-        mediaFalse();
-        connectFalse();
-        shopFalse();
-      }}
+      onClick={() => navigationTimeout()}
     >
       <h3 className="enter-button-text">ENTER</h3>
     </button>
@@ -189,6 +194,7 @@ export default function Scene({children, ...props}) {
     connectFalse,
     connectTrue,
   } = useSceneHeader();
+  const {active, progress, loaded, total} = useSceneLoader();
   const [shopHovered, setShopHovered] = useState(false);
   const [mediaHovered, setMediaHovered] = useState(false);
   const [connectHovered, setConnectHovered] = useState(false);
@@ -266,38 +272,38 @@ export default function Scene({children, ...props}) {
 
   return (
     <>
-      <button
-        className="exit-section-button"
-        style={{
-          transform:
-            shopSelect || connectSelect || mediaSelect
-              ? 'scale(1)'
-              : 'scale(0)',
-        }}
-      >
-        <img
-          src="/close.svg"
-          className="close-img"
-          alt="exit"
-          onClick={() => {
-            mediaFalse();
-            connectFalse();
-            shopFalse();
+      <Suspense fallback={null}>
+        <button
+          className="exit-section-button"
+          style={{
+            transform:
+              shopSelect || connectSelect || mediaSelect
+                ? 'scale(1)'
+                : 'scale(0)',
           }}
+        >
+          <img
+            src="/close.svg"
+            className="close-img"
+            alt="exit"
+            onClick={() => {
+              mediaFalse();
+              connectFalse();
+              shopFalse();
+            }}
+          />
+        </button>
+        <EnterButton
+          mediaSelect={mediaSelect}
+          connectSelect={connectSelect}
+          shopSelect={shopSelect}
+          shopFalse={shopFalse}
+          connectFalse={connectFalse}
+          mediaFalse={mediaFalse}
         />
-      </button>
-      <EnterButton
-        mediaSelect={mediaSelect}
-        connectSelect={connectSelect}
-        shopSelect={shopSelect}
-        shopFalse={shopFalse}
-        connectFalse={connectFalse}
-        mediaFalse={mediaFalse}
-      />
-      <MediaPhoneUI mediaSelect={mediaSelect} />
-      <ConnectDiscordUI connectSelect={connectSelect} />
-      <ShopUI shopSelect={shopSelect} />
-      {loaderState && (
+        <MediaPhoneUI mediaSelect={mediaSelect} />
+        <ConnectDiscordUI connectSelect={connectSelect} />
+        <ShopUI shopSelect={shopSelect} />
         <SceneHeader
           dragX={dragX}
           shopSelect={shopSelect}
@@ -310,24 +316,23 @@ export default function Scene({children, ...props}) {
           connectTrue={connectTrue}
           connectFalse={connectFalse}
         />
-      )}
-      <Canvas
-        {...props}
-        style={{top: 0, left: 0, position: 'fixed'}}
-        dpr={dpr}
-        frameloop={location.pathname === '/' ? 'always' : 'demand'}
-      >
-        <PerformanceMonitor
-          onIncline={() => setDpr(2)}
-          onDecline={() => setDpr(1)}
+        <Canvas
+          {...props}
+          style={{top: 0, left: 0, position: 'fixed'}}
+          dpr={dpr}
+          frameloop={location.pathname === '/' ? 'always' : 'demand'}
         >
-          {children}
-          <Preload all />
-          <fog attach="fog" args={['black', 1, 6]} />
-          <Effects disableGamma>
-            <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
-          </Effects>
-          <Suspense fallback={null}>
+          <PerformanceMonitor
+            onIncline={() => setDpr(2)}
+            onDecline={() => setDpr(1)}
+          >
+            {children}
+            <Preload all />
+            <fog attach="fog" args={['black', 1, 6]} />
+            <Effects disableGamma>
+              <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
+            </Effects>
+            {/* <Suspense fallback={null}> */}
             <pointLight position={[40, 40, 40]} />
             <BakeShadows />
             <directionalLight
@@ -486,16 +491,15 @@ export default function Scene({children, ...props}) {
                 rotZ={rotZ}
               />
             </group>
-          </Suspense>
-        </PerformanceMonitor>
-      </Canvas>
+            {/* </Suspense> */}
+          </PerformanceMonitor>
+        </Canvas>
+        <Footer />
+      </Suspense>
       <Loader
         containerStyles={{background: 'black'}}
         // initialState={(loaded) => setLoader(loaded)}
-        dataInterpolation={(p) => {
-          p === 100 && setLoader(true);
-          `Loading ${p.toFixed(0)}%`;
-        }}
+        dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`}
         dataStyles={{
           fontSize: 'clamp(25pt, 3vw, 40pt)',
           fontFamily: 'sans-serif',
@@ -503,7 +507,6 @@ export default function Scene({children, ...props}) {
         }}
         barStyles={{background: 'red'}}
       />
-      {loaderState && <Footer />}
     </>
   );
 }

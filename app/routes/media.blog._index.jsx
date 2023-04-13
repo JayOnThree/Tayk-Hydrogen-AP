@@ -3,7 +3,7 @@ import {useLoaderData, Link} from '@remix-run/react';
 import {json} from 'react-router';
 
 import Toolbar from '../components/Toolbar';
-import Header from '~/components/Header';
+// import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 
 const seo = () => ({
@@ -32,14 +32,14 @@ export default function Blog() {
       className="screen-container"
       style={{backgroundImage: `url('/BackgroundBlog.svg')`}}
     >
-      <Header
+      {/* <Header
         mediaHome={false}
         blogPost={false}
         productHome={false}
         product={false}
         landingPage={false}
         dragX={0}
-      />
+      /> */}
       <Toolbar />
       <Row
         style={{

@@ -1,7 +1,7 @@
 import {Container} from 'react-bootstrap';
 import {json} from '@shopify/remix-oxygen';
 
-import Header from '~/components/Header';
+// import Header from '~/components/Header';
 import Toolbar from '../components/Toolbar';
 import Footer from '~/components/Footer';
 
@@ -49,7 +49,7 @@ export default function music() {
       style={{backgroundImage: `url('/BackgroundMusic.svg')`}}
     >
       <Toolbar />
-      <Header />
+      {/* <Header /> */}
       <div className="music-div">
         <h1 className="music-header d-none d-md-none d-lg-block">Music</h1>
         {url &&

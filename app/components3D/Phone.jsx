@@ -11,7 +11,7 @@ export default function Model({...props}) {
   const group = useRef();
   const {nodes, materials} = useGLTF(Phone);
   return (
-    <group ref={group} {...props} dispose={null} scale={0.15} position={[3.9, 0.4, 0.6]} rotation={[-Math.PI / 2, 0, 0]}>
+    <group ref={group} {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={2.5}>
         <group rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
           <mesh

@@ -7,7 +7,7 @@ import {Money, ShopPayButton} from '@shopify/hydrogen-react';
 import {useMatches, useFetcher} from '@remix-run/react';
 
 import ProductOptions from '~/components/ProductOptions';
-import Header from '~/components/Header';
+// import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 
 const seo = ({data}) => ({
@@ -98,7 +98,7 @@ export default function ProductHandle() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Container fluid className="container-shop">
         <Row style={{height: '100%'}}>
           <Col

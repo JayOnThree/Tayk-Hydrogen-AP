@@ -4,7 +4,6 @@ import {motion} from 'framer-motion';
 import {json} from 'react-router';
 
 import Toolbar from '../components/Toolbar';
-import Header from '../components/Header';
 import Footer from '~/components/Footer';
 
 const seo = () => ({
@@ -36,14 +35,6 @@ export default function Media() {
       exit={{y: 1000, opacity: 0}}
       transition={{duration: 0.3}}
     >
-      <Header
-        mediaHome={true}
-        blogPost={false}
-        productHome={false}
-        product={false}
-        landingPage={false}
-        dragX={{x:0}}
-      />
       <Toolbar />
       <Row style={{width: '100%', marginTop: '15vh', marginLeft: 0}}>
         <Col

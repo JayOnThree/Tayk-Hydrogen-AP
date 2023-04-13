@@ -46,17 +46,6 @@ body {
   color: white;
 }
 
-.header-container-canvas {
-  width: 100%;
-  left: 0;
-  /* height: 10vh; */
-  height: 70px;
-  position: fixed;
-  z-index: 4;
-  top: 0;
-  color: white;
-}
-
 .header-div {
   backdrop-filter: blur(10px);
   border-radius: 0px 0px 50px 50px;

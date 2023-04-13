@@ -1,5 +1,7 @@
+/* eslint-disable hydrogen/prefer-image-component */
 import {useState} from 'react';
-import {useLocation} from '@remix-run/react';
+import {Link, useLocation} from '@remix-run/react';
+import {motion} from 'framer-motion';
 
 export function useSceneHeader(stateDefault = false) {
   const [shopSelect, setShopSelected] = useState(stateDefault);
@@ -51,7 +53,7 @@ function SceneHeader({
   const location = useLocation();
 
   return (
-    <div className="header-container-canvas">
+    <div className="header-container">
       {location.pathname === '/' && (
         <div
           className="header-div"
@@ -114,10 +116,7 @@ function SceneHeader({
               </div>
             </li>
             <li className="mainMenu-li">
-              <div
-                className="menu-text"
-                onClick={() => (connectSelect ? connectFalse() : connectTrue())}
-              >
+              <div className="menu-text" onClick={() => (connectSelect ? connectFalse() : connectTrue())}>
                 Connect
                 {connectSelect ? (
                   <img src="/paint.svg" alt="fingerprint" className="paint" />
@@ -138,6 +137,50 @@ function SceneHeader({
             </li>
           </ul>
         </div>
+      )}
+      {location.pathname !== '/' && (
+        <>
+          <motion.div
+            className="navigation-div"
+            // style={{width: mobile ? '40%' : tablet ? '30%' : '20%'}}
+            style={{width: '20%'}}
+            initial={{marginLeft: '-200px'}}
+            animate={{marginLeft: '0px'}}
+            exit={{marginLeft: '-200px'}}
+            transition={{duration: 0.5}}
+          >
+            <a onClick={() => history.back()} className="circle-router">
+              <img alt="back" src="/back.svg" className="icon-router" />
+            </a>
+            <Link to="/" className="circle-router">
+              <img alt="exit" src="/exit.svg" className="icon-router" />
+            </Link>
+          </motion.div>
+          <div className="header-container">
+            <motion.div
+              className="header-div"
+              animate={{
+                // width: mobile ? '60%' : tablet ? '70%' : '80%',
+                // marginLeft: mobile ? '40%' : tablet ? '30%' : '20%',
+                width: '80%',
+                marginLeft: '20%',
+              }}
+              exit={{width: '100%', marginLeft: 0}}
+            >
+              <div className="headline-text-nav">
+                {location.pathname.indexOf('media') > -1 && (
+                  <h5 className="menu-text-notLanding">Media</h5>
+                )}
+                {location.pathname.indexOf('collections') > -1 && (
+                  <h5 className="menu-text-notLanding">Shop</h5>
+                )}
+                {location.pathname.indexOf('products') > -1 && (
+                  <h5 className="menu-text-notLanding">Shop</h5>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </>
       )}
     </div>
   );

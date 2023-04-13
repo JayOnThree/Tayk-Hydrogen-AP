@@ -33,10 +33,7 @@ export default function Header() {
         exit={{marginLeft: '-200px'}}
         transition={{duration: 0.5}}
       >
-        <a
-          onClick={() => history.back()}
-          className="circle-router"
-        >
+        <a onClick={() => history.back()} className="circle-router">
           <img alt="back" src="/back.svg" className="icon-router" />
         </a>
         <Link to="/" className="circle-router">

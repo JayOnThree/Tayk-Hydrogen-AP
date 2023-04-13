@@ -7,7 +7,8 @@ import {AnalyticsPageType} from '@shopify/hydrogen';
 // import {motion} from 'framer-motion';
 
 import ProductCard from '~/components/ProductCard';
-import Header from '~/components/Header';
+// import Header from '~/components/Header';
+import {SceneHeader} from '~/components/SceneHeader';
 import Footer from '~/components/Footer';
 
 const seo = ({data}) => ({
@@ -125,7 +126,6 @@ export default function Collection() {
 
   return (
     <Container fluid className="container-shop" style={{overflow: 'hidden'}}>
-      <Header />
       <Row style={{height: '100px'}}>
         <Col lg={8} className="category-div">
           {collections.nodes.map((collection) => {
