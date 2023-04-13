@@ -1633,7 +1633,7 @@ a:hover {
     font-family: 'bpdotsunicasesquarebold';
     color: rgb(255, 55, 55);
     opacity: 0.9;
-    text-shadow:1px 1px 10px #ff3838, 1px 1px 10px #ff3838;
+    text-shadow:1px 1px 6px #ff3838, 1px 1px 6px #ff3838;
   }
 
   .home-marque-div {

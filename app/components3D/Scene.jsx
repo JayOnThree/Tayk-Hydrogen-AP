@@ -10,7 +10,7 @@ import {
   Html,
   Effects,
   PerspectiveCamera,
-  Loader,
+  useProgress,
   PerformanceMonitor,
 } from '@react-three/drei';
 import {useDrag} from '@use-gesture/react';
@@ -267,6 +267,11 @@ export default function Scene({children, ...props}) {
     }
   }, [mediaSelect, dragX, shopSelect, connectSelect]);
 
+  function Loader() {
+    const { active, progress, errors, item, loaded, total } = useProgress();
+    return <Html center>{progress} % loaded</Html>;
+  }
+
   return (
     <>
       <button
@@ -329,7 +334,7 @@ export default function Scene({children, ...props}) {
             <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
           </Effects>
           <pointLight position={[40, 40, 40]} />
-          <Suspense fallback={null}>
+          <Suspense fallback={<Loader />}>
             <BakeShadows />
             <directionalLight
               intensity={0.3}
@@ -491,16 +496,6 @@ export default function Scene({children, ...props}) {
         </PerformanceMonitor>
       </Canvas>
       <Footer />
-      <Loader
-        containerStyles={{background: 'black'}}
-        dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`}
-        dataStyles={{
-          fontSize: 'clamp(25pt, 3vw, 40pt)',
-          fontFamily: 'sans-serif',
-          WebkitTextStroke: '5px white',
-        }}
-        barStyles={{background: 'red'}}
-      />
     </>
   );
 }
