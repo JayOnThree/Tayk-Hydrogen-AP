@@ -4,7 +4,6 @@ import {motion} from 'framer-motion';
 import {json} from 'react-router';
 
 import Toolbar from '../components/Toolbar';
-import Footer from '~/components/Footer';
 
 const seo = () => ({
   title: 'Media',
@@ -82,7 +81,6 @@ export default function Media() {
           </Link>
         </Col>
       </Row>
-      <Footer />
     </MotionContainer>
   );
 }

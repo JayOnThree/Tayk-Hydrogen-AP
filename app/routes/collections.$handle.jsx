@@ -7,9 +7,6 @@ import {AnalyticsPageType} from '@shopify/hydrogen';
 // import {motion} from 'framer-motion';
 
 import ProductCard from '~/components/ProductCard';
-// import Header from '~/components/Header';
-import {SceneHeader} from '~/components/SceneHeader';
-import Footer from '~/components/Footer';
 
 const seo = ({data}) => ({
   title: data?.collection?.title,
@@ -227,7 +224,6 @@ export default function Collection() {
           </div>
         </Col>
       </Row>
-      <Footer />
     </Container>
   );
 }

@@ -1,5 +1,5 @@
 /* eslint-disable hydrogen/prefer-image-component */
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Link, useLocation} from '@remix-run/react';
 import {motion} from 'framer-motion';
 
@@ -51,6 +51,23 @@ function SceneHeader({
   connectFalse,
 }) {
   const location = useLocation();
+  const [mobile, setMobile] = useState();
+  const [tablet, setTablet] = useState();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setMobile(window.innerWidth < 600);
+      setTablet(window.innerWidth < 900 && window.innerWidth > 600);
+    }
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setMobile(window.innerWidth < 600);
+      setTablet(window.innerWidth < 900 && window.innerWidth > 600);
+    }
+    window.addEventListener('resize', handleResize);
+  });
 
   return (
     <div className="header-container">
@@ -142,11 +159,13 @@ function SceneHeader({
         <>
           <motion.div
             className="navigation-div"
-            // style={{width: mobile ? '40%' : tablet ? '30%' : '20%'}}
-            style={{width: '20%'}}
-            initial={{marginLeft: '-200px'}}
-            animate={{marginLeft: '0px'}}
-            exit={{marginLeft: '-200px'}}
+            style={{
+              width: mobile ? '40%' : tablet ? '30%' : '20%',
+              marginLeft: '0px',
+            }}
+            // initial={{marginLeft: '-200px'}}
+            // animate={{marginLeft: '0px'}}
+            // exit={{marginLeft: '-200px'}}
             transition={{duration: 0.5}}
           >
             <a onClick={() => history.back()} className="circle-router">
@@ -160,10 +179,8 @@ function SceneHeader({
             <motion.div
               className="header-div"
               animate={{
-                // width: mobile ? '60%' : tablet ? '70%' : '80%',
-                // marginLeft: mobile ? '40%' : tablet ? '30%' : '20%',
-                width: '80%',
-                marginLeft: '20%',
+                width: mobile ? '60%' : tablet ? '70%' : '80%',
+                marginLeft: mobile ? '40%' : tablet ? '30%' : '20%',
               }}
               exit={{width: '100%', marginLeft: 0}}
             >

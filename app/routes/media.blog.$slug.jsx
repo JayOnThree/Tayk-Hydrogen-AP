@@ -2,7 +2,6 @@ import {Container, Col, Row} from 'react-bootstrap';
 import {useLoaderData} from '@remix-run/react';
 import {json} from 'react-router';
 
-// import Header from '../components/Header';
 import Toolbar from '../components/Toolbar';
 import Footer from '~/components/Footer';
 
@@ -39,14 +38,6 @@ export default function Post() {
       className="screen-container"
       style={{backgroundImage: `url('/BackgroundBlog.svg')`}}
     >
-      {/* <Header
-        mediaHome={false}
-        blogPost={true}
-        productHome={false}
-        product={false}
-        landingPage={false}
-        dragX={0}
-      /> */}
       <Toolbar />
       <Row
         style={{
@@ -73,7 +64,6 @@ export default function Post() {
           </div>
         </Col>
       </Row>
-      <Footer />
     </Container>
   );
 }

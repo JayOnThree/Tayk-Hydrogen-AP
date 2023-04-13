@@ -1,9 +1,7 @@
 import {Container} from 'react-bootstrap';
 import {json} from '@shopify/remix-oxygen';
 
-import Toolbar from '../components/Toolbar';
-// import Header from '../components/Header';
-import Footer from '~/components/Footer';
+import Toolbar from '~/components/Toolbar';
 
 export async function loader() {
   return json({
@@ -63,14 +61,6 @@ export default function Videos() {
       className="screen-container"
       style={{backgroundImage: `url('/BackgroundVideos.svg')`}}
     >
-      {/* <Header
-        mediaHome={false}
-        media={true}
-        blogPost={false}
-        productHome={false}
-        product={false}
-        dragX={0}
-      /> */}
       <Toolbar home={false} blogPost={false} />
       <div className="backgroundLayer">
         <h1 className="music-header d-none d-md-none d-lg-block">Videos</h1>
@@ -83,7 +73,6 @@ export default function Videos() {
             );
           })}
       </div>
-      <Footer />
     </Container>
   );
 }

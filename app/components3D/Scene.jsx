@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {Suspense, useRef, useState, useEffect, useTransition} from 'react';
-import {Canvas, extend, useFrame, useThree} from '@react-three/fiber';
+import {Canvas, extend, useFrame} from '@react-three/fiber';
 import {UnrealBloomPass} from 'three-stdlib';
 import {useNavigate, useLocation} from '@remix-run/react';
 import {
@@ -23,7 +23,6 @@ import Connect from './Connect';
 import Court from './Court';
 import Footer from '~/components/Footer';
 import {SceneHeader, useSceneHeader} from '~/components/SceneHeader';
-import {useSceneLoader, SceneLoader} from './Loader';
 
 extend({UnrealBloomPass});
 
@@ -194,12 +193,10 @@ export default function Scene({children, ...props}) {
     connectFalse,
     connectTrue,
   } = useSceneHeader();
-  const {active, progress, loaded, total} = useSceneLoader();
   const [shopHovered, setShopHovered] = useState(false);
   const [mediaHovered, setMediaHovered] = useState(false);
   const [connectHovered, setConnectHovered] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const [loaderState, setLoader] = useState(false);
   // const regress = useThree((state) => state.performance.regress);
 
   useEffect(() => {
@@ -332,7 +329,6 @@ export default function Scene({children, ...props}) {
             <Effects disableGamma>
               <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
             </Effects>
-            {/* <Suspense fallback={null}> */}
             <pointLight position={[40, 40, 40]} />
             <BakeShadows />
             <directionalLight
@@ -491,14 +487,12 @@ export default function Scene({children, ...props}) {
                 rotZ={rotZ}
               />
             </group>
-            {/* </Suspense> */}
           </PerformanceMonitor>
         </Canvas>
         <Footer />
       </Suspense>
       <Loader
         containerStyles={{background: 'black'}}
-        // initialState={(loaded) => setLoader(loaded)}
         dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`}
         dataStyles={{
           fontSize: 'clamp(25pt, 3vw, 40pt)',

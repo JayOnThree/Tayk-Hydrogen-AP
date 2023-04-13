@@ -1,10 +1,6 @@
-// import {useState} from 'react';
 import {useLoaderData, useLocation} from '@remix-run/react';
 import {Container, Row, Col} from 'react-bootstrap';
 import {json} from 'react-router';
-
-// import Header from '~/components/Header';
-import Footer from '~/components/Footer';
 
 export async function loader({context}) {
   const {policies} = await context.storefront.query(POLICY_QUERIES);
@@ -22,7 +18,6 @@ export default function Policies() {
 
   return (
     <Container fluid className="screen-container" style={{overflow: 'hidden'}}>
-      {/* <Header /> */}
       <Row>
         <Col lg={{offset: 1, span: 10}} style={{padding: '20px'}}>
           <h1 className="policy-header-text">
@@ -38,7 +33,6 @@ export default function Policies() {
           )}
         </Col>
       </Row>
-      <Footer />
     </Container>
   );
 }
