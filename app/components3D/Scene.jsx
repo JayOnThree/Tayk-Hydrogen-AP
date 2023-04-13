@@ -330,13 +330,13 @@ export default function Scene({children, ...props}) {
           {children}
           <Preload all />
           <fog attach="fog" args={['black', 1, 6]} />
-          <Effects disableGamma>
+          {/* <Effects disableGamma>
             <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
-          </Effects>
+          </Effects> */}
           <pointLight position={[40, 40, 40]} />
           <Suspense fallback={<Loader />}>
-            <BakeShadows />
-            <directionalLight
+            {/* <BakeShadows /> */}
+            {/* <directionalLight
               intensity={0.3}
               color="#F4EF8E"
               position={[0, 100, 0]}
@@ -359,8 +359,8 @@ export default function Scene({children, ...props}) {
               castShadow
               shadow-mapSize-height={512}
               shadow-mapSize-width={512}
-            />
-            <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
+            /> */}
+            {/* <Environment files={EnvImage} ground={{height: 16, radius: 100}} /> */}
             <group ref={mesh} {...props} {...bind()}>
               <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
                 <group dispose={null} scale={0.5}>
