@@ -330,7 +330,7 @@ export default function Scene({children, ...props}) {
             />
             <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
             <group ref={mesh} {...props} {...bind()}>
-              <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
+              {/* <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
                 <group dispose={null} scale={0.5}>
                   <Court />
                   <group
@@ -450,7 +450,7 @@ export default function Scene({children, ...props}) {
                     )}
                   </group>
                 </group>
-              </group>
+              </group> */}
               <AnimatedCam {...spring} makeDefault fov={90} />
             </group>
           </Suspense>
