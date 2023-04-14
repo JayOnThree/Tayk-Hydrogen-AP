@@ -12,10 +12,11 @@ import {
   PerspectiveCamera,
   useProgress,
   PerformanceMonitor,
+  CameraControls,
 } from '@react-three/drei';
 import {useDrag} from '@use-gesture/react';
 import {useSpring, animated} from '@react-spring/three';
-import {motion} from 'framer-motion';
+import {motion} from 'framer-motion'; 
 
 import EnvImage from '../../public/glb/moonless_golf_2k.hdr';
 import Vending from './Vending';
@@ -452,7 +453,16 @@ export default function Scene({children, ...props}) {
                   {dragX.x < 100 && <Connect />}
                 </group>
               </group>
-              <AnimatedCam {...spring} makeDefault fov={90} />
+              <CameraControls
+                minPolarAngle={Math.PI / 2}
+                maxPolarAngle={Math.PI / 2}
+                minAzimuthAngle={0}
+                maxAzimuthAngle={Math.PI / 2}
+                boundaryFriction={0.5}
+                minZoom={0.5}
+                maxZoom={0.5}
+              />
+              {/* <AnimatedCam {...spring} makeDefault fov={90} /> */}
             </group>
           </Suspense>
         </PerformanceMonitor>
