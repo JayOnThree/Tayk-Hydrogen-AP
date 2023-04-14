@@ -333,7 +333,7 @@ export default function Scene({children, ...props}) {
               <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
                 <group dispose={null} scale={0.5}>
                   <Court />
-                  {/* <group
+                  <group
                     onPointerOver={() => setMediaHovered(true)}
                     onPointerOut={() => setMediaHovered(false)}
                     onClick={(event) => {
@@ -369,7 +369,7 @@ export default function Scene({children, ...props}) {
                       </Html>
                     )}
                   </group>
-                  <group
+                  {/* <group
                     onPointerOver={() => setShopHovered(true)}
                     onPointerOut={() => setShopHovered(false)}
                     onClick={(event) => {
