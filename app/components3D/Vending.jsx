@@ -6,12 +6,12 @@ import Scene from '../../public/glb/scene.glb';
 
 export default function Media({prodImages}) {
   const {nodes, materials} = useGLTF(Scene);
-  // const imgUrl = prodImages.map((images) => images.variants.nodes[0].image.url);
-  // const batchTextures = useLoader(TextureLoader, imgUrl);
+  const imgUrl = prodImages.map((images) => images.variants.nodes[0].image.url);
+  const batchTextures = useLoader(TextureLoader, imgUrl);
 
   return (
     <group>
-      {/* {batchTextures.map((textures, i) => {
+      {batchTextures.map((textures, i) => {
         const row1 = i >= 0 && i <= 2;
         const row2 = i >= 3 && i <= 5;
         const row3 = i >= 6 && i <= 8;
@@ -36,7 +36,7 @@ export default function Media({prodImages}) {
             />
           </mesh>
         );
-      })} */}
+      })}
       <group
         position={[0.8, -0.03, -0.98]}
         rotation={[-Math.PI / 2, 0, 0]}

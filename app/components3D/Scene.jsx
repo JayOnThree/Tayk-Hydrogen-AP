@@ -134,58 +134,21 @@ function ShopUI({shopSelect}) {
   );
 }
 
-// function PerspectiveCameraAmimated({posX, posY, posZ, rotX, rotY, rotZ}) {
-//   const camera = useRef();
-//   useFrame(() => {
-//     camera.current.rotation.x = THREE.MathUtils.lerp(
-//       camera.current.rotation.x,
-//       rotX,
-//       0.1,
-//     );
-//     camera.current.rotation.y = THREE.MathUtils.lerp(
-//       camera.current.rotation.y,
-//       rotY,
-//       0.1,
-//     );
-//     camera.current.rotation.z = THREE.MathUtils.lerp(
-//       camera.current.rotation.z,
-//       rotZ,
-//       0.1,
-//     );
-//     camera.current.position.x = THREE.MathUtils.lerp(
-//       camera.current.position.x,
-//       posX,
-//       0.1,
-//     );
-//     camera.current.position.y = THREE.MathUtils.lerp(
-//       camera.current.position.y,
-//       posY,
-//       0.1,
-//     );
-//     camera.current.position.z = THREE.MathUtils.lerp(
-//       camera.current.position.z,
-//       posZ,
-//       0.1,
-//     );
-//   });
-//   return <PerspectiveCamera ref={camera} makeDefault fov={90} />;
-// }
-
-// function Loader({progress}) {
-//   return (
-//     <div
-//       style={{
-//         height: '100vh',
-//         width: '100vw',
-//         position: 'fixed',
-//         zIndex: '50',
-//         background: 'red',
-//       }}
-//     >
-//       {progress.toFixed(0)}%
-//     </div>
-//   );
-// }
+function Loader({progress}) {
+  return (
+    <div
+      style={{
+        height: '100vh',
+        width: '100vw',
+        position: 'fixed',
+        zIndex: '50',
+        background: 'red',
+      }}
+    >
+      {progress.toFixed(0)}%
+    </div>
+  );
+}
 
 export default function Scene({children, ...props}) {
   const mesh = useRef(null);
@@ -234,52 +197,6 @@ export default function Scene({children, ...props}) {
     },
   );
 
-  // useEffect(() => {
-  //   if (mediaSelect) {
-  //     startTransition(() => {
-  //       setPosX(-1.39);
-  //       setPosY(0.1);
-  //       setPosZ(1.5);
-  //       setRotX(0.1);
-  //       setRotY(3.5);
-  //       setRotZ(0.1);
-  //     });
-  //   }
-
-  //   if (shopSelect) {
-  //     startTransition(() => {
-  //       setPosX(-2.55);
-  //       setPosY(0.1);
-  //       setPosZ(1);
-  //       setRotX(0);
-  //       setRotY(1.45);
-  //       setRotZ(0);
-  //     });
-  //   }
-
-  //   if (connectSelect) {
-  //     startTransition(() => {
-  //       setPosX(-2.8);
-  //       setPosY(0.2);
-  //       setPosZ(-0.1);
-  //       setRotX(-0.1);
-  //       setRotY(-0.7);
-  //       setRotZ(0.1);
-  //     });
-  //   }
-
-  //   if (!mediaSelect && !shopSelect && !connectSelect) {
-  //     startTransition(() => {
-  //       setPosX(-1.8);
-  //       setPosY(0.1);
-  //       setPosZ(0.7);
-  //       setRotX(0);
-  //       setRotY(dragX.x / 100);
-  //       setRotZ(0);
-  //     });
-  //   }
-  // }, [mediaSelect, dragX, shopSelect, connectSelect]);
-
   useEffect(() => {
     if (mediaSelect) {
       set({
@@ -312,9 +229,9 @@ export default function Scene({children, ...props}) {
 
   const AnimatedCam = animated(PerspectiveCamera);
 
-  // const {active, progress, errors, item, loaded, total} = useProgress();
-  // const hide = progress !== 100;
-  // console.log(item);
+  const {active, progress, errors, item, loaded, total} = useProgress();
+  const hide = progress !== 100;
+  console.log(progress);
 
   const [spring, set] = useSpring(() => ({
     rotation: [...rotation],
@@ -324,7 +241,7 @@ export default function Scene({children, ...props}) {
 
   return (
     <>
-      {/* {hide && <Loader progress={progress} />} */}
+      {hide && <Loader progress={progress} />}
       <button
         className="exit-section-button"
         style={{
@@ -386,7 +303,6 @@ export default function Scene({children, ...props}) {
               <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
             </Effects>
             <pointLight position={[40, 40, 40]} />
-
             <BakeShadows />
             <directionalLight
               intensity={0.3}
@@ -461,7 +377,7 @@ export default function Scene({children, ...props}) {
                       event.stopPropagation();
                     }}
                   >
-                    <Vending />
+                    <Vending prodImages={prodImages} />
                     {!shopSelect && (
                       <Html
                         position={[0, 1, -1.5]}
@@ -490,7 +406,7 @@ export default function Scene({children, ...props}) {
                     )}
                   </group>
                   <group>
-                  <mesh
+                    <mesh
                       position={[3.3, 0.5, -3.8]}
                       onClick={() =>
                         connectSelect ? connectFalse() : connectTrue()
