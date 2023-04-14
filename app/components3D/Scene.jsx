@@ -342,7 +342,7 @@ export default function Scene({children, ...props}) {
                     }}
                   >
                     <Media mediaSelect={mediaSelect} />
-                    {!mediaSelect && (
+                    {/* {!mediaSelect && (
                       <Html
                         position={[4, 0.5, 3]}
                         color
@@ -367,7 +367,7 @@ export default function Scene({children, ...props}) {
                           View everything Tay K
                         </motion.h6>
                       </Html>
-                    )}
+                    )} */}
                   </group>
                   {/* <group
                     onPointerOver={() => setShopHovered(true)}
