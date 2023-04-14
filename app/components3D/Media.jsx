@@ -6,53 +6,53 @@ import {useFrame} from '@react-three/fiber';
 import Scene from '../../public/glb/scene.glb';
 import Phone from './Phone';
 
-export default function Media({mediaSelect}) {
+export default function Media() {
   const {nodes, materials} = useGLTF(Scene);
   const ref = useRef();
 
-  useFrame(() => {
-    ref.current.position.y = THREE.MathUtils.lerp(
-      ref.current.position.y,
-      mediaSelect ? 0.5 : 0.4,
-      0.02,
-    );
-    ref.current.rotation.x = THREE.MathUtils.lerp(
-      ref.current.rotation.x,
-      mediaSelect ? -Math.PI / 1 : -Math.PI / 2,
-      0.5,
-    );
-    ref.current.rotation.z = THREE.MathUtils.lerp(
-      ref.current.rotation.z,
-      mediaSelect ? 3 : 0,
-      0.1,
-    );
-    ref.current.scale.x = THREE.MathUtils.lerp(
-      ref.current.scale.x,
-      mediaSelect ? 0.45 : 0.15,
-      0.1,
-    );
-    ref.current.scale.y = THREE.MathUtils.lerp(
-      ref.current.scale.y,
-      mediaSelect ? 0.45 : 0.15,
-      0.1,
-    );
-    ref.current.scale.z = THREE.MathUtils.lerp(
-      ref.current.scale.z,
-      mediaSelect ? 0.45 : 0.15,
-      0.1,
-    );
-  });
+  // useFrame(() => {
+  //   ref.current.position.y = THREE.MathUtils.lerp(
+  //     ref.current.position.y,
+  //     mediaSelect ? 0.5 : 0.4,
+  //     0.02,
+  //   );
+  //   ref.current.rotation.x = THREE.MathUtils.lerp(
+  //     ref.current.rotation.x,
+  //     mediaSelect ? -Math.PI / 1 : -Math.PI / 2,
+  //     0.5,
+  //   );
+  //   ref.current.rotation.z = THREE.MathUtils.lerp(
+  //     ref.current.rotation.z,
+  //     mediaSelect ? 3 : 0,
+  //     0.1,
+  //   );
+  //   ref.current.scale.x = THREE.MathUtils.lerp(
+  //     ref.current.scale.x,
+  //     mediaSelect ? 0.45 : 0.15,
+  //     0.1,
+  //   );
+  //   ref.current.scale.y = THREE.MathUtils.lerp(
+  //     ref.current.scale.y,
+  //     mediaSelect ? 0.45 : 0.15,
+  //     0.1,
+  //   );
+  //   ref.current.scale.z = THREE.MathUtils.lerp(
+  //     ref.current.scale.z,
+  //     mediaSelect ? 0.45 : 0.15,
+  //     0.1,
+  //   );
+  // });
 
   return (
     <group>
-      <group
+      {/* <group
         scale={0.15}
         position={[3.9, 0.4, 0.6]}
         rotation={[-Math.PI / 2, 0, 0]}
         ref={ref}
       >
         <Phone />
-      </group>
+      </group> */}
       <group
         position={[2.96, -0.05, 3.53]}
         rotation={[-Math.PI / 2, 0, -0.93]}
