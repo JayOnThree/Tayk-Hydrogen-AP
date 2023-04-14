@@ -334,12 +334,12 @@ export default function Scene({children, ...props}) {
                 <group dispose={null} scale={0.5}>
                   <Court />
                   <group
-                    onPointerOver={() => setMediaHovered(true)}
-                    onPointerOut={() => setMediaHovered(false)}
-                    onClick={(event) => {
-                      mediaSelect ? mediaFalse() : mediaTrue();
-                      event.stopPropagation();
-                    }}
+                    // onPointerOver={() => setMediaHovered(true)}
+                    // onPointerOut={() => setMediaHovered(false)}
+                    // onClick={(event) => {
+                    //   mediaSelect ? mediaFalse() : mediaTrue();
+                    //   event.stopPropagation();
+                    // }}
                   >
                     <Media />
                     {/* {!mediaSelect && (
