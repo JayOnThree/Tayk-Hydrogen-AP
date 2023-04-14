@@ -273,7 +273,7 @@ export default function Scene({children, ...props}) {
       <MediaPhoneUI mediaSelect={mediaSelect} />
       <ConnectDiscordUI connectSelect={connectSelect} />
       <ShopUI shopSelect={shopSelect} />
-      <SceneHeader
+      {/* <SceneHeader
         dragX={dragX}
         shopSelect={shopSelect}
         connectSelect={connectSelect}
@@ -284,7 +284,7 @@ export default function Scene({children, ...props}) {
         shopFalse={shopFalse}
         connectTrue={connectTrue}
         connectFalse={connectFalse}
-      />
+      /> */}
       <Canvas
         {...props}
         style={{top: 0, left: 0, position: 'fixed'}}
