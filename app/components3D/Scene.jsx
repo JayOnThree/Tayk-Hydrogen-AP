@@ -14,6 +14,8 @@ import {
   PerformanceMonitor,
 } from '@react-three/drei';
 import {useDrag} from '@use-gesture/react';
+import {useSpring, animated} from '@react-spring/three';
+import {motion} from 'framer-motion';
 
 import EnvImage from '../../public/glb/moonless_golf_2k.hdr';
 import Vending from './Vending';
@@ -169,21 +171,21 @@ function PerspectiveCameraAmimated({posX, posY, posZ, rotX, rotY, rotZ}) {
   return <PerspectiveCamera ref={camera} makeDefault fov={90} />;
 }
 
-function Loader({progress}) {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        width: '100vw',
-        position: 'fixed',
-        zIndex: '50',
-        background: 'red',
-      }}
-    >
-      {progress.toFixed(0)}%
-    </div>
-  );
-}
+// function Loader({progress}) {
+//   return (
+//     <div
+//       style={{
+//         height: '100vh',
+//         width: '100vw',
+//         position: 'fixed',
+//         zIndex: '50',
+//         background: 'red',
+//       }}
+//     >
+//       {progress.toFixed(0)}%
+//     </div>
+//   );
+// }
 
 export default function Scene({children, ...props}) {
   const mesh = useRef(null);
@@ -212,6 +214,8 @@ export default function Scene({children, ...props}) {
   const [mediaHovered, setMediaHovered] = useState(false);
   const [connectHovered, setConnectHovered] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [rotation, setRotation] = useState([0, 0, 0]);
+  const [position, setPosition] = useState([0, 0, 0]);
   // const regress = useThree((state) => state.performance.regress);
 
   useEffect(() => {
@@ -236,75 +240,71 @@ export default function Scene({children, ...props}) {
     },
   );
 
+  // useEffect(() => {
+  //   if (mediaSelect) {
+  //     startTransition(() => {
+  //       setPosX(-1.39);
+  //       setPosY(0.1);
+  //       setPosZ(1.5);
+  //       setRotX(0.1);
+  //       setRotY(3.5);
+  //       setRotZ(0.1);
+  //     });
+  //   }
+
+  //   if (shopSelect) {
+  //     startTransition(() => {
+  //       setPosX(-2.55);
+  //       setPosY(0.1);
+  //       setPosZ(1);
+  //       setRotX(0);
+  //       setRotY(1.45);
+  //       setRotZ(0);
+  //     });
+  //   }
+
+  //   if (connectSelect) {
+  //     startTransition(() => {
+  //       setPosX(-2.8);
+  //       setPosY(0.2);
+  //       setPosZ(-0.1);
+  //       setRotX(-0.1);
+  //       setRotY(-0.7);
+  //       setRotZ(0.1);
+  //     });
+  //   }
+
+  //   if (!mediaSelect && !shopSelect && !connectSelect) {
+  //     startTransition(() => {
+  //       setPosX(-1.8);
+  //       setPosY(0.1);
+  //       setPosZ(0.7);
+  //       setRotX(0);
+  //       setRotY(dragX.x / 100);
+  //       setRotZ(0);
+  //     });
+  //   }
+  // }, [mediaSelect, dragX, shopSelect, connectSelect]);
+
   useEffect(() => {
-    if (mediaSelect) {
-      startTransition(() => {
-        setPosX(-1.39);
-        setPosY(0.1);
-        setPosZ(1.5);
-        setRotX(0.1);
-        setRotY(3.5);
-        setRotZ(0.1);
-      });
-    }
-
-    if (shopSelect) {
-      startTransition(() => {
-        setPosX(-2.55);
-        setPosY(0.1);
-        setPosZ(1);
-        setRotX(0);
-        setRotY(1.45);
-        setRotZ(0);
-      });
-    }
-
-    if (connectSelect) {
-      startTransition(() => {
-        setPosX(-2.8);
-        setPosY(0.2);
-        setPosZ(-0.1);
-        setRotX(-0.1);
-        setRotY(-0.7);
-        setRotZ(0.1);
-      });
-    }
-
     if (!mediaSelect && !shopSelect && !connectSelect) {
-      startTransition(() => {
-        setPosX(-1.8);
-        setPosY(0.1);
-        setPosZ(0.7);
-        setRotX(0);
-        setRotY(dragX.x / 100);
-        setRotZ(0);
+      set({
+        rotation: [0, dragX.x / 100, 0],
+        position: [-1.8, 0.1, 0.7],
       });
     }
-  }, [mediaSelect, dragX, shopSelect, connectSelect]);
+  }, [dragX, mediaSelect, shopSelect, connectSelect]);
 
-  // const {active, progress, errors, item, loaded, total} = useProgress();
-  // const hide = progress !== 100;
-  // console.log(total);
+  const AnimatedCam = animated(PerspectiveCamera);
 
-  // function Loader() {
-  //   const {progress} = useProgress();
-  //   return (
-  //     <Html
-  //       center
-  //       style={{
-  //         height: '100vh',
-  //         width: '100vw',
-  //         position: 'fixed',
-  //         left: 0,
-  //         top: 0,
-  //         background: 'red',
-  //         zIndex: 50,
-  //       }}
-  //     >
-  //       <h2 style={{fontSize: '50pt'}}>{progress.toFixed(2)}%</h2>
-  //     </Html>
-  //   );
-  // }
+  const {active, progress, errors, item, loaded, total} = useProgress();
+  const hide = progress !== 100;
+  console.log(item);
+
+  const [spring, set] = useSpring(() => ({
+    rotation: [...rotation],
+    config: {mass: 1, friction: 40, tension: 400},
+  }));
 
   return (
     <>
@@ -401,16 +401,10 @@ export default function Scene({children, ...props}) {
               <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
                 <group dispose={null} scale={0.5}>
                   <Court />
-                  <group
-                    onPointerOver={() => setMediaHovered(true)}
-                    onPointerOut={() => setMediaHovered(false)}
-                    onClick={(event) => {
-                      mediaSelect ? mediaFalse() : mediaTrue();
-                      event.stopPropagation();
-                    }}
-                  >
+                  <Media mediaSelect={mediaSelect} />
+                  {/* <group>
                     <Media mediaSelect={mediaSelect} />
-                    {/* {!mediaSelect && (
+                    {!mediaSelect && (
                       <Html
                         position={[4, 0.5, 3]}
                         color
@@ -435,18 +429,11 @@ export default function Scene({children, ...props}) {
                           View everything Tay K
                         </motion.h6>
                       </Html>
-                    )} */}
-                  </group>
-                  <group
-                    onPointerOver={() => setShopHovered(true)}
-                    onPointerOut={() => setShopHovered(false)}
-                    onClick={(event) => {
-                      shopSelect ? shopFalse() : shopTrue();
-                      event.stopPropagation();
-                    }}
-                  >
-                    <Vending prodImages={prodImages} />
-                    {/* {!shopSelect && (
+                    )}
+                  </group> */}
+                  {/* <group>
+                    <Vending />
+                    {!shopSelect && (
                       <Html
                         position={[0, 1, -1.5]}
                         color
@@ -471,17 +458,10 @@ export default function Scene({children, ...props}) {
                           Shop for Tay K merch
                         </motion.h6>
                       </Html>
-                    )} */}
-                  </group>
-                  <group>
-                    <mesh
-                      position={[3.3, 0.5, -3.8]}
-                      onClick={() =>
-                        connectSelect ? connectFalse() : connectTrue()
-                      }
-                      onPointerOver={() => setConnectHovered(true)}
-                      onPointerOut={() => setConnectHovered(false)}
-                    >
+                    )}
+                  </group> */}
+                  {/* <group>
+                    <mesh position={[3.3, 0.5, -3.8]}>
                       <boxGeometry args={[1, 1, 1.2]} />
                       <meshPhongMaterial
                         color="white"
@@ -490,7 +470,7 @@ export default function Scene({children, ...props}) {
                       />
                     </mesh>
                     {dragX.x < 100 && <Connect />}
-                    {/* {!connectSelect && (
+                    {!connectSelect && (
                       <Html
                         position={[3.7, 1, -3.5]}
                         color
@@ -515,18 +495,19 @@ export default function Scene({children, ...props}) {
                           Connect on Discord
                         </motion.h6>
                       </Html>
-                    )} */}
-                  </group>
+                    )}
+                  </group> */}
                 </group>
               </group>
-              <PerspectiveCameraAmimated
+              {/* <PerspectiveCameraAmimated
                 posX={posX}
                 posY={posY}
                 posZ={posZ}
                 rotX={rotX}
                 rotY={rotY}
                 rotZ={rotZ}
-              />
+              /> */}
+              <AnimatedCam {...spring} makeDefault fov={90} />
             </group>
           </Suspense>
         </PerformanceMonitor>
