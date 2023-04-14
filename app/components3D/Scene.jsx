@@ -402,6 +402,8 @@ export default function Scene({children, ...props}) {
                 <group dispose={null} scale={0.5}>
                   <Court />
                   <Media mediaSelect={mediaSelect} />
+                  <Vending />
+                  {dragX.x < 100 && <Connect />}
                   {/* <group>
                     <Media mediaSelect={mediaSelect} />
                     {!mediaSelect && (
