@@ -449,6 +449,7 @@ export default function Scene({children, ...props}) {
                       </Html>
                     )}
                   </group> */}
+                  {dragX.x < 100 && <Connect />}
                 </group>
               </group>
               <AnimatedCam {...spring} makeDefault fov={90} />
