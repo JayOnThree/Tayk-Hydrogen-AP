@@ -134,42 +134,42 @@ function ShopUI({shopSelect}) {
   );
 }
 
-function PerspectiveCameraAmimated({posX, posY, posZ, rotX, rotY, rotZ}) {
-  const camera = useRef();
-  useFrame(() => {
-    camera.current.rotation.x = THREE.MathUtils.lerp(
-      camera.current.rotation.x,
-      rotX,
-      0.1,
-    );
-    camera.current.rotation.y = THREE.MathUtils.lerp(
-      camera.current.rotation.y,
-      rotY,
-      0.1,
-    );
-    camera.current.rotation.z = THREE.MathUtils.lerp(
-      camera.current.rotation.z,
-      rotZ,
-      0.1,
-    );
-    camera.current.position.x = THREE.MathUtils.lerp(
-      camera.current.position.x,
-      posX,
-      0.1,
-    );
-    camera.current.position.y = THREE.MathUtils.lerp(
-      camera.current.position.y,
-      posY,
-      0.1,
-    );
-    camera.current.position.z = THREE.MathUtils.lerp(
-      camera.current.position.z,
-      posZ,
-      0.1,
-    );
-  });
-  return <PerspectiveCamera ref={camera} makeDefault fov={90} />;
-}
+// function PerspectiveCameraAmimated({posX, posY, posZ, rotX, rotY, rotZ}) {
+//   const camera = useRef();
+//   useFrame(() => {
+//     camera.current.rotation.x = THREE.MathUtils.lerp(
+//       camera.current.rotation.x,
+//       rotX,
+//       0.1,
+//     );
+//     camera.current.rotation.y = THREE.MathUtils.lerp(
+//       camera.current.rotation.y,
+//       rotY,
+//       0.1,
+//     );
+//     camera.current.rotation.z = THREE.MathUtils.lerp(
+//       camera.current.rotation.z,
+//       rotZ,
+//       0.1,
+//     );
+//     camera.current.position.x = THREE.MathUtils.lerp(
+//       camera.current.position.x,
+//       posX,
+//       0.1,
+//     );
+//     camera.current.position.y = THREE.MathUtils.lerp(
+//       camera.current.position.y,
+//       posY,
+//       0.1,
+//     );
+//     camera.current.position.z = THREE.MathUtils.lerp(
+//       camera.current.position.z,
+//       posZ,
+//       0.1,
+//     );
+//   });
+//   return <PerspectiveCamera ref={camera} makeDefault fov={90} />;
+// }
 
 // function Loader({progress}) {
 //   return (
@@ -191,12 +191,6 @@ export default function Scene({children, ...props}) {
   const mesh = useRef(null);
   const location = useLocation();
   const prodImages = props.products.nodes;
-  const [posX, setPosX] = useState(-2);
-  const [posY, setPosY] = useState(0.1);
-  const [posZ, setPosZ] = useState(0.5);
-  const [rotX, setRotX] = useState(0);
-  const [rotY, setRotY] = useState(1);
-  const [rotZ, setRotZ] = useState(0);
   const [dragX, setDragX] = useState({x: 0});
   const [dpr, setDpr] = useState(1.5);
   const {
@@ -287,6 +281,27 @@ export default function Scene({children, ...props}) {
   // }, [mediaSelect, dragX, shopSelect, connectSelect]);
 
   useEffect(() => {
+    if (mediaSelect) {
+      set({
+        rotation: [0.1, 3.5, 0.1],
+        position: [-1.39, 0.1, 1.5],
+      });
+    }
+
+    if (shopSelect) {
+      set({
+        rotation: [0, 1.45, 0],
+        position: [-2.55, 0.1, 1],
+      });
+    }
+
+    if (connectSelect) {
+      set({
+        rotation: [-0.1, -0.7, 0.1],
+        position: [-2.8, 0.2, -0.1],
+      });
+    }
+
     if (!mediaSelect && !shopSelect && !connectSelect) {
       set({
         rotation: [0, dragX.x / 100, 0],
@@ -297,12 +312,13 @@ export default function Scene({children, ...props}) {
 
   const AnimatedCam = animated(PerspectiveCamera);
 
-  const {active, progress, errors, item, loaded, total} = useProgress();
-  const hide = progress !== 100;
-  console.log(item);
+  // const {active, progress, errors, item, loaded, total} = useProgress();
+  // const hide = progress !== 100;
+  // console.log(item);
 
   const [spring, set] = useSpring(() => ({
     rotation: [...rotation],
+    position: [...position],
     config: {mass: 1, friction: 40, tension: 400},
   }));
 
@@ -401,10 +417,14 @@ export default function Scene({children, ...props}) {
               <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
                 <group dispose={null} scale={0.5}>
                   <Court />
-                  <Media mediaSelect={mediaSelect} />
-                  <Vending />
-                  {dragX.x < 100 && <Connect />}
-                  {/* <group>
+                  <group
+                    onPointerOver={() => setMediaHovered(true)}
+                    onPointerOut={() => setMediaHovered(false)}
+                    onClick={(event) => {
+                      mediaSelect ? mediaFalse() : mediaTrue();
+                      event.stopPropagation();
+                    }}
+                  >
                     <Media mediaSelect={mediaSelect} />
                     {!mediaSelect && (
                       <Html
@@ -432,8 +452,15 @@ export default function Scene({children, ...props}) {
                         </motion.h6>
                       </Html>
                     )}
-                  </group> */}
-                  {/* <group>
+                  </group>
+                  <group
+                    onPointerOver={() => setShopHovered(true)}
+                    onPointerOut={() => setShopHovered(false)}
+                    onClick={(event) => {
+                      shopSelect ? shopFalse() : shopTrue();
+                      event.stopPropagation();
+                    }}
+                  >
                     <Vending />
                     {!shopSelect && (
                       <Html
@@ -461,9 +488,16 @@ export default function Scene({children, ...props}) {
                         </motion.h6>
                       </Html>
                     )}
-                  </group> */}
-                  {/* <group>
-                    <mesh position={[3.3, 0.5, -3.8]}>
+                  </group>
+                  <group>
+                  <mesh
+                      position={[3.3, 0.5, -3.8]}
+                      onClick={() =>
+                        connectSelect ? connectFalse() : connectTrue()
+                      }
+                      onPointerOver={() => setConnectHovered(true)}
+                      onPointerOut={() => setConnectHovered(false)}
+                    >
                       <boxGeometry args={[1, 1, 1.2]} />
                       <meshPhongMaterial
                         color="white"
@@ -498,17 +532,9 @@ export default function Scene({children, ...props}) {
                         </motion.h6>
                       </Html>
                     )}
-                  </group> */}
+                  </group>
                 </group>
               </group>
-              {/* <PerspectiveCameraAmimated
-                posX={posX}
-                posY={posY}
-                posZ={posZ}
-                rotX={rotX}
-                rotY={rotY}
-                rotZ={rotZ}
-              /> */}
               <AnimatedCam {...spring} makeDefault fov={90} />
             </group>
           </Suspense>
