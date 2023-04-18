@@ -224,7 +224,7 @@ export default function Scene({children, ...props}) {
     if (!mediaSelect && !shopSelect && !connectSelect) {
       set({
         rotation: [0, dragX.x / 100, 0],
-        position: [0, 0, 0],
+        position: [-1.8, 0.1, 0.7],
       });
     }
   }, [dragX, mediaSelect, shopSelect, connectSelect]);
@@ -293,7 +293,6 @@ export default function Scene({children, ...props}) {
         style={{top: 0, left: 0, position: 'fixed'}}
         dpr={dpr}
         frameloop={location.pathname === '/' ? 'always' : 'demand'}
-        camera={{position: [0, 0, 0], fov: 60}}
       >
         <PerformanceMonitor
           onIncline={() => setDpr(2)}
@@ -334,14 +333,10 @@ export default function Scene({children, ...props}) {
             />
             <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
             <group ref={mesh} {...props} {...bind()}>
-              <group
-                position={[-6.2, -1.2, 1.4]}
-                scale={3}
-                rotation={[0, 0, 0]}
-              >
-                <animated.group dispose={null} scale={0.5} {...spring}>
+              <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
+                <group dispose={null} scale={0.5}>
                   <Court />
-                  {/* <group
+                  <group
                     onPointerOver={() => setMediaHovered(true)}
                     onPointerOut={() => setMediaHovered(false)}
                     onClick={(event) => {
@@ -376,8 +371,8 @@ export default function Scene({children, ...props}) {
                         </motion.h6>
                       </Html>
                     )}
-                  </group> */}
-                  {/* <group
+                  </group>
+                  <group
                     onPointerOver={() => setShopHovered(true)}
                     onPointerOut={() => setShopHovered(false)}
                     onClick={(event) => {
@@ -412,8 +407,8 @@ export default function Scene({children, ...props}) {
                         </motion.h6>
                       </Html>
                     )}
-                  </group> */}
-                  {/* <group>
+                  </group>
+                  <group>
                     <mesh
                       position={[3, 0.5, -3]}
                       onClick={() =>
@@ -431,7 +426,7 @@ export default function Scene({children, ...props}) {
                     </mesh>
                     <Connect />
                     {dragX.x < 100 && <Connect />}
-                {!connectSelect && (
+                    {!connectSelect && (
                       <Html
                         position={[3.7, 1, -3.5]}
                         color
@@ -457,11 +452,10 @@ export default function Scene({children, ...props}) {
                         </motion.h6>
                       </Html>
                     )}
-                  </group> */}
-                </animated.group>
+                  </group>
+                </group>
               </group>
-          
-              {/* <AnimatedCam {...spring} makeDefault fov={90} /> */}
+              <AnimatedCam {...spring} makeDefault fov={90} />
             </group>
           </Suspense>
         </PerformanceMonitor>
