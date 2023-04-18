@@ -21,9 +21,9 @@ export default function Footer() {
           </Link>
         </li>
         <li className="mainMenu-li">
-          <Link to="/policies/shipping-policy" style={{textDecoration: 'none'}}>
+          <a href="mailto: info@tayk.world" style={{textDecoration: 'none'}}>
             <h6 className="footer-text">CONTACT</h6>
-          </Link>
+          </a>
         </li>
       </ul>
     </div>

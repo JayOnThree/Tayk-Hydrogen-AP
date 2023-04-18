@@ -1,6 +1,7 @@
-import * as THREE from 'three';
+/* eslint-disable hydrogen/prefer-image-component */
+// import * as THREE from 'three';
 import {Suspense, useRef, useState, useEffect, useTransition} from 'react';
-import {Canvas, extend, useFrame} from '@react-three/fiber';
+import {Canvas, extend, useFrame, useThree} from '@react-three/fiber';
 import {UnrealBloomPass} from 'three-stdlib';
 import {useNavigate, useLocation} from '@remix-run/react';
 import {
@@ -12,11 +13,11 @@ import {
   PerspectiveCamera,
   useProgress,
   PerformanceMonitor,
-  CameraControls,
 } from '@react-three/drei';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {useDrag} from '@use-gesture/react';
 import {useSpring, animated} from '@react-spring/three';
-import {motion} from 'framer-motion'; 
+import {motion} from 'framer-motion';
 
 import EnvImage from '../../public/glb/moonless_golf_2k.hdr';
 import Vending from './Vending';
@@ -27,6 +28,7 @@ import Footer from '~/components/Footer';
 import {SceneHeader, useSceneHeader} from '~/components/SceneHeader';
 
 extend({UnrealBloomPass});
+extend({OrbitControls});
 
 function EnterButton({
   shopSelect,
@@ -173,8 +175,7 @@ export default function Scene({children, ...props}) {
   const [connectHovered, setConnectHovered] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [rotation, setRotation] = useState([0, 0, 0]);
-  const [position, setPosition] = useState([0, 0, 0]);
-  // const regress = useThree((state) => state.performance.regress);
+  const [position, setPosition] = useState([3, 0.5, 0]);
 
   useEffect(() => {
     document.body.style.cursor = mediaHovered ? 'pointer' : 'auto';
@@ -223,16 +224,17 @@ export default function Scene({children, ...props}) {
     if (!mediaSelect && !shopSelect && !connectSelect) {
       set({
         rotation: [0, dragX.x / 100, 0],
-        position: [-1.8, 0.1, 0.7],
+        position: [0, 0, 0],
       });
     }
   }, [dragX, mediaSelect, shopSelect, connectSelect]);
+
+  // const cameraControlsRef = useRef();
 
   const AnimatedCam = animated(PerspectiveCamera);
 
   const {active, progress, errors, item, loaded, total} = useProgress();
   const hide = progress !== 100;
-  console.log(progress);
 
   const [spring, set] = useSpring(() => ({
     rotation: [...rotation],
@@ -274,7 +276,7 @@ export default function Scene({children, ...props}) {
       <MediaPhoneUI mediaSelect={mediaSelect} />
       <ConnectDiscordUI connectSelect={connectSelect} />
       <ShopUI shopSelect={shopSelect} />
-      {/* <SceneHeader
+      <SceneHeader
         dragX={dragX}
         shopSelect={shopSelect}
         connectSelect={connectSelect}
@@ -285,12 +287,13 @@ export default function Scene({children, ...props}) {
         shopFalse={shopFalse}
         connectTrue={connectTrue}
         connectFalse={connectFalse}
-      /> */}
+      />
       <Canvas
         {...props}
         style={{top: 0, left: 0, position: 'fixed'}}
         dpr={dpr}
         frameloop={location.pathname === '/' ? 'always' : 'demand'}
+        camera={{position: [-2, 0.1, 0.5], fov: 60, enableZoom: false}}
       >
         <PerformanceMonitor
           onIncline={() => setDpr(2)}
@@ -298,7 +301,7 @@ export default function Scene({children, ...props}) {
         >
           {children}
           <Preload all />
-          <fog attach="fog" args={['black', 1, 6]} />
+          <fog attach="fog" args={['black', 1, 15]} />
           <Suspense fallback={null}>
             <Effects disableGamma>
               <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
@@ -331,19 +334,23 @@ export default function Scene({children, ...props}) {
             />
             <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
             <group ref={mesh} {...props} {...bind()}>
-              <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
-                <group dispose={null} scale={0.5}>
+              <group
+                position={[-6.2, -1.2, 1.4]}
+                scale={3}
+                rotation={[0, 0, 0]}
+              >
+                <animated.group dispose={null} scale={0.5} {...spring}>
                   <Court />
-                  <group
-                    // onPointerOver={() => setMediaHovered(true)}
-                    // onPointerOut={() => setMediaHovered(false)}
-                    // onClick={(event) => {
-                    //   mediaSelect ? mediaFalse() : mediaTrue();
-                    //   event.stopPropagation();
-                    // }}
+                  {/* <group
+                    onPointerOver={() => setMediaHovered(true)}
+                    onPointerOut={() => setMediaHovered(false)}
+                    onClick={(event) => {
+                      mediaSelect ? mediaFalse() : mediaTrue();
+                      event.stopPropagation();
+                    }}
                   >
                     <Media />
-                    {/* {!mediaSelect && (
+                    {!mediaSelect && (
                       <Html
                         position={[4, 0.5, 3]}
                         color
@@ -368,8 +375,8 @@ export default function Scene({children, ...props}) {
                           View everything Tay K
                         </motion.h6>
                       </Html>
-                    )} */}
-                  </group>
+                    )}
+                  </group> */}
                   {/* <group
                     onPointerOver={() => setShopHovered(true)}
                     onPointerOut={() => setShopHovered(false)}
@@ -405,10 +412,10 @@ export default function Scene({children, ...props}) {
                         </motion.h6>
                       </Html>
                     )}
-                  </group>
-                  <group>
+                  </group> */}
+                  {/* <group>
                     <mesh
-                      position={[3.3, 0.5, -3.8]}
+                      position={[3, 0.5, -3]}
                       onClick={() =>
                         connectSelect ? connectFalse() : connectTrue()
                       }
@@ -422,8 +429,9 @@ export default function Scene({children, ...props}) {
                         transparent
                       />
                     </mesh>
+                    <Connect />
                     {dragX.x < 100 && <Connect />}
-                    {!connectSelect && (
+                {!connectSelect && (
                       <Html
                         position={[3.7, 1, -3.5]}
                         color
@@ -450,18 +458,9 @@ export default function Scene({children, ...props}) {
                       </Html>
                     )}
                   </group> */}
-                  {dragX.x < 100 && <Connect />}
-                </group>
+                </animated.group>
               </group>
-              <CameraControls
-                minPolarAngle={Math.PI / 2}
-                maxPolarAngle={Math.PI / 2}
-                minAzimuthAngle={0}
-                maxAzimuthAngle={Math.PI / 2}
-                boundaryFriction={0.5}
-                minZoom={0.5}
-                maxZoom={0.5}
-              />
+          
               {/* <AnimatedCam {...spring} makeDefault fov={90} /> */}
             </group>
           </Suspense>
