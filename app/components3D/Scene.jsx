@@ -139,16 +139,10 @@ function ShopUI({shopSelect}) {
 
 function Loader({progress}) {
   return (
-    <div
-      style={{
-        height: '100vh',
-        width: '100vw',
-        position: 'fixed',
-        zIndex: '50',
-        background: 'red',
-      }}
-    >
-      {progress.toFixed(0)}%
+    <div className="loader-container">
+      <div className="text-div">
+        <h3 className="loader-text">{progress.toFixed(0)}%</h3>
+      </div>
     </div>
   );
 }
@@ -229,11 +223,9 @@ export default function Scene({children, ...props}) {
     }
   }, [dragX, mediaSelect, shopSelect, connectSelect]);
 
-  // const cameraControlsRef = useRef();
-
   const AnimatedCam = animated(PerspectiveCamera);
 
-  const {active, progress, errors, item, loaded, total} = useProgress();
+  const {progress} = useProgress();
   const hide = progress !== 100;
 
   const [spring, set] = useSpring(() => ({
