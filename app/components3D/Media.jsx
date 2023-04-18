@@ -6,7 +6,7 @@ import {useFrame} from '@react-three/fiber';
 import Scene from '../../public/glb/scene.glb';
 import Phone from './Phone';
 
-export default function Media() {
+export default function Media({mediaSelect}) {
   const {nodes, materials} = useGLTF(Scene);
   const ref = useRef();
 

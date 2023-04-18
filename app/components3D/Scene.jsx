@@ -300,7 +300,7 @@ export default function Scene({children, ...props}) {
         >
           {children}
           <Preload all />
-          <fog attach="fog" args={['black', 1, 15]} />
+          <fog attach="fog" args={['black', 1, 7]} />
           <Suspense fallback={null}>
             <Effects disableGamma>
               <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
@@ -344,7 +344,7 @@ export default function Scene({children, ...props}) {
                       event.stopPropagation();
                     }}
                   >
-                    <Media />
+                    <Media mediaSelect={mediaSelect} />
                     {!mediaSelect && (
                       <Html
                         position={[4, 0.5, 3]}
@@ -424,7 +424,6 @@ export default function Scene({children, ...props}) {
                         transparent
                       />
                     </mesh>
-                    <Connect />
                     {dragX.x < 100 && <Connect />}
                     {!connectSelect && (
                       <Html
