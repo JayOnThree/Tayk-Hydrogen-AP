@@ -293,7 +293,7 @@ export default function Scene({children, ...props}) {
         style={{top: 0, left: 0, position: 'fixed'}}
         dpr={dpr}
         frameloop={location.pathname === '/' ? 'always' : 'demand'}
-        camera={{position: [-2, 0.1, 0.5], fov: 60, enableZoom: false}}
+        camera={{position: [0, 0, 0], fov: 60}}
       >
         <PerformanceMonitor
           onIncline={() => setDpr(2)}
