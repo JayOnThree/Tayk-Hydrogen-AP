@@ -3,7 +3,6 @@ import {useLoaderData} from '@remix-run/react';
 import {json} from 'react-router';
 
 import Toolbar from '../components/Toolbar';
-import Footer from '~/components/Footer';
 
 export async function loader({context, params}) {
   const searchParams = params.slug;

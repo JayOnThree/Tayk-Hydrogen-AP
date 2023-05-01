@@ -1,3 +1,4 @@
+/* eslint-disable hydrogen/prefer-image-component */
 import {useState} from 'react';
 import {useLoaderData} from '@remix-run/react';
 import {Container, Row, Col} from 'react-bootstrap';
@@ -186,31 +187,6 @@ export default function ProductHandle() {
               className="subtext-prod"
             ></div>
           )}
-
-          {/* <h6
-              className="sub-title-prod"
-              onClick={() => setToggleReturns(!toggleReturns)}
-            >
-              Returns & Exchanges{' '}
-              <img
-                src="/arrow.svg"
-                className="arrow-image-product"
-                style={{
-                  transform: toggleReturns ? 'rotate(-180deg)' : 'rotate(0)',
-                }}
-              />
-            </h6>
-            {toggleReturns && (
-              <div className="subtext-prod">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </div>
-            )} */}
         </Col>
       </Row>
     </Container>

@@ -1667,7 +1667,7 @@ a:hover {
   }
 
   .loader-text {
-    font-size: clamp(30pt, 5vw, 80pt);
+    font-size: clamp(60pt, 6vw, 100pt);
     color: white;
     -webkit-text-stroke: 8px white;
   }
