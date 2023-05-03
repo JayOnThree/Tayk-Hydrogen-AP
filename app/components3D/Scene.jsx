@@ -4,6 +4,7 @@ import {Suspense, useRef, useState, useEffect, useTransition} from 'react';
 import {Canvas, extend, useFrame, useThree} from '@react-three/fiber';
 import {UnrealBloomPass} from 'three-stdlib';
 import {useNavigate, useLocation} from '@remix-run/react';
+import useSound from 'use-sound';
 import {
   Environment,
   BakeShadows,
@@ -170,6 +171,7 @@ export default function Scene({children, ...props}) {
   const [isPending, startTransition] = useTransition();
   const [rotation, setRotation] = useState([0, 0, 0]);
   const [position, setPosition] = useState([3, 0.5, 0]);
+  const [musicOn, setMusicOn] = useState(true);
 
   useEffect(() => {
     document.body.style.cursor = mediaHovered ? 'pointer' : 'auto';
@@ -234,6 +236,19 @@ export default function Scene({children, ...props}) {
     config: {mass: 1, friction: 40, tension: 400},
   }));
 
+  const [play, {stop}] = useSound('/audio.mp3', {
+    loop: true,
+    autoplay: true,
+  });
+
+  useEffect(() => {
+    if(musicOn){
+      play();
+    } else {
+      stop();
+    }
+  }, [musicOn]);
+
   return (
     <>
       {hide && <Loader progress={progress} />}
@@ -256,6 +271,9 @@ export default function Scene({children, ...props}) {
             shopFalse();
           }}
         />
+      </button>
+      <button className="music-button" onClick={() => setMusicOn(!musicOn)}>
+          <img src={musicOn ? '/symbol.svg' : '/symbolOff.svg'} style={{height: '40px'}} />
       </button>
       <EnterButton
         mediaSelect={mediaSelect}

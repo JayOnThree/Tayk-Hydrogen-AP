@@ -112,9 +112,9 @@ body {
 .footer-div {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 15px;
   width: 100%;
-  z-index: 9;
+  z-index: 15;
   height: 30px;
 }
 
@@ -122,11 +122,10 @@ body {
   display: flex;
   align-items: stretch; /* Default */
   justify-content: space-between;
-  width: 95%;
-  left: 2.5%;
+  width: 100%;
+  /* left: 2.5%; */
   margin: 0 0 0 0;
   padding: 0;
-
 }
 
 .mainMenu-li-footer {
@@ -1670,4 +1669,21 @@ a:hover {
     font-size: clamp(60pt, 6vw, 100pt);
     color: white;
     -webkit-text-stroke: 8px white;
+  }
+
+  .music-button {
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.225);
+    z-index: 16;
+    bottom: 7vh;
+    left: -5px;
+    border: none;
+    position: fixed;
+    border-radius: 0px 20px 20px 0px;
+    padding: 10px;
+  }
+
+  .music-button:hover {
+    transform: translateX(5px);
+    transition: 0.5s transform ease;
   }

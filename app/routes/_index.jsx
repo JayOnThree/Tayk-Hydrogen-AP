@@ -1,3 +1,5 @@
+// import Sound from '../../public/audio.mp3';
+
 const seo = () => ({
   title: 'Home',
   description: 'Click and drag to navigate to where you want to go',

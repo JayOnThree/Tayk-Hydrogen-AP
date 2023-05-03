@@ -37,7 +37,8 @@
     "react-router": "^6.9.0",
     "remix-utils": "^6.0.0",
     "three": "^0.150.1",
-    "three-stdlib": "^2.21.8"
+    "three-stdlib": "^2.21.8",
+    "use-sound": "^4.0.1"
   },
   "devDependencies": {
     "@remix-run/dev": "1.14.0",
