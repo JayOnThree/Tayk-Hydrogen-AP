@@ -4,6 +4,7 @@ import {json} from 'react-router';
 import {Container, Row, Col} from 'react-bootstrap';
 import {useNavigate} from '@remix-run/react';
 import {AnalyticsPageType} from '@shopify/hydrogen';
+import {motion} from 'framer-motion';
 // import {motion} from 'framer-motion';
 
 import ProductCard from '~/components/ProductCard';
@@ -121,8 +122,18 @@ export default function Collection() {
     }
   }
 
+  const MotionContainer = motion(Container);
+
   return (
-    <Container fluid className="container-shop" style={{overflow: 'hidden'}}>
+    <MotionContainer
+      fluid
+      className="container-shop"
+      style={{overflow: 'hidden'}}
+      initial={{y: 1000, opacity: 0}}
+      animate={{y: 0, opacity: 1}}
+      exit={{y: 1000, opacity: 0}}
+      transition={{duration: 0.3}}
+    >
       <Row style={{height: '100px'}}>
         <Col lg={8} className="category-div">
           {collections.nodes.map((collection) => {
@@ -224,7 +235,7 @@ export default function Collection() {
           </div>
         </Col>
       </Row>
-    </Container>
+    </MotionContainer>
   );
 }
 

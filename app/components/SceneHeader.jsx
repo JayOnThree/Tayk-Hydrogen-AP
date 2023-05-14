@@ -164,7 +164,7 @@ function SceneHeader({
               marginLeft: '0px',
             }}
           >
-            <a onClick={() => history.back()} className="circle-router">
+            <a onClick={() => history.back()} className="circle-router" style={{marginLeft: '5vw'}}>
               <img alt="back" src="/back.svg" className="icon-router" />
             </a>
             <Link to="/" className="circle-router">
