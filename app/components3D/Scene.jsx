@@ -88,7 +88,7 @@ function ConnectDiscordUI({connectSelect}) {
 
 function MediaPhoneUI({mediaSelect}) {
   const locale = 'en';
-  const [today, setDate] = useState(new Date());
+  const today = new Date();
   const date =
     today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   const time = today.toLocaleTimeString(locale, {
@@ -168,9 +168,9 @@ export default function Scene({children, ...props}) {
   const [shopHovered, setShopHovered] = useState(false);
   const [mediaHovered, setMediaHovered] = useState(false);
   const [connectHovered, setConnectHovered] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const [rotation, setRotation] = useState([0, 0, 0]);
-  const [position, setPosition] = useState([3, 0.5, 0]);
+  // const [isPending, startTransition] = useTransition();
+  const rotation = [0, 0, 0];
+  const position = [3, 0.5, 0];
   const [musicOn, setMusicOn] = useState(true);
 
   useEffect(() => {
@@ -242,7 +242,7 @@ export default function Scene({children, ...props}) {
   });
 
   useEffect(() => {
-    if(musicOn){
+    if (musicOn) {
       play();
     } else {
       stop();

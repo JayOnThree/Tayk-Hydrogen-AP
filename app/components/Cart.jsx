@@ -5,8 +5,8 @@ import {flattenConnection, Image, Money} from '@shopify/hydrogen-react';
 export function CartSummary({cost}) {
   return (
     <>
-      <dl className="space-y-2">
-        <div className="flex items-center justify-between">
+      <dl>
+        <div>
           <dt>Subtotal</dt>
           <dd>
             {cost?.subtotalAmount?.amount ? (
