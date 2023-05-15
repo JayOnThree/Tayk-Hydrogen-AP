@@ -15,7 +15,7 @@ import {
   useShopifyCookies,
   Seo,
 } from '@shopify/hydrogen';
-import {useProgress} from '@react-three/drei';
+// import {useProgress} from '@react-three/drei';
 import {useEffect} from 'react';
 import styles from './styles/app.css';
 import favicon from '../public/favicon.svg';

@@ -1,6 +1,7 @@
 import {useLoaderData, useLocation} from '@remix-run/react';
 import {Container, Row, Col} from 'react-bootstrap';
 import {json} from 'react-router';
+import {motion} from 'framer-motion';
 
 export async function loader({context}) {
   const {policies} = await context.storefront.query(POLICY_QUERIES);
@@ -15,9 +16,18 @@ export async function loader({context}) {
 export default function Policies() {
   const {policies} = useLoaderData();
   const location = useLocation();
+  const MotionContainer = motion(Container);
 
   return (
-    <Container fluid className="screen-container" style={{overflow: 'hidden'}}>
+    <MotionContainer
+      fluid
+      className="screen-container"
+      style={{overflow: 'hidden'}}
+      initial={{y: 1000, opacity: 0}}
+      animate={{y: 0, opacity: 1}}
+      exit={{y: 1000, opacity: 0}}
+      transition={{duration: 0.3}}
+    >
       <Row>
         <Col lg={{offset: 1, span: 10}} style={{padding: '20px'}}>
           <h1 className="policy-header-text">
@@ -33,7 +43,7 @@ export default function Policies() {
           )}
         </Col>
       </Row>
-    </Container>
+    </MotionContainer>
   );
 }
 

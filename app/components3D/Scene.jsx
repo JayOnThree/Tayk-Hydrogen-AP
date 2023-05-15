@@ -14,8 +14,11 @@ import {
   PerspectiveCamera,
   useProgress,
   PerformanceMonitor,
+  Bounds, 
+  useBounds,
+  OrbitControls,
 } from '@react-three/drei';
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+// import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import {useDrag} from '@use-gesture/react';
 import {useSpring, animated} from '@react-spring/three';
 import {motion} from 'framer-motion';
@@ -29,7 +32,7 @@ import Footer from '~/components/Footer';
 import {SceneHeader, useSceneHeader} from '~/components/SceneHeader';
 
 extend({UnrealBloomPass});
-extend({OrbitControls});
+// extend({OrbitControls});
 
 function EnterButton({
   shopSelect,
@@ -185,61 +188,63 @@ export default function Scene({children, ...props}) {
     document.body.style.cursor = connectHovered ? 'pointer' : 'auto';
   }, [connectHovered]);
 
-  const bind = useDrag(
-    ({offset: [x]}) => {
-      setDragX({x});
-    },
-    {
-      bounds: {left: -10, right: 325, top: 0, bottom: 0},
-      rubberband: true,
-    },
-  );
+  // const bind = useDrag(
+  //   ({offset: [x]}) => {
+  //     setDragX({x});
+  //   },
+  //   {
+  //     bounds: {left: -10, right: 325, top: 0, bottom: 0},
+  //     rubberband: true,
+  //   },
+  // );
 
-  useEffect(() => {
-    if (mediaSelect) {
-      set({
-        rotation: [0.1, 3.5, 0.1],
-        position: [-1.39, 0.1, 1.5],
-      });
-    }
+  // useEffect(() => {
+  //   if (mediaSelect) {
+  //     set({
+  //       rotation: [0.1, 3.5, 0.1],
+  //       position: [-1.39, 0.1, 1.5],
+  //     });
+  //   }
 
-    if (shopSelect) {
-      set({
-        rotation: [0, 1.45, 0],
-        position: [-2.55, 0.1, 1],
-      });
-    }
+  //   if (shopSelect) {
+  //     set({
+  //       rotation: [0, 1.45, 0],
+  //       position: [-2.55, 0.1, 1],
+  //     });
+  //   }
 
-    if (connectSelect) {
-      set({
-        rotation: [-0.1, -0.7, 0.1],
-        position: [-2.8, 0.2, -0.1],
-      });
-    }
+  //   if (connectSelect) {
+  //     set({
+  //       rotation: [-0.1, -0.7, 0.1],
+  //       position: [-2.8, 0.2, -0.1],
+  //     });
+  //   }
 
-    if (!mediaSelect && !shopSelect && !connectSelect) {
-      set({
-        rotation: [0, dragX.x / 100, 0],
-        position: [-1.8, 0.1, 0.7],
-      });
-    }
-  }, [dragX, mediaSelect, shopSelect, connectSelect]);
+  //   if (!mediaSelect && !shopSelect && !connectSelect) {
+  //     set({
+  //       rotation: [0, dragX.x / 100, 0],
+  //       position: [-1.8, 0.1, 0.7],
+  //     });
+  //   }
+  // }, [dragX, mediaSelect, shopSelect, connectSelect]);
 
-  const AnimatedCam = animated(PerspectiveCamera);
+  // const AnimatedCam = animated(PerspectiveCamera);
 
   const {progress} = useProgress();
   const hide = progress !== 100;
 
-  const [spring, set] = useSpring(() => ({
-    rotation: [...rotation],
-    position: [...position],
-    config: {mass: 1, friction: 40, tension: 400},
-  }));
+  // const [spring, set] = useSpring(() => ({
+  //   rotation: [...rotation],
+  //   position: [...position],
+  //   config: {mass: 1, friction: 40, tension: 400},
+  // }));
 
   const [play, {stop}] = useSound('/audio.mp3', {
     loop: true,
     autoplay: true,
   });
+
+  const api = useBounds();
 
   useEffect(() => {
     if (musicOn) {
@@ -310,7 +315,7 @@ export default function Scene({children, ...props}) {
         >
           {children}
           <Preload all />
-          <fog attach="fog" args={['black', 1, 7]} />
+          {/* <fog attach="fog" args={['black', 1, 7]} /> */}
           <Suspense fallback={null}>
             <Effects disableGamma>
               <unrealBloomPass threshold={1} strength={1.0} radius={0.5} />
@@ -341,18 +346,21 @@ export default function Scene({children, ...props}) {
               shadow-mapSize-height={512}
               shadow-mapSize-width={512}
             />
-            <Environment files={EnvImage} ground={{height: 16, radius: 100}} />
-            <group ref={mesh} {...props} {...bind()}>
-              <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
+            <Environment files={EnvImage} ground={{height: 100, radius: 1000}} />
+            <Bounds fit clip observe margin={0.2}>
+            <group ref={mesh} {...props}>
+              {/* <group ref={mesh} {...props} {...bind()}> */}
+              <group position={[-4.2, -0.6, 1.6]} scale={20.5}>
                 <group dispose={null} scale={0.5}>
                   <Court />
                   <group
                     onPointerOver={() => setMediaHovered(true)}
                     onPointerOut={() => setMediaHovered(false)}
-                    onClick={(event) => {
-                      mediaSelect ? mediaFalse() : mediaTrue();
-                      event.stopPropagation();
-                    }}
+                    // onClick={(event) => {
+                    //   mediaSelect ? mediaFalse() : mediaTrue();
+                    //   event.stopPropagation();
+                    // }}
+                    onClick={(e) => (e.stopPropagation(), e.delta <= 2 && api.refresh(e.object).fit())} onPointerMissed={(e) => e.button === 0 && api.refresh().fit()}
                   >
                     <Media mediaSelect={mediaSelect} />
                     {!mediaSelect && (
@@ -464,9 +472,11 @@ export default function Scene({children, ...props}) {
                   </group>
                 </group>
               </group>
-              <AnimatedCam {...spring} makeDefault fov={90} />
+              {/* <AnimatedCam {...spring} makeDefault fov={90} /> */}
             </group>
+            </Bounds>
           </Suspense>
+          <OrbitControls makeDefault minPolarAngle={0} maxPolarAngle={Math.PI / 1.75} position={[[3, 0.5, 0]]} />
         </PerformanceMonitor>
       </Canvas>
       <Footer />
