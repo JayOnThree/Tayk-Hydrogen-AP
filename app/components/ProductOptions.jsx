@@ -2,8 +2,6 @@ import {useState} from 'react';
 import {useLocation, useSearchParams, useTransition} from '@remix-run/react';
 import {useNavigate} from '@remix-run/react';
 
-// import Arrow from '../assets/arrow.svg'
-
 export default function ProductOptions({
   options,
   selectedVariant,

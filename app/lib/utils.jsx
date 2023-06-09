@@ -18,9 +18,6 @@ export function useAnalyticsFromActions(dataKey = 'analytics') {
   for (const fetcher of fetchers) {
     const formData = fetcher.submission?.formData;
     const fetcherData = fetcher.data;
-    console.log(fetcherData, 'fetcherData');
-    console.log(formData, 'formData');
-    console.log(fetcherData && fetcherData[dataKey]);
     // Make sure that you have a successful action and an analytics payload
     if (formData && fetcherData && fetcherData[dataKey]) {
       Object.assign(data, fetcherData[dataKey]);

@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useLoaderData, Link} from '@remix-run/react';
 import {json} from 'react-router';
 import {Container, Row, Col} from 'react-bootstrap';
-import {useNavigate} from '@remix-run/react';
+import {useNavigate, useLocation} from '@remix-run/react';
 import {AnalyticsPageType} from '@shopify/hydrogen';
 import {motion} from 'framer-motion';
 // import {motion} from 'framer-motion';
@@ -106,6 +106,7 @@ export default function Collection() {
   const CollectionLength = collection.products.nodes.length;
   const updatedOrientation = Orientation.splice(0, CollectionLength);
   const navigation = useNavigate();
+  // const location = useLocation();
 
   function enterFunction() {
     const routeIndex = updatedOrientation.indexOf(dialText);
@@ -123,16 +124,24 @@ export default function Collection() {
   }
 
   const MotionContainer = motion(Container);
+  // const [isOpen, setOpen] = useState(false);
+
+  // const variants = {
+  //   open: {opacity: 1, x: 0},
+  //   closed: {opacity: 0, x: '-100%'},
+  // };
 
   return (
     <MotionContainer
       fluid
       className="container-shop"
       style={{overflow: 'hidden'}}
-      initial={{y: 1000, opacity: 0}}
-      animate={{y: 0, opacity: 1}}
-      exit={{y: 1000, opacity: 0}}
-      transition={{duration: 0.3}}
+      // animate={isOpen ? 'open' : 'closed'}
+      // variants={variants}
+      // initial={{y: 1000, opacity: 0}}
+      // animate={{y: 0, opacity: 1}}
+      // exit={{y: 1000, opacity: 0}}
+      // transition={{duration: 0.3}}
     >
       <Row style={{height: '100px'}}>
         <Col lg={8} className="category-div">

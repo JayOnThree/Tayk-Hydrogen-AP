@@ -8,26 +8,26 @@ export default function Header() {
   const [mobile, setMobile] = useState();
   const [tablet, setTablet] = useState();
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setMobile(window.innerWidth < 600);
-      setTablet(window.innerWidth < 900 && window.innerWidth > 600);
-    }
-  });
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     setMobile(window.innerWidth < 600);
+  //     setTablet(window.innerWidth < 900 && window.innerWidth > 600);
+  //   }
+  // });
 
-  useEffect(() => {
-    function handleResize() {
-      setMobile(window.innerWidth < 600);
-      setTablet(window.innerWidth < 900 && window.innerWidth > 600);
-    }
-    window.addEventListener('resize', handleResize);
-  });
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setMobile(window.innerWidth < 600);
+  //     setTablet(window.innerWidth < 900 && window.innerWidth > 600);
+  //   }
+  //   window.addEventListener('resize', handleResize);
+  // });
 
   return (
     <Container fluid className="header-container" style={{width: '100vw'}}>
       <motion.div
         className="navigation-div"
-        style={{width: mobile ? '40%' : tablet ? '30%' : '20%'}}
+        style={{width: mobile ? '40%' : tablet ? '30%' : '10%'}}
         initial={{marginLeft: '-200px'}}
         animate={{marginLeft: '0px'}}
         exit={{marginLeft: '-200px'}}
@@ -47,7 +47,7 @@ export default function Header() {
         <motion.div
           className="header-div"
           animate={{
-            width: mobile ? '60%' : tablet ? '70%' : '80%',
+            width: mobile ? '60%' : tablet ? '70%' : '90%',
             marginLeft: mobile ? '40%' : tablet ? '30%' : '20%',
           }}
           exit={{width: '100%', marginLeft: 0}}

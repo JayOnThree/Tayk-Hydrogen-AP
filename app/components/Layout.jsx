@@ -56,11 +56,7 @@ export function Layout({children}) {
           <CartHeader cart={cart} openDrawer={openDrawer} />
         </div>
       </header>
-      <main
-        role="main"
-        id="mainContent"
-        className="flex-grow p-6 md:p-8 lg:p-12"
-      >
+      <main role="main" id="mainContent">
         {children}
       </main>
       <Drawer open={isOpen} onClose={closeDrawer}>

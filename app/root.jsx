@@ -91,7 +91,6 @@ export default function App() {
   // if (analyticsFromActions) {
   //   console.log(analyticsFromActions, 'analytics form');
   // }
-
   // useEffect(() => {
   //   console.log(pageAnalytics);
   // }, [location]);

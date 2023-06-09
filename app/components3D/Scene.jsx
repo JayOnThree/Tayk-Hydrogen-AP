@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable hydrogen/prefer-image-component */
 // import * as THREE from 'three';
-import {Suspense, useRef, useState, useEffect, useTransition} from 'react';
-import {Canvas, extend, useFrame, useThree} from '@react-three/fiber';
+import {Suspense, useRef, useState, useEffect} from 'react';
+import {Canvas, extend} from '@react-three/fiber';
 import {UnrealBloomPass} from 'three-stdlib';
 import {useNavigate, useLocation} from '@remix-run/react';
 import useSound from 'use-sound';
@@ -190,7 +191,7 @@ export default function Scene({children, ...props}) {
       setDragX({x});
     },
     {
-      bounds: {left: -10, right: 325, top: 0, bottom: 0},
+      bounds: {left: -100, right: 975, top: 0, bottom: 0},
       rubberband: true,
     },
   );
@@ -233,7 +234,7 @@ export default function Scene({children, ...props}) {
   const [spring, set] = useSpring(() => ({
     rotation: [...rotation],
     position: [...position],
-    config: {mass: 1, friction: 40, tension: 400},
+    config: {mass: 75, friction: 400, tension: 1000},
   }));
 
   const [play, {stop}] = useSound('/audio.mp3', {
@@ -273,7 +274,10 @@ export default function Scene({children, ...props}) {
         />
       </button>
       <button className="music-button" onClick={() => setMusicOn(!musicOn)}>
-          <img src={musicOn ? '/symbol.svg' : '/symbolOff.svg'} style={{height: '40px'}} />
+        <img
+          src={musicOn ? '/symbol.svg' : '/symbolOff.svg'}
+          style={{height: '40px'}}
+        />
       </button>
       <EnterButton
         mediaSelect={mediaSelect}
@@ -345,7 +349,11 @@ export default function Scene({children, ...props}) {
             <group ref={mesh} {...props} {...bind()}>
               <group position={[-4.2, -0.6, 1.6]} scale={1.5}>
                 <group dispose={null} scale={0.5}>
-                  <Court />
+                  <Court
+                    shopHovered={shopHovered}
+                    connectHovered={connectHovered}
+                    mediaHovered={mediaHovered}
+                  />
                   <group
                     onPointerOver={() => setMediaHovered(true)}
                     onPointerOut={() => setMediaHovered(false)}
@@ -420,14 +428,14 @@ export default function Scene({children, ...props}) {
                   </group>
                   <group>
                     <mesh
-                      position={[3, 0.5, -3]}
+                      position={[3.2, 0.6, -3.2]}
                       onClick={() =>
                         connectSelect ? connectFalse() : connectTrue()
                       }
                       onPointerOver={() => setConnectHovered(true)}
                       onPointerOut={() => setConnectHovered(false)}
                     >
-                      <boxGeometry args={[1, 1, 1.2]} />
+                      <boxGeometry args={[0.8, 0.8, 1.2]} />
                       <meshPhongMaterial
                         color="white"
                         opacity={0}

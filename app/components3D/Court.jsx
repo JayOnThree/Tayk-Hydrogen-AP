@@ -2,8 +2,10 @@ import * as THREE from 'three';
 import {useGLTF} from '@react-three/drei';
 import Scene from '../../public/glb/scene.glb';
 
-export default function Court() {
+export default function Court(props) {
   const {nodes, materials} = useGLTF(Scene);
+  const {mediaHovered, shopHovered, connectHovered} = props;
+
   const connectBlue = new THREE.MeshBasicMaterial({
     color: new THREE.Color(0, 0.5, 20),
     toneMapped: false,
@@ -13,6 +15,11 @@ export default function Court() {
     toneMapped: false,
   });
   const glowGreen = new THREE.MeshBasicMaterial({
+    color: new THREE.Color(3, 0.5, 20),
+    toneMapped: false,
+  });
+
+  const glowSelected = new THREE.MeshBasicMaterial({
     color: new THREE.Color(0, 3, 1),
     toneMapped: false,
   });
@@ -155,7 +162,7 @@ export default function Court() {
       <mesh
         castShadow
         geometry={nodes.Text001.geometry}
-        material={glowGreen}
+        material={connectHovered ? glowSelected : glowGreen}
         position={[3.42, 1.5, -3.5]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={0.26}
@@ -163,7 +170,7 @@ export default function Court() {
       <mesh
         castShadow
         geometry={nodes.Text002.geometry}
-        material={glowYellow}
+        material={shopHovered ? glowSelected : glowYellow}
         position={[0.71, 1.28, -0.47]}
         rotation={[Math.PI / 2, 0, -Math.PI / 2]}
         scale={0.41}
@@ -171,7 +178,7 @@ export default function Court() {
       <mesh
         castShadow
         geometry={nodes.Text003.geometry}
-        material={connectBlue}
+        material={mediaHovered ? glowSelected : connectBlue}
         position={[4, 0.9, 0.68]}
         rotation={[Math.PI / 2, 0, Math.PI]}
         scale={0.31}

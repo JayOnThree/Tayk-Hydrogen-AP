@@ -7,6 +7,7 @@ export function useSceneHeader(stateDefault = false) {
   const [shopSelect, setShopSelected] = useState(stateDefault);
   const [mediaSelect, setMediaSelected] = useState(stateDefault);
   const [connectSelect, setConnectSelected] = useState(stateDefault);
+
   function shopFalse() {
     setShopSelected(false);
   }
@@ -53,13 +54,6 @@ function SceneHeader({
   const location = useLocation();
   const [mobile, setMobile] = useState();
   const [tablet, setTablet] = useState();
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setMobile(window.innerWidth < 600);
-      setTablet(window.innerWidth < 900 && window.innerWidth > 600);
-    }
-  });
 
   useEffect(() => {
     function handleResize() {
@@ -160,11 +154,11 @@ function SceneHeader({
           <div
             className="navigation-div"
             style={{
-              width: mobile ? '40%' : tablet ? '30%' : '20%',
+              width: '137px',
               marginLeft: '0px',
             }}
           >
-            <a onClick={() => history.back()} className="circle-router" style={{marginLeft: '5vw'}}>
+            <a onClick={() => history.back()} className="circle-router" style={{marginLeft: '5px'}}>
               <img alt="back" src="/back.svg" className="icon-router" />
             </a>
             <Link to="/" className="circle-router">
@@ -175,8 +169,8 @@ function SceneHeader({
             <motion.div
               className="header-div"
               animate={{
-                width: mobile ? '60%' : tablet ? '70%' : '80%',
-                marginLeft: mobile ? '40%' : tablet ? '30%' : '20%',
+                width: 'clamp(137px - 100%)',
+                marginLeft: '137px',
               }}
               exit={{width: '100%', marginLeft: 0}}
             >
