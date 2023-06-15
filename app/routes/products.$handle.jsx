@@ -1,4 +1,3 @@
-/* eslint-disable hydrogen/prefer-image-component */
 import {useState} from 'react';
 import {useLoaderData} from '@remix-run/react';
 import {Container, Row, Col} from 'react-bootstrap';
@@ -89,7 +88,6 @@ export const loader = async ({params, context, request}) => {
 export default function ProductHandle() {
   const {product, selectedVariant} = useLoaderData();
   const [imageIndex, setImageIndex] = useState(0);
-  const [toggleDescription, setToggleDescription] = useState(false);
   // const [toggleReturns, setToggleReturns] = useState(false);
   const largeImage = product.media.nodes[imageIndex && imageIndex].image;
   const sizeVariantsIndicator = product.variants;
@@ -167,26 +165,13 @@ export default function ProductHandle() {
             selectedVariant={selectedVariant}
             // product={product}
           />
-          <h6
-            style={{marginTop: '5vh'}}
-            className="sub-title-prod"
-            onClick={() => setToggleDescription(!toggleDescription)}
-          >
+          <h6 style={{marginTop: '5vh'}} className="sub-title-prod">
             Description{' '}
-            <img
-              src="/arrow.svg"
-              className="arrow-image-product"
-              style={{
-                transform: toggleDescription ? 'rotate(-180deg)' : 'rotate(0)',
-              }}
-            />
           </h6>
-          {toggleDescription && (
-            <div
-              dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
-              className="subtext-prod"
-            ></div>
-          )}
+          <div
+            dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
+            className="subtext-prod"
+          ></div>
         </Col>
       </Row>
     </Container>
