@@ -14,8 +14,7 @@ export async function loader({context}) {
 }
 
 export default function Policies() {
-  const {policies} = useLoaderData();
-  const location = useLocation();
+  // const {policies} = useLoaderData();
   const MotionContainer = motion(Container);
 
   return (
@@ -30,17 +29,10 @@ export default function Policies() {
     >
       <Row>
         <Col lg={{offset: 1, span: 10}} style={{padding: '20px'}}>
-          <h1 className="policy-header-text">
-            {location.pathname === '/policies/return-policy'
-              ? 'Return Policy'
-              : 'Shipping Policy'}
-          </h1>
-          {location.pathname === '/policies/return-policy' && (
-            <h3>policies.returnPolicy.body</h3>
-          )}
-          {location.pathname !== '/policies/return-policy' && (
-            <h3>policies.shippingPolicy.body</h3>
-          )}
+          <h1 className="policy-header-text">Policies</h1>
+          <h3 style={{textAlign: 'left', paddingTop: '20px'}}>
+            body copy policies
+          </h3>
         </Col>
       </Row>
     </MotionContainer>
@@ -57,12 +49,6 @@ query policies {
       title
       url
     }
-    refundPolicy {
-            body
-            id
-            title
-            url
-        }
   }
 }
 `;

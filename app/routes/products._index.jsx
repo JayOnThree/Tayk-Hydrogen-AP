@@ -1,11 +1,8 @@
 import {useState} from 'react';
-import {useLoaderData, Link} from '@remix-run/react';
+import {useLoaderData} from '@remix-run/react';
 import {json} from 'react-router';
 import {Container, Row, Col} from 'react-bootstrap';
-import {useNavigate, useLocation} from '@remix-run/react';
-import {AnalyticsPageType} from '@shopify/hydrogen';
-import {motion} from 'framer-motion';
-// import {motion} from 'framer-motion';
+import {useNavigate} from '@remix-run/react';
 
 import ProductCard from '~/components/ProductCard';
 
@@ -17,44 +14,25 @@ export const handle = {
   seo,
 };
 
-export async function loader({params, context, request}) {
-  const {handle} = params;
-  const searchParams = new URL(request.url).searchParams;
-  const cursor = searchParams.get('cursor');
-
-  const {collection} = await context.storefront.query(COLLECTION_QUERY, {
-    variables: {
-      handle,
-      cursor,
-    },
-  });
-
-  const {collections} = await context.storefront.query(COLLECTIONS_QUERY);
-
-  if (!collection) {
-    throw new Response(null, {status: 404});
-  }
+export async function loader({context}) {
+  const {products} = await context.storefront.query(PRODUCTS_QUERY);
 
   return json({
-    collection,
-    collections,
+    products,
     analytics: {
-      // pageType: `collections/${handle}`,
-      pageType: AnalyticsPageType.collection,
-      collections: [collections],
+      pageType: '/Products',
     },
   });
 }
 
-export const meta = ({data}) => {
+export const meta = () => {
   return {
-    title: data?.collection?.title ?? 'Collection',
-    description: data?.collection?.description,
+    title: 'products',
+    description: 'Products page, view all merchandise here',
   };
 };
 
 export default function Collection() {
-  // const MotionContainer = motion(Container);
   const Orientation = [
     'A1',
     'A2',
@@ -100,20 +78,19 @@ export default function Collection() {
     '0',
   ];
 
-  const {collection, collections} = useLoaderData();
+  const {products} = useLoaderData();
   const [textIndex, setTextIndex] = useState(null);
   const [dialText, setDialText] = useState(null);
-  const CollectionLength = collection.products.nodes.length;
+  const CollectionLength = products.nodes.length;
   const updatedOrientation = Orientation.splice(0, CollectionLength);
   const navigation = useNavigate();
-  // const location = useLocation();
 
   function enterFunction() {
     const routeIndex = updatedOrientation.indexOf(dialText);
     if (updatedOrientation.indexOf(dialText) !== -1) {
       setDialText('Thank you');
       setTimeout(() => {
-        navigation(`/products/${collection.products.nodes[routeIndex].handle}`);
+        navigation(`/products/${products.nodes[routeIndex].handle}`);
       }, 800);
     } else {
       setDialText('Pick again');
@@ -123,70 +100,23 @@ export default function Collection() {
     }
   }
 
-  const MotionContainer = motion(Container);
-  // const [isOpen, setOpen] = useState(false);
-
-  // const variants = {
-  //   open: {opacity: 1, x: 0},
-  //   closed: {opacity: 0, x: '-100%'},
-  // };
-
   return (
-    <Container
-      fluid
-      className="container-shop"
-      style={{overflow: 'hidden'}}
-      // animate={isOpen ? 'open' : 'closed'}
-      // variants={variants}
-      // initial={{y: 1000, opacity: 0}}
-      // animate={{y: 0, opacity: 1}}
-      // exit={{y: 1000, opacity: 0}}
-      // transition={{duration: 0.3}}
-    >
-      {/* <Row style={{height: '100px'}}>
-        <Col lg={8} className="category-div">
-          {collections.nodes.map((collection) => {
-            return (
-              <Link
-                style={{textDecoration: 'none'}}
-                to={`/collections/${collection.handle}`}
-                key={collection.id}
-                className="category-text category-text-size"
-              >
-                {collection.title}
-              </Link>
-            );
-          })}
-        </Col>
-        <Col lg={4} className="marque-div d-none d-md-none d-lg-flex">
-          {dialText === null ? (
-            textIndex === null ? (
-              <marquee className="marque-text">
-                CLICK AN ITEM OR TYPE ITS CODE
-              </marquee>
-            ) : (
-              <h5 className="marque-text">{updatedOrientation[textIndex]}</h5>
-            )
-          ) : (
-            <h5 className="marque-text">{dialText}</h5>
-          )}
-        </Col>
-      </Row> */}
+    <Container fluid className="container-shop" style={{overflow: 'hidden'}}>
       <Row style={{height: '100%'}}>
         <Col lg={8} xs={12} className="product-page-div">
           <div className="Product-wrapper">
-            {collection.products.nodes.map((product, i) => (
-              <div
+            {products.nodes.map((product, i) => (
+              <ProductCard
+                product={product}
+                index={i}
                 key={product.id}
                 onPointerOver={() => setTextIndex(i)}
                 onPointerOut={() => setTextIndex(null)}
-              >
-                <ProductCard product={product} index={i} />
-              </div>
+              />
             ))}
           </div>
         </Col>
-        <Col lg={4} xs={5} className='d-none d-md-none d-lg-flex'>
+        <Col lg={4} xs={5} className="d-none d-md-none d-lg-flex">
           <div style={{height: '100%', width: '100%'}}>
             <div className="marque-div-mobile">
               {dialText === null ? (
@@ -248,32 +178,9 @@ export default function Collection() {
   );
 }
 
-const COLLECTIONS_QUERY = `#graphql
-  query FeaturedCollections {
-    collections(first: 10) {
-      nodes {
-        id
-        title
-        handle
-        image {
-          altText
-          width
-          height
-          url
-        }
-      }
-    }
-  }
-`;
-
-const COLLECTION_QUERY = `#graphql
-  query CollectionDetails($handle: String!) {
-    collection(handle: $handle) {
-      id
-      title
-      description
-      handle
-      products(first: 100) {
+const PRODUCTS_QUERY = `#graphql
+  query products {
+    products(first: 100) {
         nodes {
           id
           title
@@ -301,5 +208,4 @@ const COLLECTION_QUERY = `#graphql
         }
       }
     }
-  }
 `;

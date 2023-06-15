@@ -97,7 +97,7 @@ function CartDrawer({cart, close}) {
                     className="cart-text"
                     onClick={() => {
                       close();
-                      navigate('/collections/shirts');
+                      navigate('/products');
                     }}
                   >
                     Continue shopping

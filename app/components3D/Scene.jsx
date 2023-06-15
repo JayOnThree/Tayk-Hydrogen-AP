@@ -26,6 +26,7 @@ import Media from './Media';
 import Connect from './Connect';
 import Court from './Court';
 import Footer from '~/components/Footer';
+import LoadingScreen from '~/components/LoadingScreen';
 import {SceneHeader, useSceneHeader} from '~/components/SceneHeader';
 
 extend({UnrealBloomPass});
@@ -47,7 +48,7 @@ function EnterButton({
     setTimeout(() => {
       navigate(
         shopSelect
-          ? '/collections/shirts-1'
+          ? '/products'
           : mediaSelect
           ? '/media'
           : connectSelect && 'https://discord.com/',
@@ -142,16 +143,6 @@ function ShopUI({shopSelect}) {
   );
 }
 
-function Loader({progress}) {
-  return (
-    <div className="loader-container">
-      <div className="text-div">
-        <h3 className="loader-text">{progress.toFixed(0)}%</h3>
-      </div>
-    </div>
-  );
-}
-
 export default function Scene({children, ...props}) {
   const mesh = useRef(null);
   const location = useLocation();
@@ -172,6 +163,7 @@ export default function Scene({children, ...props}) {
   const [shopHovered, setShopHovered] = useState(false);
   const [mediaHovered, setMediaHovered] = useState(false);
   const [connectHovered, setConnectHovered] = useState(false);
+  const [hide, setHide] = useState(false);
   // const [isPending, startTransition] = useTransition();
   const rotation = [0, 0, 0];
   const position = [3, 0.5, 0];
@@ -232,7 +224,7 @@ export default function Scene({children, ...props}) {
   const AnimatedCam = animated(PerspectiveCamera);
 
   const {progress} = useProgress();
-  const hide = progress !== 100;
+  // const hide = progress !== 100;
 
   const [spring, set] = useSpring(() => ({
     rotation: [...rotation],
@@ -253,9 +245,17 @@ export default function Scene({children, ...props}) {
     }
   }, [musicOn]);
 
+  useEffect(() => {
+    if (progress === 100) {
+      setTimeout(() => {
+        setHide(true);
+      }, 200);
+    }
+  }, [progress]);
+
   return (
     <>
-      {hide && <Loader progress={progress} />}
+      {!hide && <LoadingScreen progress={progress} />}
       <button
         className="exit-section-button"
         style={{

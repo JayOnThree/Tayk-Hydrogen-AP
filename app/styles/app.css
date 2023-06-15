@@ -907,7 +907,7 @@ a:hover {
   background: black;
   border-radius: 48px;
   border: solid 5px #E8E8E8;
-  /* display: flex; */
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
@@ -968,31 +968,24 @@ a:hover {
 }
 
 .Product-wrapper {
-  /* margin: 0px 0px 0px 0px;
+  margin: 1% auto 1%;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center; */
-
-  margin: 2% auto 2%;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
+	justify-content: left;
   height: 100%;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
 
 .Product {
-  /* flex: 0 1 25%; */
-
   flex: 0 1 25%;
   width: 100%;
   height: auto;
-  padding: 5px;
 }
 
 .prod-images {
-  height: 200px;
-  width: auto;
+  width: 45vw;
+  max-width: 200px;
+  height: auto;
 }
 
 .addtocart-button {
@@ -1030,6 +1023,12 @@ a:hover {
   background-color: white;
   padding: 6px;
   border-radius: 10px;
+}
+
+.title-product-text-products {
+  font-size: 10pt;
+  color: black;
+  -webkit-text-stroke: 1px black;
 }
 
 .vending-price-text {
@@ -1071,7 +1070,7 @@ a:hover {
     margin-left: -10px;
     margin-right: -10px;
     background: white;
-    height: 100%;
+    height: calc(100% - 100px);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1654,17 +1653,25 @@ a:hover {
     position: fixed;
     z-index: 50;
     background: black;
+    transition: 1s opacity ease;
   }
 
   .text-div {
     top: 45vh;
     left: 0;
-    width: 500px;
+    width: 100%;
     right: 0;
     bottom: 0;
     margin: auto;
     position: absolute;
     text-align: center;
+  }
+
+  .loading-header-text {
+    font-size: 14pt;
+    position: absolute;
+    color: white;
+    -webkit-text-stroke: 4px white;
   }
 
   .loader-text {
@@ -1678,7 +1685,7 @@ a:hover {
     background-color: rgba(0, 0, 0, 0.225);
     z-index: 16;
     bottom: 7vh;
-    left: -5px;
+    left: -5px;Product-wrapper
     border: none;
     position: fixed;
     border-radius: 0px 20px 20px 0px;
