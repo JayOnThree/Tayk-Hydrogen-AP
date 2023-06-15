@@ -19,6 +19,7 @@ function Drawer({open, onClose, children}) {
           {children}
         </header>
       </div>
+      <div className="background-cart-div" style={{display: open ? 'block' : 'none'}} />
     </div>
   );
 }

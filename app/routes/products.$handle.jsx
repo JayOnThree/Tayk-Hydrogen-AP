@@ -88,10 +88,10 @@ export const loader = async ({params, context, request}) => {
 export default function ProductHandle() {
   const {product, selectedVariant} = useLoaderData();
   const [imageIndex, setImageIndex] = useState(0);
-  // const [toggleReturns, setToggleReturns] = useState(false);
   const largeImage = product.media.nodes[imageIndex && imageIndex].image;
   const sizeVariantsIndicator = product.variants;
-  // const prodMediaLength = product.media.nodes.length;
+
+  console.log(sizeVariantsIndicator)
 
   return (
     <Container fluid className="container-shop">
