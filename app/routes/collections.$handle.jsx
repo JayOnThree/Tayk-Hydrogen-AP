@@ -132,7 +132,7 @@ export default function Collection() {
   // };
 
   return (
-    <MotionContainer
+    <Container
       fluid
       className="container-shop"
       style={{overflow: 'hidden'}}
@@ -173,7 +173,7 @@ export default function Collection() {
         </Col>
       </Row>
       <Row style={{height: 'calc(100% - 100px)'}}>
-        <Col lg={8} xs={7} className="product-page-div">
+        <Col lg={8} xs={12} className="product-page-div">
           <div className="Product-wrapper">
             {collection.products.nodes.map((product, i) => (
               <div
@@ -186,7 +186,7 @@ export default function Collection() {
             ))}
           </div>
         </Col>
-        <Col lg={4} xs={5}>
+        <Col lg={4} xs={5} className='d-none d-md-none d-lg-flex'>
           <div style={{height: '100%', width: '100%'}}>
             <div className="marque-div-mobile d-flex d-lg-none">
               {dialText === null ? (
@@ -244,7 +244,7 @@ export default function Collection() {
           </div>
         </Col>
       </Row>
-    </MotionContainer>
+    </Container>
   );
 }
 

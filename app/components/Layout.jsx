@@ -1,29 +1,34 @@
 import {useEffect} from 'react';
 import {Drawer, useDrawer} from '~/components/Drawer';
 import {Suspense} from 'react';
-import {Await, useMatches, useFetchers} from '@remix-run/react';
+import {Await, useMatches, useFetchers, useLocation} from '@remix-run/react';
 import {CartLineItems, CartActions, CartSummary} from '~/components/Cart';
 import {useNavigate} from '@remix-run/react';
 
 function CartHeader({openDrawer}) {
   const [root] = useMatches();
+  const location = useLocation();
 
   return (
     <Suspense>
       <Await resolve={root.data?.cart}>
         {(cart) => (
-          <button
-            className="cart-button cart-margin"
-            onClick={openDrawer}
-            style={{position: 'fixed', zIndex: '11'}}
-          >
-            {cart?.totalQuantity > 0 && (
-              <div className="items-text">
-                <span>{cart?.totalQuantity}</span>
-              </div>
+          <>
+            {location.pathname !== '/' && (
+              <button
+                className="cart-button cart-margin"
+                onClick={openDrawer}
+                style={{position: 'fixed', zIndex: '11'}}
+              >
+                {cart?.totalQuantity > 0 && (
+                  <div className="items-text">
+                    <span>{cart?.totalQuantity}</span>
+                  </div>
+                )}
+                <img src="/cart.svg" className="cart-image" alt="cart" />
+              </button>
             )}
-            <img src="/cart.svg" className="cart-image" alt="cart" />
-          </button>
+          </>
         )}
       </Await>
     </Suspense>

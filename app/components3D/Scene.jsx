@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable hydrogen/prefer-image-component */
 // import * as THREE from 'three';
 import {Suspense, useRef, useState, useEffect} from 'react';
@@ -48,7 +47,7 @@ function EnterButton({
     setTimeout(() => {
       navigate(
         shopSelect
-          ? '/collections/shirts'
+          ? '/collections/shirts-1'
           : mediaSelect
           ? '/media'
           : connectSelect && 'https://discord.com/',
@@ -64,7 +63,11 @@ function EnterButton({
         transform:
           shopSelect || connectSelect || mediaSelect ? 'scale(1)' : 'scale(0)',
       }}
-      onClick={() => navigationTimeout()}
+      onClick={() =>
+        connectSelect
+          ? (location.href = 'https://discord.gg/tayk')
+          : navigationTimeout()
+      }
     >
       <h3 className="enter-button-text">ENTER</h3>
     </button>

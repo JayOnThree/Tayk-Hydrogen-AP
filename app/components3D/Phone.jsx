@@ -24,4 +24,4 @@ export default function Model({...props}) {
   );
 }
 
-useGLTF.preload(Phone);
+// useGLTF.preload(Phone);

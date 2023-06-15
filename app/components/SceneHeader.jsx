@@ -1,7 +1,7 @@
 /* eslint-disable hydrogen/prefer-image-component */
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {Link, useLocation} from '@remix-run/react';
-import {motion} from 'framer-motion';
+// import {motion} from 'framer-motion';
 
 export function useSceneHeader(stateDefault = false) {
   const [shopSelect, setShopSelected] = useState(stateDefault);
@@ -52,16 +52,16 @@ function SceneHeader({
   connectFalse,
 }) {
   const location = useLocation();
-  const [mobile, setMobile] = useState();
-  const [tablet, setTablet] = useState();
+  // const [mobile, setMobile] = useState();
+  // const [tablet, setTablet] = useState();
 
-  useEffect(() => {
-    function handleResize() {
-      setMobile(window.innerWidth < 600);
-      setTablet(window.innerWidth < 900 && window.innerWidth > 600);
-    }
-    window.addEventListener('resize', handleResize);
-  });
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setMobile(window.innerWidth < 600);
+  //     setTablet(window.innerWidth < 900 && window.innerWidth > 600);
+  //   }
+  //   window.addEventListener('resize', handleResize);
+  // });
 
   return (
     <div className="header-container">
@@ -69,7 +69,7 @@ function SceneHeader({
         <div
           className="header-div"
           style={{
-            width: 'calc(100% - 100px)',
+            width: 'clamp(100% - 300px)',
             transform:
               !connectSelect && !shopSelect && !mediaSelect
                 ? 'translateY(0)'
@@ -77,36 +77,20 @@ function SceneHeader({
           }}
         >
           <ul className="mainMenu-ul">
-            <li className="mainMenu-li">
-              <div
-                className="menu-text"
-                onClick={() => (mediaSelect ? mediaFalse() : mediaTrue())}
-              >
-                Media
-                {mediaSelect ? (
-                  <img src="/paint.svg" alt="fingerprint" className="paint" />
-                ) : (
-                  <img
-                    src="/paint.svg"
-                    alt="indication that you are in the media section"
-                    className="paint"
-                    style={{
-                      transform:
-                        dragX.x > 245 && !shopSelect && !connectSelect
-                          ? 'scale(1)'
-                          : 'scale(0)',
-                    }}
-                  />
-                )}
-              </div>
+            <li
+              className="mainMenu-li menu-text"
+              onClick={() => (mediaSelect ? mediaFalse() : mediaTrue())}
+            >
+              Media
+              <img src="/paint.svg" alt="fingerprint" className="paint" />
             </li>
-            <li className="mainMenu-li">
-              <div
-                className="menu-text"
-                onClick={() => (shopSelect ? shopFalse() : shopTrue())}
-              >
-                Shop
-                {shopSelect ? (
+            <li
+              className="mainMenu-li menu-text"
+              onClick={() => (shopSelect ? shopFalse() : shopTrue())}
+            >
+              Shop
+              <img src="/paint.svg" alt="fingerprint" className="paint" />
+              {/* {shopSelect ? (
                   <img src="/paint.svg" alt="fingerprint" className="paint" />
                 ) : (
                   <img
@@ -115,19 +99,21 @@ function SceneHeader({
                     className="paint"
                     style={{
                       transform:
-                        dragX.x > 77 &&
-                        dragX.x < 245 &&
+                        dragX.x > 250 &&
+                        dragX.x < 770 &&
                         !mediaSelect &&
                         !connectSelect
                           ? 'scale(1)'
                           : 'scale(0)',
                     }}
                   />
-                )}
-              </div>
+                )} */}
             </li>
             <li className="mainMenu-li">
-              <div className="menu-text" onClick={() => (connectSelect ? connectFalse() : connectTrue())}>
+              <div
+                className="menu-text"
+                onClick={() => (connectSelect ? connectFalse() : connectTrue())}
+              >
                 Connect
                 {connectSelect ? (
                   <img src="/paint.svg" alt="fingerprint" className="paint" />
@@ -138,7 +124,7 @@ function SceneHeader({
                     className="paint"
                     style={{
                       transform:
-                        dragX.x < 77 && !shopSelect && !mediaSelect
+                        dragX.x < 250 && !shopSelect && !mediaSelect
                           ? 'scale(1)'
                           : 'scale(0)',
                     }}
@@ -154,11 +140,15 @@ function SceneHeader({
           <div
             className="navigation-div"
             style={{
-              width: '137px',
+              width: '167px',
               marginLeft: '0px',
             }}
           >
-            <a onClick={() => history.back()} className="circle-router" style={{marginLeft: '5px'}}>
+            <a
+              onClick={() => history.back()}
+              className="circle-router"
+              style={{marginLeft: '20px'}}
+            >
               <img alt="back" src="/back.svg" className="icon-router" />
             </a>
             <Link to="/" className="circle-router">
@@ -166,13 +156,17 @@ function SceneHeader({
             </Link>
           </div>
           <div className="header-container">
-            <motion.div
+            <div
               className="header-div"
-              animate={{
-                width: 'clamp(137px - 100%)',
-                marginLeft: '137px',
+              style={{
+                width: 'clamp(167px - 100%)',
+                marginLeft: '167px',
               }}
-              exit={{width: '100%', marginLeft: 0}}
+              // animate={{
+              //   width: 'clamp(167px - 100%)',
+              //   marginLeft: '167px',
+              // }}
+              // exit={{width: 'clamp(0px - 100%)', marginLeft: 0}}
             >
               <div className="headline-text-nav">
                 {location.pathname.indexOf('media') > -1 && (
@@ -185,7 +179,7 @@ function SceneHeader({
                   <h5 className="menu-text-notLanding">Shop</h5>
                 )}
               </div>
-            </motion.div>
+            </div>
           </div>
         </>
       )}
