@@ -143,7 +143,7 @@ export default function Collection() {
       // exit={{y: 1000, opacity: 0}}
       // transition={{duration: 0.3}}
     >
-      <Row style={{height: '100px'}}>
+      {/* <Row style={{height: '100px'}}>
         <Col lg={8} className="category-div">
           {collections.nodes.map((collection) => {
             return (
@@ -171,8 +171,8 @@ export default function Collection() {
             <h5 className="marque-text">{dialText}</h5>
           )}
         </Col>
-      </Row>
-      <Row style={{height: 'calc(100% - 100px)'}}>
+      </Row> */}
+      <Row style={{height: '100%'}}>
         <Col lg={8} xs={12} className="product-page-div">
           <div className="Product-wrapper">
             {collection.products.nodes.map((product, i) => (
@@ -188,7 +188,7 @@ export default function Collection() {
         </Col>
         <Col lg={4} xs={5} className='d-none d-md-none d-lg-flex'>
           <div style={{height: '100%', width: '100%'}}>
-            <div className="marque-div-mobile d-flex d-lg-none">
+            <div className="marque-div-mobile">
               {dialText === null ? (
                 textIndex === null ? (
                   <marquee className="marque-text">
