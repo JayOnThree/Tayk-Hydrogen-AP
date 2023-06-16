@@ -91,8 +91,6 @@ export default function ProductHandle() {
   const largeImage = product.media.nodes[imageIndex && imageIndex].image;
   const sizeVariantsIndicator = product.variants;
 
-  console.log(sizeVariantsIndicator)
-
   return (
     <Container fluid className="container-shop">
       <Row style={{height: '100%'}}>

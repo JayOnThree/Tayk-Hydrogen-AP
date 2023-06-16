@@ -6,8 +6,9 @@ import Scene from '../../public/glb/scene.glb';
 
 export default function Media({prodImages}) {
   const {nodes, materials} = useGLTF(Scene);
-  const imgUrl = prodImages.map((images) => images.variants.nodes[0].image.url);
-  const batchTextures = useLoader(TextureLoader, imgUrl);
+  const imgUrl = prodImages.map((images) => images.variants.nodes[0].image?.url);
+  const filterArry = imgUrl.filter(cur => cur);
+  const batchTextures = useLoader(TextureLoader, filterArry);
 
   return (
     <group>

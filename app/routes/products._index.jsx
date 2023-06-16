@@ -107,6 +107,8 @@ export default function Collection() {
           <div className="Product-wrapper">
             {products.nodes.map((product, i) => {
               const {price} = product.variants?.nodes[0] || {};
+              const hide = product.tags.includes('coming soon');
+
               return (
                 <div
                   className="Product"
@@ -115,7 +117,7 @@ export default function Collection() {
                   onPointerOut={() => setTextIndex(null)}
                 >
                   <Link
-                    to={`/products/${product.handle}`}
+                    to={`${hide ? '/products' : `/products/${product.handle}`}`}
                     style={{textDecoration: 'none'}}
                   >
                     <Image
@@ -206,6 +208,7 @@ const PRODUCTS_QUERY = `#graphql
           title
           publishedAt
           handle
+          tags
           variants(first: 1) {
             nodes {
               id

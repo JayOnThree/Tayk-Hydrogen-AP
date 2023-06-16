@@ -1,4 +1,4 @@
-import {useLoaderData, useLocation} from '@remix-run/react';
+import {useLoaderData} from '@remix-run/react';
 import {Container, Row, Col} from 'react-bootstrap';
 import {json} from 'react-router';
 import {motion} from 'framer-motion';
