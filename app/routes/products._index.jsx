@@ -131,7 +131,7 @@ export default function Collection() {
                       {product.title}
                     </h6>
                     <div className="vending-text-div" style={{display: 'flex'}}>
-                      <h6 className="vending-text">{Orientation[i]}</h6>
+                      <h6 className="vending-text">{updatedOrientation[i]}</h6>
                       <Money data={price} className="vending-price-text" />
                     </div>
                   </Link>
