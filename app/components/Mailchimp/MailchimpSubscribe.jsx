@@ -126,19 +126,12 @@ const CustomForm = ({status, onValidated}) => {
 };
 
 const MailchimpForm = () => {
-  const url = `https://gmail.us10.list-manage.com/subscribe/post?u=f44c41b585cf2ea8136952a5f&amp;id=b1506a89aa&amp;`;
-
   return (
     <div className="formDiv">
-      <MailchimpSubscribe
-        url={url}
-        render={({subscribe, status, message}) => (
-          <CustomForm
-            status={status}
-            message={message}
-            onValidated={(formData) => subscribe(formData)}
-          />
-        )}
+      <CustomForm
+        status={status}
+        // message={message}
+        // onValidated={(formData) => subscribe(formData)}
       />
     </div>
   );

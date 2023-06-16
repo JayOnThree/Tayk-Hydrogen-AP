@@ -1,10 +1,9 @@
-import {useState} from 'react';
+import {useState, Fragment} from 'react';
 import {useLoaderData} from '@remix-run/react';
 import {json} from 'react-router';
 import {Container, Row, Col} from 'react-bootstrap';
-import {useNavigate} from '@remix-run/react';
-
-import ProductCard from '~/components/ProductCard';
+import {Link, useNavigate} from '@remix-run/react';
+import {Image, Money} from '@shopify/hydrogen';
 
 const seo = ({data}) => ({
   title: data?.collection?.title,
@@ -83,6 +82,7 @@ export default function Collection() {
   const [dialText, setDialText] = useState(null);
   const CollectionLength = products.nodes.length;
   const updatedOrientation = Orientation.splice(0, CollectionLength);
+  // const {price} = product.variants?.nodes[0] || {};
   const navigation = useNavigate();
 
   function enterFunction() {
@@ -105,15 +105,35 @@ export default function Collection() {
       <Row style={{height: '100%'}}>
         <Col lg={8} xs={12} className="product-page-div">
           <div className="Product-wrapper">
-            {products.nodes.map((product, i) => (
-              <ProductCard
-                product={product}
-                index={i}
-                key={product.id}
-                onPointerOver={() => setTextIndex(i)}
-                onPointerOut={() => setTextIndex(null)}
-              />
-            ))}
+            {products.nodes.map((product, i) => {
+              const {price} = product.variants?.nodes[0] || {};
+              return (
+                <div
+                  className="Product"
+                  key={product.id}
+                  onPointerOver={() => setTextIndex(i)}
+                  onPointerOut={() => setTextIndex(null)}
+                >
+                  <Link
+                    to={`/products/${product.handle}`}
+                    style={{textDecoration: 'none'}}
+                  >
+                    <Image
+                      data={product.variants.nodes[0].image}
+                      alt={product.title}
+                      className="prod-images"
+                    />
+                    <h6 className="title-product-text-products">
+                      {product.title}
+                    </h6>
+                    <div className="vending-text-div" style={{display: 'flex'}}>
+                      <h6 className="vending-text">{Orientation[i]}</h6>
+                      <Money data={price} className="vending-price-text" />
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </Col>
         <Col lg={4} xs={5} className="d-none d-md-none d-lg-flex">

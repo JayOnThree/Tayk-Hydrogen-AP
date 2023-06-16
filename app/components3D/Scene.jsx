@@ -445,7 +445,7 @@ export default function Scene({children, ...props}) {
                         transparent
                       />
                     </mesh>
-                    {dragX.x < 100 && <Connect />}
+                    <Connect />
                     {!connectSelect && (
                       <Html
                         position={[3.7, 1, -3.5]}

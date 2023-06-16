@@ -26,8 +26,10 @@ import {Layout} from '~/components/Layout';
 import {CART_QUERY} from '~/queries/cart';
 import {ClientOnly} from 'remix-utils';
 import {useAnalyticsFromLoaders, useAnalyticsFromActions} from '~/lib/utils';
+import {isMobile} from 'react-device-detect';
 
 import Canvas from '~/components3D/Scene';
+import Mobile from '~/components/Mobile';
 
 export const links = () => {
   return [
@@ -64,7 +66,7 @@ export const handle = {
   },
 };
 
-export async function loader({context, request}) {
+export async function loader({context}) {
   const cartId = await context.session.get('cartId');
   const {products} = await context.storefront.query(PRODUCTS_QUERY);
 
@@ -132,10 +134,18 @@ export default function App() {
       <body style={{background: 'black', overflow: 'hidden'}}>
         <Layout />
         <Outlet />
-        <ClientOnly
+        {/* <ClientOnly
           fallback={null}
           children={() => <Canvas products={products} />}
-        />
+        /> */}
+        {isMobile ? (
+          <Mobile />
+        ) : (
+          <ClientOnly
+            fallback={null}
+            children={() => <Canvas products={products} />}
+          />
+        )}
         <ScrollRestoration />
         <Scripts />
       </body>

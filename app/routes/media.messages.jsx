@@ -2,7 +2,7 @@ import {Container, Row} from 'react-bootstrap';
 import {json} from '@shopify/remix-oxygen';
 
 import Toolbar from '../components/Toolbar';
-import MailchimpForm from '~/components/Mailchimp/MailchimpSubscribe';
+import MessageForm from '~/components/MessageForm';
 
 export async function loader() {
   return json({
@@ -30,7 +30,7 @@ export default function Messages() {
       <Toolbar />
       <h1 className="music-header d-none d-md-none d-lg-block">Messages</h1>
       <Row className="row-message-container">
-        <MailchimpForm />
+        <MessageForm />
       </Row>
     </Container>
   );
