@@ -1,4 +1,6 @@
+import {useEffect, useState} from 'react';
 import {useNavigate} from '@remix-run/react';
+import useSound from 'use-sound';
 // import {motion} from 'framer-motion';
 import {Suspense} from 'react';
 
@@ -7,10 +9,30 @@ import MobileHeader from '~/components/MobileHeader';
 
 export default function Mobile() {
   const navigate = useNavigate();
+  const [musicOn, setMusicOn] = useState(false);
+
+  const [play, {stop}] = useSound('/audio.mp3', {
+    loop: true,
+    autoplay: false,
+  });
+
+  useEffect(() => {
+    if (musicOn) {
+      play();
+    } else {
+      stop();
+    }
+  }, [musicOn]);
 
   return (
     <Suspense fallback={null}>
       <MobileHeader />
+      {/* <button className="music-button" onClick={() => setMusicOn(!musicOn)}>
+        <img
+          src={musicOn ? '/symbol.svg' : '/symbolOff.svg'}
+          style={{height: '30px'}}
+        />
+      </button> */}
       <div
         style={{backgroundImage: `url('/bg.jpg')`}}
         className="mobile-div-container"
