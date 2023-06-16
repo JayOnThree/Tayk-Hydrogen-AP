@@ -14,20 +14,18 @@ function CartHeader({openDrawer}) {
       <Await resolve={root.data?.cart}>
         {(cart) => (
           <>
-            {location.pathname !== '/' && (
-              <button
-                className="cart-button cart-margin"
-                onClick={openDrawer}
-                style={{position: 'fixed', zIndex: '11'}}
-              >
-                {cart?.totalQuantity > 0 && (
-                  <div className="items-text">
-                    <span>{cart?.totalQuantity}</span>
-                  </div>
-                )}
-                <img src="/cart.svg" className="cart-image" alt="cart" />
-              </button>
-            )}
+            <button
+              className="cart-button cart-margin"
+              onClick={openDrawer}
+              style={{position: 'fixed', zIndex: '11'}}
+            >
+              {cart?.totalQuantity > 0 && (
+                <div className="items-text">
+                  <span>{cart?.totalQuantity}</span>
+                </div>
+              )}
+              <img src="/cart.svg" className="cart-image" alt="cart" />
+            </button>
           </>
         )}
       </Await>

@@ -26,9 +26,9 @@ export default function Footer() {
           </Link>
         </li>
         <li className="mainMenu-li">
-          <a href="mailto: info@tayk.world" style={{textDecoration: 'none'}}>
+          <Link to="/credits" style={{textDecoration: 'none'}}>
             <h6 className="footer-text">CREDITS</h6>
-          </a>
+          </Link>
         </li>
       </ul>
     </div>

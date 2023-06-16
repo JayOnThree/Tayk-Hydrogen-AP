@@ -24,6 +24,8 @@ export async function loader({context}) {
 
 export default function Blog() {
   const {articles} = useLoaderData();
+  const noArticles = articles.nodes.length === 0;
+
   return (
     <Container
       fluid
@@ -39,6 +41,11 @@ export default function Blog() {
           borderRadius: '50px 50px 0 0',
         }}
       >
+        {noArticles && (
+          <Col lg={{offset: 1, span: 10}} style={{padding: '50px'}}>
+            <h1 className="policy-header-text">Coming Soon...</h1>
+          </Col>
+        )}
         {articles.nodes.map((article, i) => {
           const excerptShort = article.excerpt.slice(0, 70);
           const output = article.title.toLowerCase();

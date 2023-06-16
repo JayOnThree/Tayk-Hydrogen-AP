@@ -59,7 +59,7 @@ function SceneHeader({
         <div
           className="header-div"
           style={{
-            width: 'clamp(100% - 300px)',
+            width: 'calc(100% - 100px)',
             transform:
               !connectSelect && !shopSelect && !mediaSelect
                 ? 'translateY(0)'
