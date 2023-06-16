@@ -7,11 +7,11 @@ import Idl from '../../public/glb/idle.glb';
 function Dribble({...props}) {
   const group = useRef();
   const {nodes, materials, animations} = useGLTF(Drib);
-  const {actions} = useAnimations(animations, group);
+  const {actions, names} = useAnimations(animations, group);
 
   useEffect(() => {
-    actions.basketballAction.play();
-    // actions.metarig|mixamo.com|Layer0.play();
+    actions[names[0]].play();
+    actions[names[1]].play();
   });
 
   return (
@@ -94,12 +94,11 @@ function Dribble({...props}) {
 export default function Connect() {
   const group = useRef();
   const {nodes, materials, animations} = useGLTF(Idl);
-  const {actions} = useAnimations(animations, group);
+  const {actions, names} = useAnimations(animations, group);
 
-  // useEffect(() => {
-  //   actions.ArmatureAction.play();
-  //   actions.Sketchfab_modelAction.play();
-  // });
+  useEffect(() => {
+    actions[names[0]].play();
+  });
 
   return (
     <group>
