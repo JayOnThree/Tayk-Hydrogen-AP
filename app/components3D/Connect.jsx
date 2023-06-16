@@ -16,7 +16,7 @@ function Dribble({...props}) {
 
   return (
     <group ref={group} {...props} dispose={null}>
-      <group name="Scene" scale={0.5} position={[3, 0, -3.7]}>
+      <group name="Scene" scale={0.43} position={[3, 0, -4]} rotation={[0, 1.4, 0]}>
         <group
           name="metarig"
           position={[-0.03, -0.06, 0.36]}
@@ -107,8 +107,8 @@ export default function Connect() {
         ref={group}
         dispose={null}
         scale={0.4}
-        position={[2, 0, -3]}
-        rotation={[0, 2.5, 0]}
+        position={[2.35, 0, -3.5]}
+        rotation={[0, 2, 0]}
       >
         <group name="Scene">
           <group

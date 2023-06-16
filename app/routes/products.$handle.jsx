@@ -88,7 +88,7 @@ export const loader = async ({params, context, request}) => {
 export default function ProductHandle() {
   const {product, selectedVariant} = useLoaderData();
   const [imageIndex, setImageIndex] = useState(0);
-  const largeImage = product.media.nodes[imageIndex && imageIndex].image;
+  const largeImage = product.media.nodes[imageIndex && imageIndex]?.image;
   const sizeVariantsIndicator = product.variants;
 
   return (
@@ -112,12 +112,12 @@ export default function ProductHandle() {
         <Col
           className="product-images-div d-none d-md-none d-lg-block"
           lg={5}
-          style={{backgroundImage: `url(${largeImage.url})`}}
+          style={{backgroundImage: `url(${largeImage?.url})`}}
         ></Col>
         <Col
           xs={12}
           className="product-images-div-mobile d-flex d-lg-none"
-          style={{backgroundImage: `url(${largeImage.url})`}}
+          style={{backgroundImage: `url(${largeImage?.url})`}}
         ></Col>
         <Col
           className="product-images-picker-div-mobile d-flex d-lg-none"

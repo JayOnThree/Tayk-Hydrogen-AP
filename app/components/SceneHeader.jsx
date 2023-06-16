@@ -52,16 +52,6 @@ function SceneHeader({
   connectFalse,
 }) {
   const location = useLocation();
-  // const [mobile, setMobile] = useState();
-  // const [tablet, setTablet] = useState();
-
-  // useEffect(() => {
-  //   function handleResize() {
-  //     setMobile(window.innerWidth < 600);
-  //     setTablet(window.innerWidth < 900 && window.innerWidth > 600);
-  //   }
-  //   window.addEventListener('resize', handleResize);
-  // });
 
   return (
     <div className="header-container">
@@ -77,20 +67,36 @@ function SceneHeader({
           }}
         >
           <ul className="mainMenu-ul">
-            <li
-              className="mainMenu-li menu-text"
-              onClick={() => (mediaSelect ? mediaFalse() : mediaTrue())}
-            >
-              Media
-              <img src="/paint.svg" alt="fingerprint" className="paint" />
+            <li className="mainMenu-li">
+              <div
+                className="menu-text"
+                onClick={() => (mediaSelect ? mediaFalse() : mediaTrue())}
+              >
+                Media
+                {mediaSelect ? (
+                  <img src="/paint.svg" alt="fingerprint" className="paint" />
+                ) : (
+                  <img
+                    src="/paint.svg"
+                    alt="indication that you are in the media section"
+                    className="paint"
+                    style={{
+                      transform:
+                        dragX.x > 770 && !shopSelect && !connectSelect
+                          ? 'scale(1)'
+                          : 'scale(0)',
+                    }}
+                  />
+                )}
+              </div>
             </li>
-            <li
-              className="mainMenu-li menu-text"
-              onClick={() => (shopSelect ? shopFalse() : shopTrue())}
-            >
-              Shop
-              <img src="/paint.svg" alt="fingerprint" className="paint" />
-              {/* {shopSelect ? (
+            <li className="mainMenu-li">
+              <div
+                className="menu-text"
+                onClick={() => (shopSelect ? shopFalse() : shopTrue())}
+              >
+                Shop
+                {shopSelect ? (
                   <img src="/paint.svg" alt="fingerprint" className="paint" />
                 ) : (
                   <img
@@ -99,21 +105,19 @@ function SceneHeader({
                     className="paint"
                     style={{
                       transform:
-                        dragX.x > 250 &&
-                        dragX.x < 770 &&
+                      dragX.x > 250 &&
+                      dragX.x < 770 &&
                         !mediaSelect &&
                         !connectSelect
                           ? 'scale(1)'
                           : 'scale(0)',
                     }}
                   />
-                )} */}
+                )}
+              </div>
             </li>
             <li className="mainMenu-li">
-              <div
-                className="menu-text"
-                onClick={() => (connectSelect ? connectFalse() : connectTrue())}
-              >
+              <div className="menu-text" onClick={() => (connectSelect ? connectFalse() : connectTrue())}>
                 Connect
                 {connectSelect ? (
                   <img src="/paint.svg" alt="fingerprint" className="paint" />

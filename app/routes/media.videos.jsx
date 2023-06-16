@@ -1,3 +1,4 @@
+import {Suspense} from 'react';
 import {Container} from 'react-bootstrap';
 import {json} from '@shopify/remix-oxygen';
 
@@ -22,28 +23,30 @@ export const handle = {
 const VideoFrame = ({url}) => {
   return (
     <>
-      <div className="d-none d-md-none d-lg-block">
-        <iframe
-          className="videos-iframe-desktop"
-          width="560"
-          height="315"
-          src={url}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
-      <div className="d-block d-lg-none">
-        <iframe
-          className="videos-iframe-mobile"
-          width="560"
-          height="315"
-          src={url}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
+      <Suspense fallback={null}>
+        <div className="d-none d-md-none d-lg-block">
+          <iframe
+            className="videos-iframe-desktop"
+            width="560"
+            height="315"
+            src={url}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+        <div className="d-block d-lg-none">
+          <iframe
+            className="videos-iframe-mobile"
+            width="560"
+            height="315"
+            src={url}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </Suspense>
     </>
   );
 };

@@ -85,7 +85,9 @@ function LineItem({lineItem}) {
         to={`/products/${merchandise.product.handle}`}
         className="flex-shrink-0"
       >
-        <Image data={merchandise.image} width={110} height={110} />
+        {merchandise.image !== null && (
+          <Image data={merchandise.image} width={110} height={110} />
+        )}
       </Link>
       <div className="cart-content-div">
         <div style={{width: '220px', display: 'block', height: '50px'}}>

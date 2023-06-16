@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable hydrogen/prefer-image-component */
 // import * as THREE from 'three';
 import {Suspense, useRef, useState, useEffect} from 'react';
@@ -167,7 +168,7 @@ export default function Scene({children, ...props}) {
   // const [isPending, startTransition] = useTransition();
   const rotation = [0, 0, 0];
   const position = [3, 0.5, 0];
-  const [musicOn, setMusicOn] = useState(true);
+  const [musicOn, setMusicOn] = useState(false);
 
   useEffect(() => {
     document.body.style.cursor = mediaHovered ? 'pointer' : 'auto';
@@ -229,12 +230,12 @@ export default function Scene({children, ...props}) {
   const [spring, set] = useSpring(() => ({
     rotation: [...rotation],
     position: [...position],
-    config: {mass: 75, friction: 400, tension: 1000},
+    config: {mass: 50, friction: 400, tension: 900},
   }));
 
   const [play, {stop}] = useSound('/audio.mp3', {
     loop: true,
-    autoplay: true,
+    autoplay: false,
   });
 
   useEffect(() => {
@@ -279,7 +280,7 @@ export default function Scene({children, ...props}) {
       <button className="music-button" onClick={() => setMusicOn(!musicOn)}>
         <img
           src={musicOn ? '/symbol.svg' : '/symbolOff.svg'}
-          style={{height: '40px'}}
+          style={{height: '30px'}}
         />
       </button>
       <EnterButton

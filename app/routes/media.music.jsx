@@ -1,3 +1,4 @@
+import {Suspense} from 'react';
 import {Container} from 'react-bootstrap';
 import {json} from '@shopify/remix-oxygen';
 
@@ -41,25 +42,27 @@ const url = [
 
 export default function music() {
   return (
-    <Container
-      fluid
-      className="screen-container"
-      style={{backgroundImage: `url('/BackgroundMusic.svg')`}}
-    >
-      <Toolbar />
-      <div className="music-div">
-        <h1 className="music-header d-none d-md-none d-lg-block">Music</h1>
-        {url &&
-          url.map((link, i) => {
-            return (
-              <MusicFrame
-                key={i}
-                style={{marginTop: i === 0 ? '10vh' : '0vh'}}
-                url={link}
-              />
-            );
-          })}
-      </div>
-    </Container>
+    <Suspense fallback={null}>
+      <Container
+        fluid
+        className="screen-container"
+        style={{backgroundImage: `url('/BackgroundMusic.svg')`}}
+      >
+        <Toolbar />
+        <div className="music-div">
+          <h1 className="music-header d-none d-md-none d-lg-block">Music</h1>
+          {url &&
+            url.map((link, i) => {
+              return (
+                <MusicFrame
+                  key={i}
+                  style={{marginTop: i === 0 ? '10vh' : '0vh'}}
+                  url={link}
+                />
+              );
+            })}
+        </div>
+      </Container>
+    </Suspense>
   );
 }

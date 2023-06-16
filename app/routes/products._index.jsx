@@ -108,7 +108,7 @@ export default function Collection() {
             {products.nodes.map((product, i) => {
               const {price} = product.variants?.nodes[0] || {};
               const hide = product.tags.includes('coming soon');
-
+              const noImg = product.variants.nodes[0].image === null;
               return (
                 <div
                   className="Product"
@@ -120,11 +120,13 @@ export default function Collection() {
                     to={`${hide ? '/products' : `/products/${product.handle}`}`}
                     style={{textDecoration: 'none'}}
                   >
-                    <Image
-                      data={product.variants.nodes[0].image}
-                      alt={product.title}
-                      className="prod-images"
-                    />
+                    {!noImg && (
+                      <Image
+                        data={product.variants.nodes[0].image}
+                        alt={product.title}
+                        className="prod-images"
+                      />
+                    )}
                     <h6 className="title-product-text-products">
                       {product.title}
                     </h6>

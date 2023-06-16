@@ -145,15 +145,14 @@ body {
 
 .paint {
   position: absolute;
-  /* width: 8vw; */
-  margin-left: -25pt;
-  /* min-width: 75px; */
-  width: 50px;
-  /* left: 0; */
-  top: -20px;
+  height: 150px;
+  margin-left: -70pt;
+  min-height: 100px;
+  top: -40px;
   z-index: -1;
   transition: transform 0.2s;
 }
+
 
 .cart-button {
   height: 30px;
