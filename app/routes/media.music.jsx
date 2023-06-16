@@ -36,8 +36,8 @@ const MusicFrame = ({url}) => {
 
 const url = [
   'https://open.spotify.com/embed/track/0Dk9lP1YnOqssHH0oCeq9u?utm_source=generator&theme=0',
-  'https://open.spotify.com/embed/track/0Dk9lP1YnOqssHH0oCeq9u?utm_source=generator&theme=0',
-  'https://open.spotify.com/embed/track/0Dk9lP1YnOqssHH0oCeq9u?utm_source=generator&theme=0',
+  'https://open.spotify.com/embed/track/3wGXyJGsCf1myH5MooQIqE?utm_source=generator&theme=0',
+  'https://open.spotify.com/embed/track/1WRzux3cJRM9xRNN99QKgR?utm_source=generator&theme=0',
 ];
 
 export default function music() {
