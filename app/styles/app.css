@@ -795,8 +795,9 @@ a:hover {
   color: black;
   display: flex;
   position: fixed;
+  left: 0;
   bottom: 0;
-  width: 100%;
+  width: 100vw;
 }
 
 .enter-button {
@@ -819,6 +820,7 @@ a:hover {
   bottom: 0;
   border-top: grey solid 1px;
   background: white;
+  left: 12px;
 }
 
 /* videos page */

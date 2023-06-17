@@ -86,40 +86,32 @@ const CustomForm = ({status, onValidated}) => {
         </motion.div>
       )} */}
       <form
-        // onSubmit={(e) => {
-        //   handleSubmit(e);
-        //   setSubmitted(messageTay);
-        // }}
         className="message-form-div"
         action="https://submit-form.com/DYbEBFRQ"
       >
         <Col lg={{span: 8, offset: 2}} xs={8}>
-          <input type="hidden" name="_append" value="false" />
-          <input type="hidden" name="_redirect" value="" />
+          {/* <input type="hidden" name="_append" value="false" />
+          <input type="hidden" name="_redirect" value="" /> */}
           <input
-            label="Email"
-            onChange={(e) => setEmail(e.target.value)}
             type="email"
-            value={email}
-            required
-            placeholder="Your Email"
+            id="name"
+            name="name"
+            placeholder="Name"
+            required=""
             className="message-input"
           />
           <textarea
-            label="Message"
-            onChange={(e) => setMessageTay(e.target.value)}
-            type="message"
-            value={messageTay}
-            placeholder="Your Message"
-            required
+            id="message"
+            name="message"
+            placeholder="Message"
+            required=""
             className="message-textarea"
           />
         </Col>
         <Col lg={2} xs={4}>
           <button className="enter-button" type="submit">
-            <img src="/send.svg" />
+            <img src="/send.svg" style={{width: '100%'}} />
           </button>
-
           {/* <input
             className="enter-button"
             type="image"
