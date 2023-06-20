@@ -1,13 +1,12 @@
 import {useEffect} from 'react';
 import {Drawer, useDrawer} from '~/components/Drawer';
 import {Suspense} from 'react';
-import {Await, useMatches, useFetchers, useLocation} from '@remix-run/react';
+import {Await, useMatches, useFetchers} from '@remix-run/react';
 import {CartLineItems, CartActions, CartSummary} from '~/components/Cart';
 import {useNavigate} from '@remix-run/react';
 
 function CartHeader({openDrawer}) {
   const [root] = useMatches();
-  const location = useLocation();
 
   return (
     <Suspense>

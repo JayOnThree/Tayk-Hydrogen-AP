@@ -1,4 +1,4 @@
-import {useState, Fragment} from 'react';
+import {useState} from 'react';
 import {useLoaderData} from '@remix-run/react';
 import {json} from 'react-router';
 import {Container, Row, Col} from 'react-bootstrap';
@@ -120,6 +120,9 @@ export default function Collection() {
                     to={`${hide ? '/products' : `/products/${product.handle}`}`}
                     style={{textDecoration: 'none'}}
                   >
+                    {!product.availableForSale && !hide && (
+                      <h3 className="outOffStock-text">Out of Stock</h3>
+                    )}
                     {!noImg && (
                       <Image
                         data={product.variants.nodes[0].image}
@@ -211,6 +214,7 @@ const PRODUCTS_QUERY = `#graphql
           publishedAt
           handle
           tags
+          availableForSale
           variants(first: 1) {
             nodes {
               id

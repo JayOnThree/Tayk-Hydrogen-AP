@@ -50,7 +50,7 @@ body {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-radius: 0px 0px 50px 50px;
-  background-color: #ffffff11;
+  background-color: #8585853d;
   height: 100%;
   transition: transform 0.3s ease;
 }
@@ -212,7 +212,7 @@ body {
 
 .circle-router {
   height: 60px;
-  background-color: rgb(204, 204, 204, 0.3);
+  background-color: #8585853d;
   border-radius: 50%;
   display: inline-block;
   backdrop-filter: blur(10px);
@@ -222,7 +222,7 @@ body {
 }
 
 .circle-router:hover {
-  filter: brightness(1.5);
+  filter: brightness(0.9);
 }
 
 .icon-router {
@@ -984,6 +984,7 @@ a:hover {
   flex: 0 1 25%;
   width: 100%;
   height: auto;
+  position: relative;
 }
 
 .prod-images {
@@ -1749,4 +1750,16 @@ a:hover {
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     position: absolute;
+  }
+
+  .outOffStock-text {
+    color: red;
+    position: absolute;
+    -webkit-text-stroke: 2px red;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+    font-size: 25pt;
+    transform: rotate(30deg);
+    opacity: 0.7;
   }
